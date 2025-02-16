@@ -8,7 +8,7 @@ import { motion } from "framer-motion"
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const scrollToSection = (e: MouseEvent, sectionId: string) => {
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault()
     const element = document.getElementById(sectionId)
     if (element) {

@@ -11,13 +11,13 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Arwindpianist Multimedia & Consulting",
-  description: "Your one-stop solution for multimedia production and IT consulting services.",
+  description: "Professional multimedia services and consulting",
   keywords: "multimedia, consulting, music production, web development, mobile apps, desktop software",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://www.arwindpianist.com",
-    site_name: "Arwindpianist Multimedia & Consulting",
+    siteName: "Arwindpianist Multimedia & Consulting",
     images: [
       {
         url: "/og-image.jpg",
@@ -28,9 +28,9 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    handle: "@arwindpianist",
+    card: "summary_large_image",
+    creator: "@arwindpianist",
     site: "@arwindpianist",
-    cardType: "summary_large_image",
   },
 }
 
