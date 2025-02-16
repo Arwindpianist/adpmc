@@ -3,25 +3,35 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --foreground-rgb: 255, 255, 255;
+  --background-rgb: 0, 0, 0;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer components {
+  .glassmorphism {
+    @apply bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg border border-white border-opacity-20 shadow-lg;
+  }
+
+  .btn-primary {
+    @apply bg-white text-black px-6 py-2 rounded-full font-semibold transition duration-300 hover:bg-opacity-80 hover:scale-105;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent border border-white text-white px-6 py-2 rounded-full font-semibold transition duration-300 hover:bg-white hover:text-black hover:scale-105;
+  }
+
+  .section-title {
+    @apply text-3xl font-bold text-center mb-12 relative;
+  }
+
+  .section-title::after {
+    content: "";
+    @apply absolute bottom-0 left-1/2 transform -translate-x-1/2 w-20 h-1 bg-white mt-2;
   }
 }
+
