@@ -9,7 +9,7 @@ const testimonials = [
   },
   {
     quote: "Their mobile app development skills are top-notch. Our app has seen a 200% increase in user engagement.",
-    author: "SneggyBooty., CEO of Booty Inc.",
+    author: "Mark Z., CEO of Company Inc.",
   },
 ]
 
