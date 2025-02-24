@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-xl font-semibold mb-4">Arwindpianist</h3>
+            <h3 className="text-xl font-semibold mb-4">Arwindpianist Multimedia & Consulting (JR0170970-M)</h3>
             <p className="text-gray-400">Multimedia & Consulting services for all your creative and technical needs.</p>
           </div>
           <div>
@@ -33,16 +33,10 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Connect With Us</h4>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition duration-300">
-                <Facebook size={24} />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition duration-300">
-                <Twitter size={24} />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition duration-300">
+              <a href="https://www.instagram.com/adpmnc/" className="text-gray-400 hover:text-white transition duration-300">
                 <Instagram size={24} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition duration-300">
+              <a href="https://www.linkedin.com/company/arwindpianist-multimedia-consulting/" className="text-gray-400 hover:text-white transition duration-300">
                 <Linkedin size={24} />
               </a>
             </div>

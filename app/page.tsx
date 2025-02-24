@@ -7,6 +7,7 @@ import Pricing from "@/components/Pricing"
 import CallToAction from "@/components/CallToAction"
 import Footer from "@/components/Footer"
 import { motion } from "framer-motion"
+import ParticleBackground from "@/components/ParticleBackground"
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
@@ -16,55 +17,62 @@ const fadeInUp = {
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col">
-      <Header />
-      <motion.div
-        initial="initial"
-        whileInView="animate"
-        viewport={{ once: true }}
-        variants={fadeInUp}
-      >
-        <Hero />
-      </motion.div>
-      
-      <motion.div
-        initial="initial"
-        whileInView="animate"
-        viewport={{ once: true }}
-        variants={fadeInUp}
-      >
-        <Features />
-      </motion.div>
+    <main className="flex min-h-screen flex-col relative">
+      {/* Particle Background */}
+      <div className="absolute inset-0 z-0">
+        <ParticleBackground />
+      </div>
 
-      <motion.div
-        initial="initial"
-        whileInView="animate"
-        viewport={{ once: true }}
-        variants={fadeInUp}
-      >
-        <Testimonials />
-      </motion.div>
+      {/* Content */}
+      <div className="relative z-10">
+        <Header />
+        <motion.div
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          <Hero />
+        </motion.div>
 
-      <motion.div
-        initial="initial"
-        whileInView="animate"
-        viewport={{ once: true }}
-        variants={fadeInUp}
-      >
-        <Pricing />
-      </motion.div>
+        <motion.div
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          <Features />
+        </motion.div>
 
-      <motion.div
-        initial="initial"
-        whileInView="animate"
-        viewport={{ once: true }}
-        variants={fadeInUp}
-      >
-        <CallToAction />
-      </motion.div>
+        <motion.div
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          <Testimonials />
+        </motion.div>
 
-      <Footer />
+        <motion.div
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          <Pricing />
+        </motion.div>
+
+        <motion.div
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          <CallToAction />
+        </motion.div>
+
+        <Footer />
+      </div>
     </main>
   )
 }
-

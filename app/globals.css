@@ -14,11 +14,11 @@ body {
 
 @layer components {
   .glassmorphism {
-    @apply bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg border border-white border-opacity-20 shadow-lg;
+    @apply bg-slate-400 bg-opacity-10 backdrop-filter backdrop-blur-lg border border-white border-opacity-20 shadow-white/10 shadow-lg;
   }
 
   .btn-primary {
-    @apply bg-white text-black px-6 py-2 rounded-full font-semibold transition duration-300 hover:bg-opacity-80 hover:scale-105;
+    @apply bg-white text-black shadow-teal-400/20 shadow-lg px-6 py-2 rounded-full font-semibold transition duration-300 hover:bg-opacity-80 hover:scale-105;
   }
 
   .btn-secondary {

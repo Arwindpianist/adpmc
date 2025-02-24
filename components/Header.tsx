@@ -4,6 +4,8 @@ import { useState } from "react"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
 import { motion } from "framer-motion"
+import Image from "next/image"
+import SVGIMG from "../public/logo.svg"
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -20,8 +22,8 @@ const Header = () => {
   return (
     <header className="glassmorphism fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href="/" className="text-2xl font-bold">
-          Arwindpianist
+        <Link href="/" className="text-xl font-bold">
+          <Image src={SVGIMG} alt="Logo" width={50} height={50} />
         </Link>
         <nav className="hidden md:flex space-x-6">
           <motion.a
