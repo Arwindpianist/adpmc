@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react"
 import dynamic from "next/dynamic"
 import type { Container, ISourceOptions } from "@tsparticles/engine"
 import { loadSlim } from "@tsparticles/slim" // or use `loadFull` if you need all features
-import { initParticlesEngine } from "@tsparticles/react"
 
 // Dynamically import the Particles component with SSR disabled
 const Particles = dynamic(() => import("@tsparticles/react"), { ssr: false })
@@ -14,12 +13,17 @@ const ParticleBackground = () => {
 
   // Initialize the particles engine
   useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      // You can load `slim`, `full`, `basic`, or any other preset
-      await loadSlim(engine) // Use `loadFull(engine)` if you need all features
-    }).then(() => {
-      setInit(true)
-    })
+    // Ensure this runs only on the client-side
+    if (typeof window !== "undefined") {
+      import("@tsparticles/react").then(({ initParticlesEngine }) => {
+        initParticlesEngine(async (engine) => {
+          // You can load `slim`, `full`, `basic`, or any other preset
+          await loadSlim(engine) // Use `loadFull(engine)` if you need all features
+        }).then(() => {
+          setInit(true)
+        })
+      })
+    }
   }, [])
 
   // Callback when particles are loaded
