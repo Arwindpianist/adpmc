@@ -1,9 +1,13 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import Particles, { initParticlesEngine } from "@tsparticles/react"
+import dynamic from "next/dynamic"
 import type { Container, ISourceOptions } from "@tsparticles/engine"
 import { loadSlim } from "@tsparticles/slim" // or use `loadFull` if you need all features
+import { initParticlesEngine } from "@tsparticles/react"
+
+// Dynamically import the Particles component with SSR disabled
+const Particles = dynamic(() => import("@tsparticles/react"), { ssr: false })
 
 const ParticleBackground = () => {
   const [init, setInit] = useState(false)
@@ -35,12 +39,12 @@ const ParticleBackground = () => {
       interactivity: {
         events: {
           onClick: {
-            enable: false,
-            mode: "push", // Add particles on click
+            enable: false, // Disable click interaction
+            mode: "push",
           },
           onHover: {
-            enable: true,
-            mode: "repulse", // Repulse particles on hover
+            enable: true, // Enable hover interaction
+            mode: "repulse",
           },
         },
         modes: {
@@ -61,21 +65,21 @@ const ParticleBackground = () => {
           color: "#ffffff", // White links between particles
           distance: 100, // Distance between linked particles
           enable: true,
-          opacity: 0.2,
-          width: 1,
+          opacity: 0.2, // Link opacity
+          width: 1, // Link width
         },
         collisions: {
-          enable: true,
+          enable: true, // Enable collisions between particles
         },
         move: {
-          direction: "none",
+          direction: "none", // Particles move randomly
           enable: true,
           outModes: {
             default: "bounce", // Particles bounce off edges
           },
-          random: true,
+          random: true, // Random movement
           speed: 2, // Speed of particles
-          straight: false,
+          straight: false, // Particles don't move in a straight line
         },
         number: {
           density: {
@@ -94,7 +98,7 @@ const ParticleBackground = () => {
           value: { min: 1, max: 3 }, // Size range of particles
         },
       },
-      detectRetina: true,
+      detectRetina: true, // Enable retina display support
     }),
     []
   )
@@ -110,6 +114,7 @@ const ParticleBackground = () => {
     )
   }
 
+  // Return nothing until particles are initialized
   return null
 }
 

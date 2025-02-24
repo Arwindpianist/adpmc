@@ -14,7 +14,7 @@ body {
 
 @layer components {
   .glassmorphism {
-    @apply bg-slate-400 bg-opacity-10 backdrop-filter backdrop-blur-lg border border-white border-opacity-20 shadow-white/10 shadow-lg;
+    @apply bg-slate-200 bg-opacity-5 backdrop-filter backdrop-blur-sm border border-white border-opacity-20 shadow-white/10 shadow-sm;
   }
 
   .btn-primary {
