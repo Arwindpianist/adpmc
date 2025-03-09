@@ -1,39 +1,28 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
-import dynamic from "next/dynamic"
-import type { Container, ISourceOptions } from "@tsparticles/engine"
-import { loadSlim } from "@tsparticles/slim" // or use `loadFull` if you need all features
-
-// Dynamically import the Particles component with SSR disabled
-const Particles = dynamic(() => import("@tsparticles/react"), { ssr: false })
+import { useEffect, useState } from "react"
+import type { ISourceOptions } from "@tsparticles/engine"
 
 const ParticleBackground = () => {
-  const [init, setInit] = useState(false)
+  const [Particles, setParticles] = useState<React.FC<any> | null>(null)
 
-  // Initialize the particles engine
   useEffect(() => {
-    // Ensure this runs only on the client-side
-    if (typeof window !== "undefined") {
-      import("@tsparticles/react").then(({ initParticlesEngine }) => {
-        initParticlesEngine(async (engine) => {
-          // You can load `slim`, `full`, `basic`, or any other preset
-          await loadSlim(engine) // Use `loadFull(engine)` if you need all features
-        }).then(() => {
-          setInit(true)
-        })
+    const initializeParticles = async () => {
+      const { initParticlesEngine } = await import("@tsparticles/react")
+      const { loadSlim } = await import("@tsparticles/slim")
+      const particlesReact = await import("@tsparticles/react")
+      
+      await initParticlesEngine(async (engine) => {
+        await loadSlim(engine)
       })
+
+      setParticles(() => particlesReact.Particles)
     }
+
+    initializeParticles()
   }, [])
 
-  // Callback when particles are loaded
-  const particlesLoaded = async (container?: Container): Promise<void> => {
-    console.log("Particles loaded", container)
-  }
-
-  // Particle options
-  const options: ISourceOptions = useMemo(
-    () => ({
+  const options: ISourceOptions = {
       background: {
         color: {
           value: "#000000", // Black background
@@ -88,7 +77,6 @@ const ParticleBackground = () => {
         number: {
           density: {
             enable: true,
-            area: 800, // Density of particles
           },
           value: 80, // Number of particles
         },
@@ -103,23 +91,11 @@ const ParticleBackground = () => {
         },
       },
       detectRetina: true, // Enable retina display support
-    }),
-    []
-  )
+    }
 
-  // Render Particles only after initialization
-  if (init) {
-    return (
-      <Particles
-        id="tsparticles"
-        particlesLoaded={particlesLoaded}
-        options={options}
-      />
-    )
+    if (!Particles) return null
+
+    return <Particles id="tsparticles" options={options} />
   }
-
-  // Return nothing until particles are initialized
-  return null
-}
-
-export default ParticleBackground
+  
+  export default ParticleBackground

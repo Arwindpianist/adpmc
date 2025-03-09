@@ -1,5 +1,5 @@
 import Link from "next/link"
-import Typewriter from "react-typewriter-effect"
+import Typewriter from "react-ts-typewriter"
 
 const Hero = () => {
   return (
@@ -10,8 +10,7 @@ const Hero = () => {
           <h1 className="text-xl md:text-4xl font-bold mb-6 animate-fade-in-up">
             <Typewriter
               text="Arwindpianist Multimedia & Consulting"
-              typeSpeed={100}
-              cursorColor="teal"
+              speed={100}
             />
           </h1>
         </div>

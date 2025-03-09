@@ -1,4 +1,5 @@
 "use client"
+import dynamic from "next/dynamic"
 import Header from "@/components/Header"
 import Hero from "@/components/Hero"
 import Features from "@/components/Features"
@@ -7,7 +8,14 @@ import Pricing from "@/components/Pricing"
 import CallToAction from "@/components/CallToAction"
 import Footer from "@/components/Footer"
 import { motion } from "framer-motion"
-import ParticleBackground from "@/components/ParticleBackground"
+
+const ParticleBackground = dynamic(
+  () => import("@/components/ParticleBackground"),
+  {
+    ssr: false,
+    loading: () => <div className="absolute inset-0 bg-black z-0" />
+  }
+)
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },

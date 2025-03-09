@@ -10,13 +10,14 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: "Arwindpianist Multimedia & Consulting",
   description: "Professional multimedia services and consulting",
   keywords: "multimedia, consulting, music production, web development, mobile apps, desktop software",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://www.arwindpianist.com",
+    url: "https://www.arwindpianist.store",
     siteName: "Arwindpianist Multimedia & Consulting",
     images: [
       {
