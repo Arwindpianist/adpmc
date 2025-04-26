@@ -101,7 +101,9 @@ const ProjectsPage = () => {
                     alt="AS Kitchen"
                     className="rounded-lg mb-4"
                   />
-                  <h3 className="text-xl font-bold mb-2">AS Kitchen</h3>
+                  <h3 className="text-xl font-bold mb-2">
+                    AS Kitchen <span className="text-gray-400">(askitchen.arwindpianist.store)</span>
+                  </h3>
                 </a>
                 <p className="text-gray-400">
                   A website showcasing AS Kitchen's services and menu.
@@ -118,10 +120,12 @@ const ProjectsPage = () => {
                     alt="PogoPass"
                     className="rounded-lg mb-4"
                   />
-                  <h3 className="text-xl font-bold mb-2">PogoPass</h3>
+                  <h3 className="text-xl font-bold mb-2">
+                    PogoPass <span className="text-gray-400">(pogopass.arwindpianist.store)</span>
+                  </h3>
                 </a>
                 <p className="text-gray-400">
-                  A platform for managing and tracking pogo passes.
+                  Pogopass Password Manager official website.
                 </p>
               </div>
               <div className="glassmorphism p-6 rounded-lg transition duration-300 hover:scale-105">
@@ -135,7 +139,9 @@ const ProjectsPage = () => {
                     alt="KMTCS"
                     className="rounded-lg mb-4"
                   />
-                  <h3 className="text-xl font-bold mb-2">KMTC</h3>
+                  <h3 className="text-xl font-bold mb-2">
+                    KMTCS <span className="text-gray-400">(kmtcs.com.my)</span>
+                  </h3>
                 </a>
                 <p className="text-gray-400">
                   Official website for KMTCS services and information.
