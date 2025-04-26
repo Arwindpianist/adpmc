@@ -1,34 +1,50 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { Menu, X } from "lucide-react"
-import { motion } from "framer-motion"
-import Image from "next/image"
-import SVGIMG from "../public/logo.svg"
+import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation"; // Import to get the current route
+import { Menu, X } from "lucide-react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import SVGIMG from "../public/logo.svg";
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname(); // Get the current route
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
-    e.preventDefault()
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+  const scrollToSection = (e: React.MouseEvent<HTMLElement>, sectionId: string) => {
+    e.preventDefault();
+    if (pathname === "/") {
+      // If on the main page, scroll to the section
+      if (sectionId === "") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    } else {
+      // If not on the main page, navigate to the main page with the section ID
+      window.location.href = `/#${sectionId}`;
     }
-    setIsMenuOpen(false)
-  }
+    setIsMenuOpen(false);
+  };
 
   return (
     <header className="glassmorphism fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href="/" className="text-xl font-bold">
+        <Link
+          href="/"
+          onClick={(e) => scrollToSection(e, "")}
+          className="text-xl font-bold"
+        >
           <Image src={SVGIMG} alt="Logo" width={50} height={50} />
         </Link>
         <nav className="hidden md:flex space-x-6">
           <motion.a
             href="#features"
-            onClick={(e) => scrollToSection(e, 'features')}
+            onClick={(e) => scrollToSection(e, "features")}
             className="hover:text-gray-300 transition duration-500"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -37,7 +53,7 @@ const Header = () => {
           </motion.a>
           <motion.a
             href="#testimonials"
-            onClick={(e) => scrollToSection(e, 'testimonials')}
+            onClick={(e) => scrollToSection(e, "testimonials")}
             className="hover:text-gray-300 transition duration-500"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -46,19 +62,28 @@ const Header = () => {
           </motion.a>
           <motion.a
             href="#pricing"
-            onClick={(e) => scrollToSection(e, 'pricing')}
+            onClick={(e) => scrollToSection(e, "pricing")}
             className="hover:text-gray-300 transition duration-500"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             Pricing
           </motion.a>
+          <motion.a
+            href="/projects"
+            className="hover:text-gray-300 transition duration-500"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Projects
+          </motion.a>
         </nav>
-        <motion.button 
+        <motion.button
           className="hidden md:block btn-primary"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           transition={{ duration: 0.3 }}
+          onClick={(e) => scrollToSection(e, "pricing")}
         >
           Get Started
         </motion.button>
@@ -67,7 +92,7 @@ const Header = () => {
         </button>
       </div>
       {isMenuOpen && (
-        <motion.div 
+        <motion.div
           className="md:hidden glassmorphism"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -76,7 +101,7 @@ const Header = () => {
           <nav className="flex flex-col space-y-4 px-4 py-2">
             <motion.a
               href="#features"
-              onClick={(e) => scrollToSection(e, 'features')}
+              onClick={(e) => scrollToSection(e, "features")}
               className="hover:text-gray-300 transition duration-500"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -85,7 +110,7 @@ const Header = () => {
             </motion.a>
             <motion.a
               href="#testimonials"
-              onClick={(e) => scrollToSection(e, 'testimonials')}
+              onClick={(e) => scrollToSection(e, "testimonials")}
               className="hover:text-gray-300 transition duration-500"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -94,27 +119,27 @@ const Header = () => {
             </motion.a>
             <motion.a
               href="#pricing"
-              onClick={(e) => scrollToSection(e, 'pricing')}
+              onClick={(e) => scrollToSection(e, "pricing")}
               className="hover:text-gray-300 transition duration-500"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               Pricing
             </motion.a>
-            <motion.button 
-              className="btn-primary"
+            <motion.a
+              href="/projects"
+              className="hover:text-gray-300 transition duration-500"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.3 }}
             >
-              Get Started
-            </motion.button>
+              Projects
+            </motion.a>
           </nav>
         </motion.div>
       )}
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
 
