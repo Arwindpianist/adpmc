@@ -2,10 +2,6 @@
 import dynamic from "next/dynamic"
 import Header from "@/components/Header"
 import Hero from "@/components/Hero"
-import Features from "@/components/Features"
-import Testimonials from "@/components/Testimonials"
-import Pricing from "@/components/Pricing"
-import CallToAction from "@/components/CallToAction"
 import Footer from "@/components/Footer"
 import { motion } from "framer-motion"
 
@@ -42,43 +38,6 @@ export default function Home() {
         >
           <Hero />
         </motion.div>
-
-        <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-        >
-          <Features />
-        </motion.div>
-
-        <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-        >
-          <Testimonials />
-        </motion.div>
-
-        <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-        >
-          <Pricing />
-        </motion.div>
-
-        <motion.div
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-        >
-          <CallToAction />
-        </motion.div>
-
         <Footer />
       </div>
     </main>

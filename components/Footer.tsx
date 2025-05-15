@@ -14,17 +14,17 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="#features" className="text-gray-400 hover:text-white transition duration-300">
+                <Link href="https://www.arwindpianist.store/#features" className="text-gray-400 hover:text-white transition duration-300">
                   Services
                 </Link>
               </li>
               <li>
-                <Link href="#testimonials" className="text-gray-400 hover:text-white transition duration-300">
+                <Link href="https://www.arwindpianist.store/#testimonials" className="text-gray-400 hover:text-white transition duration-300">
                   Testimonials
                 </Link>
               </li>
               <li>
-                <Link href="#pricing" className="text-gray-400 hover:text-white transition duration-300">
+                <Link href="https://www.arwindpianist.store/#pricing" className="text-gray-400 hover:text-white transition duration-300">
                   Pricing
                 </Link>
               </li>
