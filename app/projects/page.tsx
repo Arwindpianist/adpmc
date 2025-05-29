@@ -147,6 +147,25 @@ const ProjectsPage = () => {
                   Official website for KMTCS services and information.
                 </p>
               </div>
+              <div className="glassmorphism p-6 rounded-lg transition duration-300 hover:scale-105">
+                <a
+                  href="https://typescripttutor.arwindpianist.store/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="/images/typescript-tutor.png"
+                    alt="TypeScript Tutor"
+                    className="rounded-lg mb-4"
+                  />
+                  <h3 className="text-xl font-bold mb-2">
+                    TypeScript Tutor <span className="text-gray-400">(typescripttutor.arwindpianist.store)</span>
+                  </h3>
+                </a>
+                <p className="text-gray-400">
+                  An interactive learning platform for mastering TypeScript through hands-on exercises, real-world examples, and interactive quizzes.
+                </p>
+              </div>
             </div>
           </div>
         </section>
