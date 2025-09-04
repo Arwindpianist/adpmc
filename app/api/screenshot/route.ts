@@ -16,9 +16,8 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // Use a free screenshot service API
-    // You can replace this with your preferred service
-    const screenshotUrl = await getScreenshotUrl();
+    // Use a real screenshot service
+    const screenshotUrl = await getScreenshotUrl(url);
     
     if (screenshotUrl) {
       // Redirect to the screenshot URL
@@ -49,26 +48,35 @@ export async function GET(request: NextRequest) {
   }
 }
 
-async function getScreenshotUrl(): Promise<string | null> {
+async function getScreenshotUrl(url: string): Promise<string | null> {
   try {
-    // Using a free screenshot service
-    // You can replace this with your preferred service like:
-    // - ScreenshotAPI (paid)
-    // - Browserless (paid)
-    // - Cloudinary (paid)
-    // - Or host your own screenshot service
+    // Using Microlink.io - a free screenshot service
+    // This generates real website previews similar to link previews
+    const microlinkUrl = `https://api.microlink.io?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url`;
     
-    // For now, we'll use a simple approach that creates a placeholder
-    // In production, you might want to use a real screenshot service
+    const response = await fetch(microlinkUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      }
+    });
     
-    // Example with a free service (you'll need to sign up for an API key):
-    // const response = await fetch(`https://api.screenshotapi.net/screenshot?url=${encodeURIComponent(url)}&token=YOUR_API_KEY`);
-    // if (response.ok) {
-    //   const data = await response.json();
-    //   return data.screenshot;
-    // }
+    if (response.ok) {
+      const data = await response.json();
+      if (data.status === 'success' && data.data.screenshot) {
+        return data.data.screenshot.url;
+      }
+    }
     
-    return null; // Return null to use placeholder
+    // Fallback: Try using Cloudinary's screenshot service
+    const cloudinaryUrl = `https://res.cloudinary.com/demo/image/fetch/w_1200,h_800,f_auto,q_auto/${encodeURIComponent(url)}`;
+    
+    // Test if Cloudinary can generate the screenshot
+    const cloudinaryResponse = await fetch(cloudinaryUrl, { method: 'HEAD' });
+    if (cloudinaryResponse.ok) {
+      return cloudinaryUrl;
+    }
+    
+    return null;
   } catch (error) {
     console.error('Error fetching screenshot:', error);
     return null;

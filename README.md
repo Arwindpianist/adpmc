@@ -5,9 +5,9 @@ A modern, responsive portfolio website showcasing projects and skills with dynam
 ## Features
 
 ### 🚀 Dynamic Project Previews
-- **Custom Preview Generation**: Creates beautiful SVG previews for deployed projects
-- **Real-time Updates**: Previews are generated on-demand and cached for performance
-- **Fallback Handling**: Graceful fallback with attractive placeholder designs
+- **Real Screenshot Generation**: Uses Microlink.io and Cloudinary to generate actual website previews
+- **Real-time Updates**: Screenshots are generated on-demand and cached for performance
+- **Fallback Handling**: Graceful fallback to custom SVG previews when external services are unavailable
 
 ### 📊 GitHub Integration
 - **Automatic Repository Fetching**: Fetches all GitHub repositories with descriptions
@@ -45,7 +45,7 @@ A modern, responsive portfolio website showcasing projects and skills with dynam
 - **Frontend**: Next.js 14, React 18, TypeScript
 - **Styling**: Tailwind CSS, CSS Modules
 - **Animations**: Framer Motion, TSParticles
-- **Previews**: Custom SVG generation
+- **Screenshots**: Microlink.io + Cloudinary
 - **Deployment**: Vercel (recommended)
 
 ## Getting Started
@@ -84,10 +84,10 @@ npm start
 ## API Endpoints
 
 ### `/api/screenshot`
-Generates custom preview images for websites.
+Generates real website screenshots using external services.
 
 **Query Parameters:**
-- `url` (required): The website URL to generate preview for
+- `url` (required): The website URL to screenshot
 
 **Example:**
 ```
@@ -95,15 +95,16 @@ GET /api/screenshot?url=https://example.com
 ```
 
 **Features:**
-- Creates beautiful SVG previews with website branding
-- Includes realistic browser window mockup
+- Uses Microlink.io for high-quality screenshots
+- Fallback to Cloudinary for additional coverage
+- Graceful fallback to custom SVG previews
 - Cached for 1 hour for optimal performance
 
 ## Configuration
 
 ### Next.js Config
 The project includes optimized configuration for:
-- Custom preview generation
+- Real screenshot generation
 - Image optimization
 - External domain handling
 
