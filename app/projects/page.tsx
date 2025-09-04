@@ -17,11 +17,12 @@ const ParticleBackground = dynamic(
 interface Repository {
   id: number;
   name: string;
-  description: string;
+  description: string | null;
   html_url: string;
   created_at: string;
   updated_at: string;
   homepage?: string;
+  fork: boolean;
 }
 
 interface DeployedProject {
@@ -83,11 +84,11 @@ const ProjectsPage = () => {
         );
         const data = await response.json();
 
-        // Filter out repositories with no description and exclude deployed projects
+        // Filter out deployed projects and forks, but include all repositories
         const deployedProjectNames = deployedProjects.map(p => p.title.toLowerCase());
         const filteredData = data.filter((repo: Repository) => 
-          repo.description && 
-          !deployedProjectNames.includes(repo.name.toLowerCase())
+          !deployedProjectNames.includes(repo.name.toLowerCase()) &&
+          !repo.fork // Exclude forked repositories
         );
 
         // Sort repositories by update date (newest first)
@@ -140,7 +141,9 @@ const ProjectsPage = () => {
         {/* GitHub Projects Section */}
         <section className="py-20">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">GitHub Projects</h2>
+            <h2 className="text-3xl font-bold mb-8 text-center">
+              GitHub Projects ({repositories.length} repositories)
+            </h2>
             {loading ? (
               <div className="text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-400 mx-auto mb-4"></div>
@@ -152,7 +155,7 @@ const ProjectsPage = () => {
                   <ProjectCard
                     key={repo.id}
                     title={repo.name}
-                    description={repo.description}
+                    description={repo.description || "No description available."}
                     url={repo.html_url}
                     githubUrl={repo.html_url}
                     isDeployed={false}

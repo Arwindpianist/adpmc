@@ -5,9 +5,9 @@ A modern, responsive portfolio website showcasing projects and skills with dynam
 ## Features
 
 ### 🚀 Dynamic Project Previews
-- **Automatic Screenshot Generation**: Uses Puppeteer to generate live previews of deployed projects
-- **Real-time Updates**: Screenshots are generated on-demand and cached for performance
-- **Fallback Handling**: Graceful fallback when screenshots are unavailable
+- **Custom Preview Generation**: Creates beautiful SVG previews for deployed projects
+- **Real-time Updates**: Previews are generated on-demand and cached for performance
+- **Fallback Handling**: Graceful fallback with attractive placeholder designs
 
 ### 📊 GitHub Integration
 - **Automatic Repository Fetching**: Fetches all GitHub repositories with descriptions
@@ -45,7 +45,7 @@ A modern, responsive portfolio website showcasing projects and skills with dynam
 - **Frontend**: Next.js 14, React 18, TypeScript
 - **Styling**: Tailwind CSS, CSS Modules
 - **Animations**: Framer Motion, TSParticles
-- **Screenshots**: Puppeteer
+- **Previews**: Custom SVG generation
 - **Deployment**: Vercel (recommended)
 
 ## Getting Started
@@ -84,21 +84,26 @@ npm start
 ## API Endpoints
 
 ### `/api/screenshot`
-Generates screenshots of websites using Puppeteer.
+Generates custom preview images for websites.
 
 **Query Parameters:**
-- `url` (required): The website URL to screenshot
+- `url` (required): The website URL to generate preview for
 
 **Example:**
 ```
 GET /api/screenshot?url=https://example.com
 ```
 
+**Features:**
+- Creates beautiful SVG previews with website branding
+- Includes realistic browser window mockup
+- Cached for 1 hour for optimal performance
+
 ## Configuration
 
 ### Next.js Config
 The project includes optimized configuration for:
-- Puppeteer integration
+- Custom preview generation
 - Image optimization
 - External domain handling
 
@@ -108,7 +113,7 @@ Create a `.env.local` file for any environment-specific configurations.
 ## Performance Features
 
 - **Image Optimization**: Next.js Image component with automatic optimization
-- **Caching**: Screenshots cached for 1 hour to reduce API calls
+- **Caching**: Previews cached for 1 hour to reduce API calls
 - **Lazy Loading**: Components loaded dynamically for better performance
 - **Static Generation**: Pages pre-rendered for faster loading
 
