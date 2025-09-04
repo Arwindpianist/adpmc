@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import dynamic from "next/dynamic";
 import Footer from "@/components/Footer";
+import ProjectCard from "@/components/ProjectCard";
 
 const ParticleBackground = dynamic(
   () => import("@/components/ParticleBackground"),
@@ -13,24 +14,86 @@ const ParticleBackground = dynamic(
   }
 );
 
+interface Repository {
+  id: number;
+  name: string;
+  description: string;
+  html_url: string;
+  created_at: string;
+  updated_at: string;
+  homepage?: string;
+}
+
+interface DeployedProject {
+  title: string;
+  description: string;
+  url: string;
+  githubUrl?: string;
+}
+
+// Define deployed projects including the new ones
+const deployedProjects: DeployedProject[] = [
+  {
+    title: "AS Kitchen",
+    description: "A website showcasing AS Kitchen's services and menu.",
+    url: "https://askitchen.arwindpianist.store/",
+    githubUrl: "https://github.com/Arwindpianist/askitchen"
+  },
+  {
+    title: "PogoPass",
+    description: "Pogopass Password Manager official website.",
+    url: "https://pogopass.arwindpianist.store/",
+    githubUrl: "https://github.com/Arwindpianist/pogopass"
+  },
+  {
+    title: "KMTCS",
+    description: "Official website for KMTCS services and information.",
+    url: "https://www.kmtcs.com.my/",
+    githubUrl: "https://github.com/Arwindpianist/kmtcs"
+  },
+  {
+    title: "TypeScript Tutor",
+    description: "An interactive learning platform for mastering TypeScript through hands-on exercises, real-world examples, and interactive quizzes.",
+    url: "https://typescripttutor.arwindpianist.store/",
+    githubUrl: "https://github.com/Arwindpianist/typescript-tutor"
+  },
+  {
+    title: "Sunrise 2025",
+    description: "A modern web application showcasing innovative design and development practices.",
+    url: "https://sunrise-2025.com/",
+    githubUrl: "https://github.com/Arwindpianist/sunrise-2025"
+  },
+  {
+    title: "GridHealth",
+    description: "Enterprise-grade system health monitoring platform. Monitor CPU, memory, disk, and network health across your entire organization in real-time with beautiful, intuitive dashboards.",
+    url: "https://gridhealth.arwindpianist.store/",
+    githubUrl: "https://github.com/Arwindpianist/gridhealth"
+  }
+];
+
 const ProjectsPage = () => {
-  const [repositories, setRepositories] = useState<any[]>([]);
+  const [repositories, setRepositories] = useState<Repository[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchRepositories = async () => {
       try {
         const response = await fetch(
-          "https://api.github.com/users/Arwindpianist/repos"
+          "https://api.github.com/users/Arwindpianist/repos?per_page=100&sort=updated"
         );
         const data = await response.json();
 
-        // Filter out repositories with no description
-        const filteredData = data.filter((repo: any) => repo.description);
+        // Filter out repositories with no description and exclude deployed projects
+        const deployedProjectNames = deployedProjects.map(p => p.title.toLowerCase());
+        const filteredData = data.filter((repo: Repository) => 
+          repo.description && 
+          !deployedProjectNames.includes(repo.name.toLowerCase())
+        );
 
-        // Sort repositories by creation date (newest first)
+        // Sort repositories by update date (newest first)
         const sortedData = filteredData.sort(
-          (a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          (a: Repository, b: Repository) => 
+            new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
         );
 
         setRepositories(sortedData);
@@ -54,121 +117,52 @@ const ProjectsPage = () => {
       {/* Content */}
       <div className="relative z-10">
         <Header />
+        
+        {/* Deployed Projects Section */}
         <section className="py-40">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">Completed Projects</h2>
+            <h2 className="text-3xl font-bold mb-8 text-center">Deployed Projects</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {deployedProjects.map((project, index) => (
+                <ProjectCard
+                  key={index}
+                  title={project.title}
+                  description={project.description}
+                  url={project.url}
+                  githubUrl={project.githubUrl}
+                  isDeployed={true}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* GitHub Projects Section */}
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-8 text-center">GitHub Projects</h2>
             {loading ? (
-              <p className="text-center">Loading projects...</p>
+              <div className="text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-400 mx-auto mb-4"></div>
+                <p>Loading projects...</p>
+              </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {repositories.map((repo) => (
-                  <div
+                  <ProjectCard
                     key={repo.id}
-                    className="glassmorphism p-6 rounded-lg transition duration-300 hover:scale-105"
-                  >
-                    <h3 className="text-xl font-bold mb-2">{repo.name}</h3>
-                    <p className="text-gray-400 mb-4">
-                      {repo.description || "No description available."}
-                    </p>
-                    <a
-                      href={repo.html_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-teal-400 hover:underline"
-                    >
-                      View on GitHub
-                    </a>
-                  </div>
+                    title={repo.name}
+                    description={repo.description}
+                    url={repo.html_url}
+                    githubUrl={repo.html_url}
+                    isDeployed={false}
+                  />
                 ))}
               </div>
             )}
           </div>
         </section>
-
-        {/* Deployed Projects Section */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">Deployed Projects</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="glassmorphism p-6 rounded-lg transition duration-300 hover:scale-105">
-                <a
-                  href="https://askitchen.arwindpianist.store/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src="/images/askitchen-preview.png"
-                    alt="AS Kitchen"
-                    className="rounded-lg mb-4"
-                  />
-                  <h3 className="text-xl font-bold mb-2">
-                    AS Kitchen <span className="text-gray-400">(askitchen.arwindpianist.store)</span>
-                  </h3>
-                </a>
-                <p className="text-gray-400">
-                  A website showcasing AS Kitchen's services and menu.
-                </p>
-              </div>
-              <div className="glassmorphism p-6 rounded-lg transition duration-300 hover:scale-105">
-                <a
-                  href="https://pogopass.arwindpianist.store/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src="/images/pogopass-preview.png"
-                    alt="PogoPass"
-                    className="rounded-lg mb-4"
-                  />
-                  <h3 className="text-xl font-bold mb-2">
-                    PogoPass <span className="text-gray-400">(pogopass.arwindpianist.store)</span>
-                  </h3>
-                </a>
-                <p className="text-gray-400">
-                  Pogopass Password Manager official website.
-                </p>
-              </div>
-              <div className="glassmorphism p-6 rounded-lg transition duration-300 hover:scale-105">
-                <a
-                  href="https://www.kmtcs.com.my/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src="/images/kmtcs-preview.png"
-                    alt="KMTCS"
-                    className="rounded-lg mb-4"
-                  />
-                  <h3 className="text-xl font-bold mb-2">
-                    KMTCS <span className="text-gray-400">(kmtcs.com.my)</span>
-                  </h3>
-                </a>
-                <p className="text-gray-400">
-                  Official website for KMTCS services and information.
-                </p>
-              </div>
-              <div className="glassmorphism p-6 rounded-lg transition duration-300 hover:scale-105">
-                <a
-                  href="https://typescripttutor.arwindpianist.store/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src="/images/typescript-tutor.png"
-                    alt="TypeScript Tutor"
-                    className="rounded-lg mb-4"
-                  />
-                  <h3 className="text-xl font-bold mb-2">
-                    TypeScript Tutor <span className="text-gray-400">(typescripttutor.arwindpianist.store)</span>
-                  </h3>
-                </a>
-                <p className="text-gray-400">
-                  An interactive learning platform for mastering TypeScript through hands-on exercises, real-world examples, and interactive quizzes.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        
         <Footer />
       </div>
     </main>
