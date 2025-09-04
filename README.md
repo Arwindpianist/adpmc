@@ -5,9 +5,9 @@ A modern, responsive portfolio website showcasing projects and skills with dynam
 ## Features
 
 ### 🚀 Dynamic Project Previews
-- **Real Screenshot Generation**: Uses Microlink.io and Cloudinary to generate actual website previews
-- **Real-time Updates**: Screenshots are generated on-demand and cached for performance
-- **Fallback Handling**: Graceful fallback to custom SVG previews when external services are unavailable
+- **OpenGraph Integration**: Fetches real website previews using OpenGraph meta tags
+- **Real-time Updates**: Previews are generated on-demand and cached for performance
+- **Fallback Handling**: Graceful fallback to custom SVG previews when OpenGraph data is unavailable
 
 ### 📊 GitHub Integration
 - **Automatic Repository Fetching**: Fetches all GitHub repositories with descriptions
@@ -45,7 +45,7 @@ A modern, responsive portfolio website showcasing projects and skills with dynam
 - **Frontend**: Next.js 14, React 18, TypeScript
 - **Styling**: Tailwind CSS, CSS Modules
 - **Animations**: Framer Motion, TSParticles
-- **Screenshots**: Microlink.io + Cloudinary
+- **Previews**: OpenGraph + Custom SVG
 - **Deployment**: Vercel (recommended)
 
 ## Getting Started
@@ -84,10 +84,10 @@ npm start
 ## API Endpoints
 
 ### `/api/screenshot`
-Generates real website screenshots using external services.
+Generates website previews using OpenGraph meta tags.
 
 **Query Parameters:**
-- `url` (required): The website URL to screenshot
+- `url` (required): The website URL to generate preview for
 
 **Example:**
 ```
@@ -95,8 +95,8 @@ GET /api/screenshot?url=https://example.com
 ```
 
 **Features:**
-- Uses Microlink.io for high-quality screenshots
-- Fallback to Cloudinary for additional coverage
+- Fetches OpenGraph images from website meta tags
+- Extracts title and description from meta tags
 - Graceful fallback to custom SVG previews
 - Cached for 1 hour for optimal performance
 
@@ -104,7 +104,7 @@ GET /api/screenshot?url=https://example.com
 
 ### Next.js Config
 The project includes optimized configuration for:
-- Real screenshot generation
+- OpenGraph preview generation
 - Image optimization
 - External domain handling
 

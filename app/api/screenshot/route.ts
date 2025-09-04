@@ -16,12 +16,17 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // Use a real screenshot service
-    const screenshotUrl = await getScreenshotUrl(url);
+    // Try to get OpenGraph data first
+    const ogData = await getOpenGraphData(url);
     
-    if (screenshotUrl) {
-      // Redirect to the screenshot URL
-      return NextResponse.redirect(screenshotUrl);
+    if (ogData && ogData.image) {
+      // Return the OpenGraph image
+      return NextResponse.json({ 
+        screenshotUrl: ogData.image,
+        success: true,
+        title: ogData.title,
+        description: ogData.description
+      });
     } else {
       // Fallback to placeholder
       const placeholderImage = createPlaceholderImage(url);
@@ -34,7 +39,7 @@ export async function GET(request: NextRequest) {
       });
     }
   } catch (error) {
-    console.error('Screenshot generation error:', error);
+    console.error('OpenGraph generation error:', error);
     
     // Fallback to placeholder on error
     const placeholderImage = createPlaceholderImage(url);
@@ -48,39 +53,64 @@ export async function GET(request: NextRequest) {
   }
 }
 
-async function getScreenshotUrl(url: string): Promise<string | null> {
+async function getOpenGraphData(url: string): Promise<{
+  image?: string;
+  title?: string;
+  description?: string;
+} | null> {
   try {
-    // Using Microlink.io - a free screenshot service
-    // This generates real website previews similar to link previews
-    const microlinkUrl = `https://api.microlink.io?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url`;
-    
-    const response = await fetch(microlinkUrl, {
+    // Fetch the HTML content of the page
+    const response = await fetch(url, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
       }
     });
-    
-    if (response.ok) {
-      const data = await response.json();
-      if (data.status === 'success' && data.data.screenshot) {
-        return data.data.screenshot.url;
-      }
+
+    if (!response.ok) {
+      return null;
     }
+
+    const html = await response.text();
     
-    // Fallback: Try using Cloudinary's screenshot service
-    const cloudinaryUrl = `https://res.cloudinary.com/demo/image/fetch/w_1200,h_800,f_auto,q_auto/${encodeURIComponent(url)}`;
+    // Parse OpenGraph meta tags
+    const ogImage = extractMetaContent(html, 'property="og:image"') || 
+                   extractMetaContent(html, 'property="og:image:url"');
     
-    // Test if Cloudinary can generate the screenshot
-    const cloudinaryResponse = await fetch(cloudinaryUrl, { method: 'HEAD' });
-    if (cloudinaryResponse.ok) {
-      return cloudinaryUrl;
+    const ogTitle = extractMetaContent(html, 'property="og:title"') ||
+                   extractMetaContent(html, 'name="title"') ||
+                   extractTitle(html);
+    
+    const ogDescription = extractMetaContent(html, 'property="og:description"') ||
+                         extractMetaContent(html, 'name="description"');
+
+    // If we found an image, make sure it's an absolute URL
+    let imageUrl = ogImage;
+    if (ogImage && !ogImage.startsWith('http')) {
+      const baseUrl = new URL(url);
+      imageUrl = new URL(ogImage, baseUrl).href;
     }
-    
-    return null;
+
+    return {
+      image: imageUrl,
+      title: ogTitle,
+      description: ogDescription
+    };
   } catch (error) {
-    console.error('Error fetching screenshot:', error);
+    console.error('Error fetching OpenGraph data:', error);
     return null;
   }
+}
+
+function extractMetaContent(html: string, property: string): string | null {
+  const regex = new RegExp(`<meta[^>]*${property}[^>]*content=["']([^"']*)["'][^>]*>`, 'i');
+  const match = html.match(regex);
+  return match ? match[1] : null;
+}
+
+function extractTitle(html: string): string | null {
+  const regex = /<title[^>]*>([^<]*)<\/title>/i;
+  const match = html.match(regex);
+  return match ? match[1] : null;
 }
 
 function createPlaceholderImage(url: string): Buffer {

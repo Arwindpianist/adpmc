@@ -29,8 +29,21 @@ const ProjectCard = ({
       try {
         setLoading(true);
         setImageError(false);
-        const screenshotUrl = `/api/screenshot?url=${encodeURIComponent(url)}`;
-        setImageUrl(screenshotUrl);
+        
+        const response = await fetch(`/api/screenshot?url=${encodeURIComponent(url)}`);
+        
+        if (response.ok) {
+          const data = await response.json();
+          
+          if (data.success && data.screenshotUrl) {
+            setImageUrl(data.screenshotUrl);
+          } else {
+            // If no screenshot URL, the API returned a placeholder SVG
+            setImageUrl(`/api/screenshot?url=${encodeURIComponent(url)}`);
+          }
+        } else {
+          setImageError(true);
+        }
       } catch (error) {
         console.error('Error generating screenshot:', error);
         setImageError(true);
