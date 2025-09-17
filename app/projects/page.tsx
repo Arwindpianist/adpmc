@@ -30,6 +30,7 @@ interface DeployedProject {
   description: string;
   url: string;
   githubUrl?: string;
+  fallbackImage?: string;
 }
 
 // Define deployed projects including the new ones
@@ -44,13 +45,15 @@ const deployedProjects: DeployedProject[] = [
     title: "AS Kitchen",
     description: "A website showcasing AS Kitchen's services and menu.",
     url: "https://askitchen.arwindpianist.store/",
-    githubUrl: "https://github.com/Arwindpianist/askitchen"
+    githubUrl: "https://github.com/Arwindpianist/askitchen",
+    fallbackImage: "/images/askitchen-preview.png"
   },
   {
     title: "PogoPass",
     description: "Pogopass Password Manager official website.",
     url: "https://pogopass.arwindpianist.store/",
-    githubUrl: "https://github.com/Arwindpianist/pogopass"
+    githubUrl: "https://github.com/Arwindpianist/pogopass",
+    fallbackImage: "/images/pogopass-preview.png"
   },
   {
     title: "KMTCS",
@@ -126,10 +129,10 @@ const ProjectsPage = () => {
         <Header />
         
         {/* Deployed Projects Section */}
-        <section className="py-40">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">Deployed Projects</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <section className="py-16 sm:py-24 lg:py-40">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 sm:mb-8 text-center">Deployed Projects</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {deployedProjects.map((project, index) => (
                 <ProjectCard
                   key={index}
@@ -138,6 +141,7 @@ const ProjectsPage = () => {
                   url={project.url}
                   githubUrl={project.githubUrl}
                   isDeployed={true}
+                  fallbackImage={project.fallbackImage}
                 />
               ))}
             </div>
@@ -145,18 +149,18 @@ const ProjectsPage = () => {
         </section>
 
         {/* GitHub Projects Section */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8 text-center">
+        <section className="py-12 sm:py-16 lg:py-20">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 sm:mb-8 text-center">
               GitHub Projects ({repositories.length} repositories)
             </h2>
             {loading ? (
               <div className="text-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-400 mx-auto mb-4"></div>
-                <p>Loading projects...</p>
+                <div className="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-b-2 border-teal-400 mx-auto mb-4"></div>
+                <p className="text-sm sm:text-base">Loading projects...</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
                 {repositories.map((repo) => (
                   <ProjectCard
                     key={repo.id}
