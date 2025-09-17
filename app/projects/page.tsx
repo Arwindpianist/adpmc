@@ -35,6 +35,12 @@ interface DeployedProject {
 // Define deployed projects including the new ones
 const deployedProjects: DeployedProject[] = [
   {
+    title: "CasaLink",
+    description: "A multi-tenant SaaS platform for residential condominiums, providing tools to manage residents, visitors, amenities, community engagement, security access, and communication in a single platform.",
+    url: "https://casalink.arwindpianist.store/",
+    githubUrl: "https://github.com/Arwindpianist/CasaLink"
+  },
+  {
     title: "AS Kitchen",
     description: "A website showcasing AS Kitchen's services and menu.",
     url: "https://askitchen.arwindpianist.store/",
