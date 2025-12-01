@@ -11,13 +11,13 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
-  title: "Arwindpianist Multimedia & Consulting",
-  description: "Professional multimedia services and consulting",
-  keywords: "multimedia, consulting, music production, web development, mobile apps, desktop software",
+  title: "Arwindpianist Multimedia & Consulting - MSP & IT Solutions",
+  description: "Managed Service Provider offering IT hardware sales (new & refurbished), software solutions, music production solutions, and IT/Construction consulting. Authorized partners with Extreme Networks, Aruba, Huawei, and IBM.",
+  keywords: "MSP, managed services, IT hardware, network equipment, enterprise solutions, Extreme Networks, Aruba, Huawei, IBM, refurbished IT equipment, software solutions, music production, IT consulting, construction IT, myceliumlink",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://www.arwindpianist.store",
+    url: "https://www.arwindpianist.com",
     siteName: "Arwindpianist Multimedia & Consulting",
     images: [
       {

@@ -1,5 +1,6 @@
 "use client"
 import { motion } from "framer-motion"
+import { ExternalLink } from "lucide-react"
 
 const CallToAction = () => {
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
@@ -19,31 +20,55 @@ const CallToAction = () => {
           transition={{ duration: 1.2 }}
           className="text-3xl font-bold mb-4"
         >
-          Ready to Bring Your Vision to Life?
+          Ready to Transform Your IT Infrastructure?
         </motion.h2>
         
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 0.3 }}
-          className="text-xl mb-8"
+          className="text-xl mb-8 max-w-2xl mx-auto"
         >
-          Let's collaborate on your next project and create something extraordinary.
+          Whether you need managed services, hardware solutions, custom software, or expert consulting, 
+          we're here to help your business succeed.
         </motion.p>
 
         <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ duration: 0.3 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 0.6 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
           <motion.a 
             href="#pricing" 
             onClick={(e) => scrollToSection(e, 'pricing')}
-            className="btn-primary inline-block"
+            className="btn-primary inline-flex items-center gap-2"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            Get Started Now
+            Get a Free Quote
+          </motion.a>
+          <motion.a 
+            href="https://myceliumlink.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary inline-flex items-center gap-2 bg-transparent border-2 border-teal-400 hover:bg-teal-400/10"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Explore MyceliumLink
+            <ExternalLink size={18} />
           </motion.a>
         </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1.2, delay: 0.9 }}
+          className="text-gray-400 mt-6 text-sm"
+        >
+          Or call us for immediate assistance
+        </motion.p>
       </div>
     </section>
   )

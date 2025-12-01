@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Header from "@/components/Header";
 import dynamic from "next/dynamic";
 import Footer from "@/components/Footer";
 import ProjectCard from "@/components/ProjectCard";
+import { RefreshCw } from "lucide-react";
 
 const ParticleBackground = dynamic(
   () => import("@/components/ParticleBackground"),
@@ -31,6 +32,15 @@ interface DeployedProject {
   url: string;
   githubUrl?: string;
   fallbackImage?: string;
+  detected?: boolean;
+}
+
+interface DetectedProject {
+  title: string;
+  description: string;
+  url: string;
+  githubUrl?: string;
+  detected: boolean;
 }
 
 // Define deployed projects including the new ones
@@ -83,39 +93,100 @@ const deployedProjects: DeployedProject[] = [
 
 const ProjectsPage = () => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
+  const [detectedProjects, setDetectedProjects] = useState<DetectedProject[]>([]);
   const [loading, setLoading] = useState(true);
+  const [detecting, setDetecting] = useState(false);
+  const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchRepositories = useCallback(async (currentDetectedProjects: DetectedProject[] = []) => {
+    try {
+      const response = await fetch(
+        "https://api.github.com/users/Arwindpianist/repos?per_page=100&sort=updated"
+      );
+      const data = await response.json();
+
+      // Filter out deployed projects and forks, but include all repositories
+      const allProjectNames = [
+        ...deployedProjects.map(p => p.title.toLowerCase()),
+        ...currentDetectedProjects.map(p => p.title.toLowerCase())
+      ];
+      const filteredData = data.filter((repo: Repository) => 
+        !allProjectNames.includes(repo.name.toLowerCase()) &&
+        !repo.fork // Exclude forked repositories
+      );
+
+      // Sort repositories by update date (newest first)
+      const sortedData = filteredData.sort(
+        (a: Repository, b: Repository) => 
+          new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+      );
+
+      setRepositories(sortedData);
+      setLastRefresh(new Date());
+    } catch (error) {
+      console.error("Error fetching repositories:", error);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  }, []);
+
+  const detectProjects = useCallback(async () => {
+    setDetecting(true);
+    try {
+      const response = await fetch("/api/detect-projects");
+      const data = await response.json();
+      
+      if (data.success && data.projects) {
+        setDetectedProjects(data.projects);
+        // Refresh repositories after detecting projects
+        fetchRepositories(data.projects);
+      }
+    } catch (error) {
+      console.error("Error detecting projects:", error);
+    } finally {
+      setDetecting(false);
+    }
+  }, [fetchRepositories]);
+
+  const handleManualRefresh = () => {
+    setRefreshing(true);
+    detectProjects();
+  };
 
   useEffect(() => {
-    const fetchRepositories = async () => {
-      try {
-        const response = await fetch(
-          "https://api.github.com/users/Arwindpianist/repos?per_page=100&sort=updated"
-        );
-        const data = await response.json();
+    // Initial load
+    detectProjects();
+    fetchRepositories([]);
+  }, [detectProjects, fetchRepositories]);
 
-        // Filter out deployed projects and forks, but include all repositories
-        const deployedProjectNames = deployedProjects.map(p => p.title.toLowerCase());
-        const filteredData = data.filter((repo: Repository) => 
-          !deployedProjectNames.includes(repo.name.toLowerCase()) &&
-          !repo.fork // Exclude forked repositories
-        );
+  useEffect(() => {
+    // Auto-refresh every 5 minutes
+    const interval = setInterval(() => {
+      detectProjects();
+    }, 5 * 60 * 1000); // 5 minutes
 
-        // Sort repositories by update date (newest first)
-        const sortedData = filteredData.sort(
-          (a: Repository, b: Repository) => 
-            new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
-        );
+    return () => clearInterval(interval);
+  }, [detectProjects]);
 
-        setRepositories(sortedData);
-      } catch (error) {
-        console.error("Error fetching repositories:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRepositories();
-  }, []);
+  // Merge detected projects with manually defined projects
+  const allDeployedProjects: DeployedProject[] = [...deployedProjects];
+  const detectedUrls = new Set(deployedProjects.map(p => new URL(p.url).hostname));
+  
+  for (const detected of detectedProjects) {
+    const hostname = new URL(detected.url).hostname;
+    if (!detectedUrls.has(hostname)) {
+      allDeployedProjects.push({
+        title: detected.title,
+        description: detected.description,
+        url: detected.url,
+        githubUrl: detected.githubUrl,
+        detected: true
+      });
+      detectedUrls.add(hostname);
+    }
+  }
 
   return (
     <main className="flex min-h-screen flex-col relative">
@@ -131,9 +202,28 @@ const ProjectsPage = () => {
         {/* Deployed Projects Section */}
         <section className="py-16 sm:py-24 lg:py-40">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 sm:mb-8 text-center">Deployed Projects</h2>
+            <div className="flex flex-col sm:flex-row justify-between items-center mb-6 sm:mb-8 gap-4">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center">
+                Deployed Projects {detecting && <span className="text-sm text-gray-400">(Detecting...)</span>}
+              </h2>
+              <div className="flex items-center gap-4">
+                {lastRefresh && (
+                  <span className="text-sm text-gray-400">
+                    Last updated: {lastRefresh.toLocaleTimeString()}
+                  </span>
+                )}
+                <button
+                  onClick={handleManualRefresh}
+                  disabled={refreshing || detecting}
+                  className="flex items-center gap-2 btn-primary bg-transparent border-2 border-teal-400 hover:bg-teal-400/10 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <RefreshCw size={18} className={refreshing || detecting ? "animate-spin" : ""} />
+                  Refresh
+                </button>
+              </div>
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-              {deployedProjects.map((project, index) => (
+              {allDeployedProjects.map((project, index) => (
                 <ProjectCard
                   key={index}
                   title={project.title}
@@ -144,6 +234,11 @@ const ProjectsPage = () => {
                   fallbackImage={project.fallbackImage}
                 />
               ))}
+              {allDeployedProjects.length === 0 && !detecting && (
+                <div className="col-span-full text-center text-gray-400 py-12">
+                  No deployed projects found. Projects are automatically detected from arwindpianist.com and arwindpianist.store.
+                </div>
+              )}
             </div>
           </div>
         </section>

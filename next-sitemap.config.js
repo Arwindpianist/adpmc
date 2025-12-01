@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-    siteUrl: 'https://www.arwindpianist.store', // Your site's URL
+    siteUrl: 'https://www.arwindpianist.com', // Your site's URL
     generateRobotsTxt: true, // Generate robots.txt
     changefreq: 'daily', // Change frequency for the single page
     priority: 1.0, // Highest priority for the single page

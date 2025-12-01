@@ -132,5 +132,5 @@ This project is licensed under the MIT License.
 
 ## Contact
 
-- **Website**: [arwindpianist.store](https://arwindpianist.store)
+- **Website**: [arwindpianist.com](https://arwindpianist.com)
 - **GitHub**: [@Arwindpianist](https://github.com/Arwindpianist)
