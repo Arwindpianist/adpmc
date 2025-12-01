@@ -122,10 +122,8 @@ async function detectFromGitHub(): Promise<DetectedProject[]> {
   return detected;
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
-    const detectedProjects: DetectedProject[] = [];
-    
     // Detect from subdomains on both domains
     const [comProjects, storeProjects] = await Promise.all([
       detectFromSubdomains('arwindpianist.com'),

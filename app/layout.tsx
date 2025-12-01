@@ -2,6 +2,7 @@ import type React from "react"
 import "./globals.css"
 import type { Metadata } from "next"
 import { Poppins } from "next/font/google"
+import Script from "next/script"
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
@@ -42,21 +43,23 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
+      <head />
+      <body className={poppins.className}>
         {/* Google tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-4FLE1RWKVX"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-4FLE1RWKVX');
-            `,
-          }}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-4FLE1RWKVX"
+          strategy="afterInteractive"
         />
-      </head>
-      <body className={poppins.className}>{children}</body>
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-4FLE1RWKVX');
+          `}
+        </Script>
+        {children}
+      </body>
     </html>
   )
 }
