@@ -83,7 +83,7 @@ const LeadMagnets = () => {
               <p className="text-gray-300 mb-4 text-sm">{magnet.description}</p>
               <Button
                 onClick={magnet.action}
-                className="btn-primary w-full bg-transparent border-2 border-teal-400 hover:bg-teal-400/10"
+                className="btn-secondary w-full"
               >
                 {magnet.cta}
               </Button>

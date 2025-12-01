@@ -1,6 +1,5 @@
 "use client"
 import { motion } from "framer-motion"
-import { ExternalLink } from "lucide-react"
 
 const CallToAction = () => {
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
@@ -49,15 +48,12 @@ const CallToAction = () => {
             Get a Free Quote
           </motion.a>
           <motion.a 
-            href="https://myceliumlink.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary inline-flex items-center gap-2 bg-transparent border-2 border-teal-400 hover:bg-teal-400/10"
+            href="/projects"
+            className="btn-secondary inline-flex items-center gap-2"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Explore MyceliumLink
-            <ExternalLink size={18} />
+            View Our Projects
           </motion.a>
         </motion.div>
 

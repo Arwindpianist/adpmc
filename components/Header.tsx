@@ -42,15 +42,12 @@ const Header = () => {
           <Image src={SVGIMG} alt="Logo" width={50} height={50} />
         </Link>
         <nav className="hidden md:flex space-x-6">
-          <motion.a
-            href="#features"
-            onClick={(e) => scrollToSection(e, "features")}
+          <Link
+            href="/services"
             className="hover:text-gray-300 transition duration-500"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             Services
-          </motion.a>
+          </Link>
           <motion.a
             href="#testimonials"
             onClick={(e) => scrollToSection(e, "testimonials")}
@@ -69,14 +66,24 @@ const Header = () => {
           >
             Pricing
           </motion.a>
-          <motion.a
+          <Link
             href="/projects"
             className="hover:text-gray-300 transition duration-500"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             Projects
-          </motion.a>
+          </Link>
+          <Link
+            href="/about"
+            className="hover:text-gray-300 transition duration-500"
+          >
+            About
+          </Link>
+          <Link
+            href="/contact"
+            className="hover:text-gray-300 transition duration-500"
+          >
+            Contact
+          </Link>
         </nav>
         <motion.button
           className="hidden md:block btn-primary"
@@ -99,15 +106,13 @@ const Header = () => {
           transition={{ duration: 0.5 }}
         >
           <nav className="flex flex-col space-y-4 px-4 py-2">
-            <motion.a
-              href="#features"
-              onClick={(e) => scrollToSection(e, "features")}
+            <Link
+              href="/services"
               className="hover:text-gray-300 transition duration-500"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsMenuOpen(false)}
             >
               Services
-            </motion.a>
+            </Link>
             <motion.a
               href="#testimonials"
               onClick={(e) => scrollToSection(e, "testimonials")}
@@ -126,14 +131,27 @@ const Header = () => {
             >
               Pricing
             </motion.a>
-            <motion.a
+            <Link
               href="/projects"
               className="hover:text-gray-300 transition duration-500"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsMenuOpen(false)}
             >
               Projects
-            </motion.a>
+            </Link>
+            <Link
+              href="/about"
+              className="hover:text-gray-300 transition duration-500"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              About
+            </Link>
+            <Link
+              href="/contact"
+              className="hover:text-gray-300 transition duration-500"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Contact
+            </Link>
           </nav>
         </motion.div>
       )}

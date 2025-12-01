@@ -199,6 +199,33 @@ const ProjectsPage = () => {
       <div className="relative z-10">
         <Header />
         
+        {/* Featured Project: MyceliumLink */}
+        <section className="pt-32 pb-16 sm:pb-24">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="glassmorphism p-8 rounded-lg max-w-4xl mx-auto border-2 border-teal-400/50">
+              <div className="text-center mb-6">
+                <h2 className="text-3xl md:text-4xl font-bold mb-3 text-teal-400">
+                  Featured Product: MyceliumLink
+                </h2>
+                <p className="text-lg text-gray-300 mb-6">
+                  Our latest innovation in network solutions and connectivity
+                </p>
+                <a
+                  href="https://myceliumlink.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 btn-primary bg-teal-500 hover:bg-teal-600"
+                >
+                  Explore MyceliumLink
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Deployed Projects Section */}
         <section className="py-16 sm:py-24 lg:py-40">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -215,7 +242,7 @@ const ProjectsPage = () => {
                 <button
                   onClick={handleManualRefresh}
                   disabled={refreshing || detecting}
-                  className="flex items-center gap-2 btn-primary bg-transparent border-2 border-teal-400 hover:bg-teal-400/10 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <RefreshCw size={18} className={refreshing || detecting ? "animate-spin" : ""} />
                   Refresh

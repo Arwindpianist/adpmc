@@ -22,7 +22,7 @@ body {
   }
 
   .btn-secondary {
-    @apply bg-transparent border border-white text-white px-6 py-2 rounded-full font-semibold transition duration-300 hover:bg-white hover:text-black hover:scale-105;
+    @apply bg-transparent border-2 border-teal-400 text-white px-6 py-2 rounded-full font-semibold transition duration-300 hover:bg-teal-400/20 hover:scale-105;
   }
 
   .section-title {
