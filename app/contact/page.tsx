@@ -124,8 +124,8 @@ export default function ContactPage() {
                       <Mail size={24} className="text-teal-400 flex-shrink-0 mt-1" />
                       <div>
                         <h3 className="font-semibold mb-1">Email</h3>
-                        <a href="mailto:info@arwindpianist.com" className="text-gray-300 hover:text-teal-400 transition">
-                          info@arwindpianist.com
+                        <a href="mailto:hello@arwindpianist.com" className="text-gray-300 hover:text-teal-400 transition">
+                          hello@arwindpianist.com
                         </a>
                       </div>
                     </div>
@@ -133,8 +133,8 @@ export default function ContactPage() {
                       <Phone size={24} className="text-teal-400 flex-shrink-0 mt-1" />
                       <div>
                         <h3 className="font-semibold mb-1">Phone</h3>
-                        <a href="tel:+60123456789" className="text-gray-300 hover:text-teal-400 transition">
-                          +60 12-345 6789
+                        <a href="tel:+601114815030" className="text-gray-300 hover:text-teal-400 transition">
+                          +601114815030
                         </a>
                       </div>
                     </div>

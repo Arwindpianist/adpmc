@@ -42,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <head />
       <body className={poppins.className}>
         {/* Google tag (gtag.js) */}
