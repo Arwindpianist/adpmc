@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Download, Mail, Calendar, FileText } from "lucide-react"
+import { Mail, Calendar, Video, MapPin, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { motion } from "framer-motion"
@@ -25,74 +25,94 @@ const LeadMagnets = () => {
     }, 1000)
   }
 
-  const magnets = [
-    {
-      icon: <Calendar size={32} />,
-      title: "Free Consultation",
-      description: "Schedule a 30-minute consultation to discuss your IT needs",
-      cta: "Schedule Now",
-      action: () => {
-        const element = document.getElementById("pricing")
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" })
-        }
-      }
-    },
-    {
-      icon: <FileText size={32} />,
-      title: "Hardware Catalog",
-      description: "Download our latest catalog of new and refurbished IT equipment",
-      cta: "Download Catalog",
-      action: () => {
-        // In a real implementation, this would download a PDF
-        window.open("#", "_blank")
-      }
-    },
-    {
-      icon: <Download size={32} />,
-      title: "MSP Services Guide",
-      description: "Learn about our comprehensive managed service provider solutions",
-      cta: "Get Guide",
-      action: () => {
-        // In a real implementation, this would download a guide
-        window.open("#", "_blank")
-      }
-    },
-  ]
+  const bookingUrl = "https://zbooking.us/rK7sS"
+  
+  const scheduleConsultation = () => {
+    window.open(bookingUrl, "_blank")
+  }
 
   return (
     <section className="py-20 glassmorphism">
       <div className="container mx-auto px-4">
         <h2 className="section-title mb-4">Get Started Today</h2>
         <p className="text-center text-gray-300 mb-12 max-w-2xl mx-auto">
-          Take advantage of our free resources and consultations to find the perfect solution for your business.
+          Schedule a free 30-minute consultation to discuss your IT needs and discover how we can help your business succeed.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {magnets.map((magnet, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="glassmorphism p-6 rounded-lg border border-teal-400/30 hover:border-teal-400/50 transition-all"
-            >
-              <div className="text-teal-400 mb-4">{magnet.icon}</div>
-              <h3 className="text-xl font-semibold mb-2">{magnet.title}</h3>
-              <p className="text-gray-300 mb-4 text-sm">{magnet.description}</p>
-              <Button
-                onClick={magnet.action}
-                className="btn-secondary w-full"
+        {/* Free Consultation CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-4xl mx-auto mb-12"
+        >
+          <div className="glassmorphism p-6 md:p-8 rounded-2xl border-2 border-teal-400/50 relative overflow-hidden mb-6">
+            <div className="absolute inset-0 bg-gradient-to-br from-teal-400/10 via-transparent to-cyan-400/10" />
+            <div className="relative z-10 text-center">
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 rounded-full bg-teal-400/20 flex items-center justify-center">
+                  <Calendar size={32} className="text-teal-400" />
+                </div>
+              </div>
+              <h3 className="text-2xl md:text-3xl font-bold mb-3">Free 30-Minute Consultation</h3>
+              <p className="text-gray-300 text-lg mb-4 max-w-2xl mx-auto">
+                Book a consultation to discuss your IT needs, whether it's managed services, hardware solutions, software development, or strategic consulting.
+              </p>
+              <div className="flex flex-wrap gap-4 justify-center mb-4">
+                <div className="flex items-center gap-2 text-gray-300">
+                  <Video size={18} className="text-teal-400" />
+                  <span className="text-sm">Virtual or Physical</span>
+                </div>
+                <div className="flex items-center gap-2 text-gray-300">
+                  <Clock size={18} className="text-teal-400" />
+                  <span className="text-sm">30 Minutes</span>
+                </div>
+                <div className="flex items-center gap-2 text-gray-300">
+                  <MapPin size={18} className="text-teal-400" />
+                  <span className="text-sm">Flexible Location</span>
+                </div>
+              </div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="mb-4"
               >
-                {magnet.cta}
-              </Button>
-            </motion.div>
-          ))}
-        </div>
+                <Button
+                  onClick={scheduleConsultation}
+                  className="btn-primary text-lg px-8 py-4"
+                >
+                  Open Booking Calendar
+                </Button>
+              </motion.div>
+              <p className="text-sm text-gray-400">
+                Or schedule directly below
+              </p>
+            </div>
+          </div>
+
+          {/* Zoho Bookings Embed */}
+          <div className="glassmorphism rounded-xl overflow-hidden border border-teal-400/30">
+            <iframe
+              width="100%"
+              height="750px"
+              src="https://arwindpianistmultimediaconsulting.zohobookings.com/portal-embed#/arwindpianistmultimediaconsulting"
+              frameBorder="0"
+              allowFullScreen
+              className="w-full"
+              title="Schedule Consultation"
+            />
+          </div>
+        </motion.div>
 
         {/* Newsletter Signup */}
-        <div className="max-w-md mx-auto glassmorphism p-6 rounded-lg border border-teal-400/30">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="max-w-md mx-auto glassmorphism p-6 rounded-lg border border-teal-400/30"
+        >
           <div className="flex items-center justify-center mb-4">
             <Mail size={32} className="text-teal-400" />
           </div>
@@ -121,7 +141,7 @@ const LeadMagnets = () => {
               </Button>
             </form>
           )}
-        </div>
+        </motion.div>
       </div>
     </section>
   )
