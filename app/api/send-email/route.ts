@@ -22,7 +22,7 @@ export async function POST(request: Request) {
   // Email content
   const mailOptions = {
     from: process.env.ZOHO_EMAIL, // Sender address
-    to: process.env.ZOHO_EMAIL, // Recipient address (your email)
+    to: 'hello@arwindpianist.com', // Recipient address
     subject: `New Message from ${name} (${email})`,
     text: message,
     html: `<p>You have a new message from <strong>${name}</strong> (${email}):</p><p>${message}</p>`,

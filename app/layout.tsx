@@ -55,6 +55,13 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* Zoho SalesIQ Live Chat */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.$zoho=window.$zoho || {};$zoho.salesiq=$zoho.salesiq||{ready:function(){}}`,
+          }}
+        />
+        <script id="zsiqscript" src="https://salesiq.zohopublic.com/widget?wc=siq632e43d1367354f184fe2c85c108331e7581c3e9732136b97589a6f8eed110545f834f7087883f72a11fc35c9dc49043" defer></script>
       </head>
       <body className={poppins.className}>{children}</body>
     </html>

@@ -32,13 +32,18 @@ const Footer = () => {
           </div>
           <div>
             <h4 className="text-lg font-semibold mb-4">Connect With Us</h4>
-            <div className="flex space-x-4">
-              <a href="https://www.instagram.com/adpmnc/" className="text-gray-400 hover:text-white transition duration-300">
-                <Instagram size={24} />
+            <div className="space-y-3">
+              <a href="mailto:hello@arwindpianist.com" className="text-gray-400 hover:text-white transition duration-300 block">
+                hello@arwindpianist.com
               </a>
-              <a href="https://www.linkedin.com/company/arwindpianist-multimedia-consulting/" className="text-gray-400 hover:text-white transition duration-300">
-                <Linkedin size={24} />
-              </a>
+              <div className="flex space-x-4">
+                <a href="https://www.instagram.com/adpmnc/" className="text-gray-400 hover:text-white transition duration-300">
+                  <Instagram size={24} />
+                </a>
+                <a href="https://www.linkedin.com/company/arwindpianist-multimedia-consulting/" className="text-gray-400 hover:text-white transition duration-300">
+                  <Linkedin size={24} />
+                </a>
+              </div>
             </div>
           </div>
         </div>
