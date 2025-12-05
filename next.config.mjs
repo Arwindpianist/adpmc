@@ -7,7 +7,11 @@ const nextConfig = {
       'askitchen.arwindpianist.store',
       'pogopass.arwindpianist.store',
       'www.kmtcs.com.my',
-      'typescripttutor.arwindpianist.store'
+      'typescripttutor.arwindpianist.store',
+      'arwindpianist.com',
+      'www.arwindpianist.com',
+      'arwindpianist.store',
+      'www.arwindpianist.store'
     ],
     remotePatterns: [
       {

@@ -94,14 +94,15 @@ const ProjectCard = ({
   };
 
   return (
-    <div className="glassmorphism p-4 sm:p-6 rounded-lg transition duration-300 hover:scale-105">
+    <div className="glassmorphism p-4 sm:p-6 rounded-xl card-hover group relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-teal-400/0 via-teal-400/5 to-cyan-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       <a
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="block"
+        className="block relative z-10"
       >
-        <div className="relative h-40 sm:h-48 mb-3 sm:mb-4 bg-gray-800 rounded-lg overflow-hidden">
+        <div className="relative h-40 sm:h-48 mb-3 sm:mb-4 bg-gray-800 rounded-lg overflow-hidden group/image">
           {loading ? (
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-teal-400"></div>
@@ -123,14 +124,14 @@ const ProjectCard = ({
               src={imageUrl}
               alt={title}
               fill
-              className="object-cover"
+              className="object-cover group-hover/image:scale-110 transition-transform duration-500"
               onError={handleImageError}
               unoptimized
             />
           )}
         </div>
         
-        <h3 className="text-lg sm:text-xl font-bold mb-2">
+        <h3 className="text-lg sm:text-xl font-bold mb-2 group-hover:text-teal-400 transition-colors">
           {title}
           {isDeployed && (
             <span className="text-gray-400 text-xs sm:text-sm ml-1 sm:ml-2 block sm:inline">
@@ -144,12 +145,12 @@ const ProjectCard = ({
         {description}
       </p>
       
-      <div className="flex flex-col sm:flex-row gap-2 sm:gap-2">
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-2 relative z-10">
         <a
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-teal-400 hover:underline text-xs sm:text-sm text-center sm:text-left py-1 px-2 rounded bg-teal-400/10 hover:bg-teal-400/20 transition-colors"
+          className="text-teal-400 hover:text-white text-xs sm:text-sm text-center sm:text-left py-2 px-4 rounded-lg bg-teal-400/10 hover:bg-teal-400/30 transition-all duration-300 hover:scale-105"
         >
           {isDeployed ? 'Visit Site' : 'View Project'}
         </a>
@@ -158,7 +159,7 @@ const ProjectCard = ({
             href={githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-teal-400 hover:underline text-xs sm:text-sm text-center sm:text-left py-1 px-2 rounded bg-teal-400/10 hover:bg-teal-400/20 transition-colors"
+            className="text-teal-400 hover:text-white text-xs sm:text-sm text-center sm:text-left py-2 px-4 rounded-lg bg-teal-400/10 hover:bg-teal-400/30 transition-all duration-300 hover:scale-105"
           >
             View on GitHub
           </a>

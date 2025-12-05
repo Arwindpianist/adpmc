@@ -8,24 +8,32 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h3 className="text-xl font-semibold mb-4">Arwindpianist Multimedia & Consulting (JR0170970-M)</h3>
-            <p className="text-gray-400">Multimedia & Consulting services for all your creative and technical needs.</p>
+            <p className="text-gray-400">
+              Your trusted Managed Service Provider offering IT hardware sales (new & refurbished), software solutions, 
+              music production services, and IT/Construction consulting. Authorized partners with Extreme Networks, Aruba, Huawei, and IBM.
+            </p>
           </div>
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <Link href="#features" className="text-gray-400 hover:text-white transition duration-300">
+                <Link href="/services" className="text-gray-400 hover:text-white transition duration-300">
                   Services
                 </Link>
               </li>
               <li>
-                <Link href="#testimonials" className="text-gray-400 hover:text-white transition duration-300">
-                  Testimonials
+                <Link href="/projects" className="text-gray-400 hover:text-white transition duration-300">
+                  Projects
                 </Link>
               </li>
               <li>
-                <Link href="#pricing" className="text-gray-400 hover:text-white transition duration-300">
-                  Pricing
+                <Link href="/about" className="text-gray-400 hover:text-white transition duration-300">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-gray-400 hover:text-white transition duration-300">
+                  Contact
                 </Link>
               </li>
             </ul>
