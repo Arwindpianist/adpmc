@@ -122,6 +122,31 @@ async function detectFromGitHub(): Promise<DetectedProject[]> {
   return detected;
 }
 
+async function detectFromVercel(): Promise<DetectedProject[]> {
+  try {
+    const { fetchVercelProjects, transformVercelProjectsToDetected } = await import('@/lib/vercel');
+    
+    // Also fetch GitHub repos to match with Vercel projects
+    const githubResponse = await fetch(
+      'https://api.github.com/users/Arwindpianist/repos?per_page=100&sort=updated',
+      {
+        headers: {
+          'Accept': 'application/vnd.github.v3+json',
+          'User-Agent': 'Mozilla/5.0'
+        }
+      }
+    );
+    
+    const githubRepos = githubResponse.ok ? await githubResponse.json() : [];
+    
+    const projects = await fetchVercelProjects();
+    return transformVercelProjectsToDetected(projects, githubRepos);
+  } catch (error) {
+    console.error('Error fetching Vercel projects:', error);
+    return [];
+  }
+}
+
 export async function GET() {
   try {
     // Detect from subdomains on both domains
@@ -130,15 +155,20 @@ export async function GET() {
       detectFromSubdomains('arwindpianist.store')
     ]);
     
-    // Detect from GitHub homepage URLs
-    const githubProjects = await detectFromGitHub();
+    // Detect from GitHub homepage URLs and Vercel projects
+    const [githubProjects, vercelProjects] = await Promise.all([
+      detectFromGitHub(),
+      detectFromVercel()
+    ]);
     
     // Merge all detected projects, avoiding duplicates
-    const allProjects = [...comProjects, ...storeProjects, ...githubProjects];
+    // Vercel projects take priority as they have accurate domains
+    const allProjects = [...vercelProjects, ...comProjects, ...storeProjects, ...githubProjects];
     const uniqueProjects = new Map<string, DetectedProject>();
     
     for (const project of allProjects) {
       const key = new URL(project.url).hostname;
+      // Only add if we haven't seen this hostname, prioritizing Vercel projects
       if (!uniqueProjects.has(key)) {
         uniqueProjects.set(key, project);
       }

@@ -26,15 +26,6 @@ interface Repository {
   fork: boolean;
 }
 
-interface DeployedProject {
-  title: string;
-  description: string;
-  url: string;
-  githubUrl?: string;
-  fallbackImage?: string;
-  detected?: boolean;
-}
-
 interface DetectedProject {
   title: string;
   description: string;
@@ -42,54 +33,6 @@ interface DetectedProject {
   githubUrl?: string;
   detected: boolean;
 }
-
-// Define deployed projects including the new ones
-const deployedProjects: DeployedProject[] = [
-  {
-    title: "CasaLink",
-    description: "A multi-tenant SaaS platform for residential condominiums, providing tools to manage residents, visitors, amenities, community engagement, security access, and communication in a single platform.",
-    url: "https://casalink.arwindpianist.store/",
-    githubUrl: "https://github.com/Arwindpianist/CasaLink"
-  },
-  {
-    title: "AS Kitchen",
-    description: "A website showcasing AS Kitchen's services and menu.",
-    url: "https://askitchen.arwindpianist.store/",
-    githubUrl: "https://github.com/Arwindpianist/askitchen",
-    fallbackImage: "/images/askitchen-preview.png"
-  },
-  {
-    title: "PogoPass",
-    description: "Pogopass Password Manager official website.",
-    url: "https://pogopass.arwindpianist.store/",
-    githubUrl: "https://github.com/Arwindpianist/pogopass",
-    fallbackImage: "/images/pogopass-preview.png"
-  },
-  {
-    title: "KMTCS",
-    description: "Official website for KMTCS services and information.",
-    url: "https://www.kmtcs.com.my/",
-    githubUrl: "https://github.com/Arwindpianist/kmtcs"
-  },
-  {
-    title: "TypeScript Tutor",
-    description: "An interactive learning platform for mastering TypeScript through hands-on exercises, real-world examples, and interactive quizzes.",
-    url: "https://typescripttutor.arwindpianist.store/",
-    githubUrl: "https://github.com/Arwindpianist/typescript-tutor"
-  },
-  {
-    title: "Sunrise 2025",
-    description: "A modern web application showcasing innovative design and development practices.",
-    url: "https://sunrise-2025.com/",
-    githubUrl: "https://github.com/Arwindpianist/sunrise-2025"
-  },
-  {
-    title: "GridHealth",
-    description: "Enterprise-grade system health monitoring platform. Monitor CPU, memory, disk, and network health across your entire organization in real-time with beautiful, intuitive dashboards.",
-    url: "https://gridhealth.arwindpianist.store/",
-    githubUrl: "https://github.com/Arwindpianist/gridhealth"
-  }
-];
 
 const ProjectsPage = () => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
@@ -107,10 +50,7 @@ const ProjectsPage = () => {
       const data = await response.json();
 
       // Filter out deployed projects and forks, but include all repositories
-      const allProjectNames = [
-        ...deployedProjects.map(p => p.title.toLowerCase()),
-        ...currentDetectedProjects.map(p => p.title.toLowerCase())
-      ];
+      const allProjectNames = currentDetectedProjects.map(p => p.title.toLowerCase());
       const filteredData = data.filter((repo: Repository) => 
         !allProjectNames.includes(repo.name.toLowerCase()) &&
         !repo.fork // Exclude forked repositories
@@ -170,23 +110,14 @@ const ProjectsPage = () => {
     return () => clearInterval(interval);
   }, [detectProjects]);
 
-  // Merge detected projects with manually defined projects
-  const allDeployedProjects: DeployedProject[] = [...deployedProjects];
-  const detectedUrls = new Set(deployedProjects.map(p => new URL(p.url).hostname));
-  
-  for (const detected of detectedProjects) {
-    const hostname = new URL(detected.url).hostname;
-    if (!detectedUrls.has(hostname)) {
-      allDeployedProjects.push({
-        title: detected.title,
-        description: detected.description,
-        url: detected.url,
-        githubUrl: detected.githubUrl,
-        detected: true
-      });
-      detectedUrls.add(hostname);
-    }
-  }
+  // Convert detected projects to deployed projects format
+  const allDeployedProjects = detectedProjects.map(project => ({
+    title: project.title,
+    description: project.description,
+    url: project.url,
+    githubUrl: project.githubUrl,
+    detected: true
+  }));
 
   return (
     <main className="flex min-h-screen flex-col relative">
@@ -258,12 +189,11 @@ const ProjectsPage = () => {
                   url={project.url}
                   githubUrl={project.githubUrl}
                   isDeployed={true}
-                  fallbackImage={project.fallbackImage}
                 />
               ))}
               {allDeployedProjects.length === 0 && !detecting && (
                 <div className="col-span-full text-center text-gray-400 py-12">
-                  No deployed projects found. Projects are automatically detected from arwindpianist.com and arwindpianist.store.
+                  No deployed projects found. Projects are automatically detected from your Vercel account and deployed domains.
                 </div>
               )}
             </div>
