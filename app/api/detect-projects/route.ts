@@ -149,35 +149,13 @@ async function detectFromVercel(): Promise<DetectedProject[]> {
 
 export async function GET() {
   try {
-    // Detect from subdomains on both domains
-    const [comProjects, storeProjects] = await Promise.all([
-      detectFromSubdomains('arwindpianist.com'),
-      detectFromSubdomains('arwindpianist.store')
-    ]);
-    
-    // Detect from GitHub homepage URLs and Vercel projects
-    const [githubProjects, vercelProjects] = await Promise.all([
-      detectFromGitHub(),
-      detectFromVercel()
-    ]);
-    
-    // Merge all detected projects, avoiding duplicates
-    // Vercel projects take priority as they have accurate domains
-    const allProjects = [...vercelProjects, ...comProjects, ...storeProjects, ...githubProjects];
-    const uniqueProjects = new Map<string, DetectedProject>();
-    
-    for (const project of allProjects) {
-      const key = new URL(project.url).hostname;
-      // Only add if we haven't seen this hostname, prioritizing Vercel projects
-      if (!uniqueProjects.has(key)) {
-        uniqueProjects.set(key, project);
-      }
-    }
+    // Only fetch from Vercel - this is the single source of truth
+    const vercelProjects = await detectFromVercel();
     
     return NextResponse.json({
       success: true,
-      projects: Array.from(uniqueProjects.values()),
-      count: uniqueProjects.size
+      projects: vercelProjects,
+      count: vercelProjects.length
     });
   } catch (error) {
     console.error('Error detecting projects:', error);

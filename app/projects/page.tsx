@@ -193,7 +193,7 @@ const ProjectsPage = () => {
               ))}
               {allDeployedProjects.length === 0 && !detecting && (
                 <div className="col-span-full text-center text-gray-400 py-12">
-                  No deployed projects found. Projects are automatically detected from your Vercel account and deployed domains.
+                  No deployed projects found. Projects are automatically synced from your Vercel account.
                 </div>
               )}
             </div>

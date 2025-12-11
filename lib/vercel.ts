@@ -144,13 +144,22 @@ export function transformVercelProjectsToDetected(
     if (!primaryDomain) return [];
 
     // Try to find matching GitHub repository
+    // Match by exact name, or by normalized name (handle hyphens, case differences)
     let githubUrl: string | undefined;
     let description = `Vercel deployment for ${project.name}`;
     
     if (githubRepos) {
-      const matchingRepo = githubRepos.find(
-        (repo) => repo.name.toLowerCase() === project.name.toLowerCase()
-      );
+      // Normalize names for matching (remove hyphens, convert to lowercase)
+      const normalizeName = (name: string) => name.toLowerCase().replace(/[-_]/g, '');
+      const projectNormalized = normalizeName(project.name);
+      
+      const matchingRepo = githubRepos.find((repo) => {
+        const repoNormalized = normalizeName(repo.name);
+        // Try exact match first, then normalized match
+        return repo.name.toLowerCase() === project.name.toLowerCase() ||
+               repoNormalized === projectNormalized;
+      });
+      
       if (matchingRepo) {
         githubUrl = matchingRepo.html_url;
         description = matchingRepo.description || description;
