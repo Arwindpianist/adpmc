@@ -33,12 +33,27 @@ const ProjectCard = ({
         const response = await fetch(`/api/screenshot?url=${encodeURIComponent(url)}`);
         
         if (response.ok) {
-          const data = await response.json();
+          // Check content type to determine if response is JSON or SVG
+          const contentType = response.headers.get('content-type') || '';
           
-          if (data.success && data.screenshotUrl) {
-            setImageUrl(data.screenshotUrl);
+          if (contentType.includes('application/json')) {
+            // Parse as JSON if it's JSON
+            try {
+              const data = await response.json();
+              
+              if (data.success && data.screenshotUrl) {
+                setImageUrl(data.screenshotUrl);
+              } else {
+                // Fallback to API endpoint which will return SVG
+                setImageUrl(`/api/screenshot?url=${encodeURIComponent(url)}`);
+              }
+            } catch (parseError) {
+              // If JSON parsing fails, use API URL directly
+              console.error('Failed to parse JSON response:', parseError);
+              setImageUrl(`/api/screenshot?url=${encodeURIComponent(url)}`);
+            }
           } else {
-            // If no screenshot URL, the API returned a placeholder SVG
+            // SVG or other image type - use the API URL directly
             setImageUrl(`/api/screenshot?url=${encodeURIComponent(url)}`);
           }
         } else {
