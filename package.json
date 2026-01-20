@@ -21,11 +21,7 @@
     "clsx": "^2.1.1",
     "framer-motion": "^12.4.3",
     "lucide-react": "^0.475.0",
-<<<<<<< HEAD
     "next": "^16.1.4",
-=======
-    "next": "14.2.35",
->>>>>>> 57762dfc30b69667d9f01a73c03c9d57e162bd20
     "next-sitemap": "^4.2.3",
     "nodemailer": "^6.10.0",
     "react": "^18",
