@@ -11,8 +11,11 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
-  title: "Arwindpianist Multimedia & Consulting - MSP & IT Solutions",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://www.arwindpianist.com"),
+  title: {
+    default: "Arwindpianist Multimedia & Consulting - MSP & IT Solutions",
+    template: "%s | Arwindpianist Multimedia & Consulting",
+  },
   description: "Managed Service Provider offering IT hardware sales (new & refurbished), software solutions, music production solutions, and IT/Construction consulting. Strategic authorized partnerships with leading technology manufacturers across enterprise networking, cloud platforms, and surveillance systems.",
   keywords: "MSP, managed services, IT hardware, network equipment, enterprise solutions, Extreme Networks, Aruba, Huawei, IBM, Xero, Zoho, Vercel, Supabase, Cisco, Juniper, Hikvision, refurbished IT equipment, software solutions, music production, IT consulting, construction IT, myceliumlink",
   openGraph: {
@@ -22,7 +25,7 @@ export const metadata: Metadata = {
     siteName: "Arwindpianist Multimedia & Consulting",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/images/og.png",
         width: 1200,
         height: 630,
         alt: "Arwindpianist Multimedia & Consulting",
