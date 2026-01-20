@@ -4,10 +4,6 @@ import nodemailer from 'nodemailer'
 export async function POST(request: Request) {
   const { name, email, message } = await request.json()
 
-  // Debugging: Log environment variables
-  console.log('ZOHO_EMAIL:', process.env.ZOHO_EMAIL)
-  console.log('ZOHO_PASSWORD:', process.env.ZOHO_PASSWORD ? '***' : 'Not set')
-
   // Configure Nodemailer with Zoho SMTP
   const transporter = nodemailer.createTransport({
     host: 'smtp.zoho.com',
@@ -31,14 +27,11 @@ export async function POST(request: Request) {
   try {
     // Verify SMTP connection
     await transporter.verify()
-    console.log('SMTP connection verified')
 
     // Send email
     await transporter.sendMail(mailOptions)
-    console.log('Email sent successfully')
     return NextResponse.json({ message: 'Email sent successfully!' }, { status: 200 })
   } catch (error) {
-    console.error('Error sending email:', error)
     return NextResponse.json({ message: 'Failed to send email.' }, { status: 500 })
   }
 }

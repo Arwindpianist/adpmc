@@ -37,11 +37,10 @@ const PaymentModal = ({ isOpen, onClose, priceId }: PaymentModalProps) => {
       if (checkoutUrl) {
         window.location.href = checkoutUrl;
       } else {
-        alert('Failed to create checkout session. Please try again.');
-        setLoading(false);
+      alert('Failed to create checkout session. Please try again.');
+      setLoading(false);
       }
     } catch (error) {
-      console.error('Error initiating checkout:', error);
       alert('An error occurred. Please try again.');
       setLoading(false);
     }

@@ -61,7 +61,7 @@ const ProjectsPage = () => {
         setLastRefresh(new Date());
       }
     } catch (error) {
-      console.error("Error fetching repositories:", error);
+      // Error fetching repositories
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -80,7 +80,7 @@ const ProjectsPage = () => {
         fetchRepositories(data.projects);
       }
     } catch (error) {
-      console.error("Error detecting projects:", error);
+      // Error detecting projects
     } finally {
       setDetecting(false);
     }

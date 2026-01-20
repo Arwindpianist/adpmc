@@ -36,7 +36,6 @@ export async function GET() {
       count: detectedProjects.length,
     });
   } catch (error) {
-    console.error('Error in Vercel projects API:', error);
     return NextResponse.json(
       { success: false, error: 'Failed to fetch Vercel projects' },
       { status: 500 }

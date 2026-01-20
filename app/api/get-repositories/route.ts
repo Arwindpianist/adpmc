@@ -93,7 +93,6 @@ export async function GET() {
       count: safeRepos.length
     });
   } catch (error: any) {
-    console.error('Error fetching repositories:', error);
     return NextResponse.json(
       { error: 'Failed to fetch repositories' },
       { status: 500 }

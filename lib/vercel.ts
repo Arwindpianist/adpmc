@@ -38,7 +38,6 @@ export async function fetchVercelProjects(): Promise<VercelProjectWithDomains[]>
   const token = process.env.VERCEL_TOKEN;
 
   if (!token) {
-    console.warn('VERCEL_TOKEN not set. Skipping Vercel projects.');
     return [];
   }
 
@@ -84,7 +83,6 @@ export async function fetchVercelProjects(): Promise<VercelProjectWithDomains[]>
     }
     
     allProjects = [...allProjects, ...personalProjects];
-    console.log(`Found ${personalProjects.length} projects in personal account:`, personalProjects.map(p => p.name));
 
     // Fetch projects from teams if available
     if (teamsResponse.ok) {
@@ -122,7 +120,6 @@ export async function fetchVercelProjects(): Promise<VercelProjectWithDomains[]>
         }
         
         allProjects = [...allProjects, ...teamProjects];
-        console.log(`Found ${teamProjects.length} projects in team "${team.name}" (${team.id}):`, teamProjects.map(p => p.name));
       }
     }
 
@@ -131,8 +128,6 @@ export async function fetchVercelProjects(): Promise<VercelProjectWithDomains[]>
       new Map(allProjects.map(p => [p.id, p])).values()
     );
     
-    console.log(`Total unique projects found: ${uniqueProjects.length}`);
-    console.log(`Project names:`, uniqueProjects.map(p => p.name));
     
     const projects = uniqueProjects;
 
@@ -171,15 +166,6 @@ export async function fetchVercelProjects(): Promise<VercelProjectWithDomains[]>
             domains = (domainsData.domains || [])
               .map((domain: VercelDomain) => domain.name);
             
-            // Log if domain exists but isn't verified
-            const unverifiedDomains = (domainsData.domains || [])
-              .filter((domain: VercelDomain) => !domain.verified)
-              .map((domain: VercelDomain) => domain.name);
-            if (unverifiedDomains.length > 0) {
-              console.log(`Project ${project.name} has unverified domains:`, unverifiedDomains);
-            }
-          } else {
-            console.warn(`Failed to fetch domains for project ${project.name}:`, domainsResponse.statusText);
           }
 
           // Fetch latest production deployment
@@ -228,49 +214,21 @@ export async function fetchVercelProjects(): Promise<VercelProjectWithDomains[]>
             domains = [productionUrl];
           }
           
-          // Log project details for debugging
-          if (domains.length === 0) {
-            console.warn(`Project ${project.name} has no domains or production URL`);
-          } else {
-            console.log(`Project ${project.name} found with domains:`, domains);
-          }
-
           return {
             ...project,
             domains,
             productionUrl,
           };
         } catch (error) {
-          console.error(`Error fetching data for project ${project.name}:`, error);
           return {
             ...project,
             domains: [],
+            productionUrl: undefined,
           };
         }
       })
     );
 
-    // Log all projects before filtering
-    const projectsWithoutDomains = projectsWithDomains.filter((project) => project.domains.length === 0);
-    if (projectsWithoutDomains.length > 0) {
-      console.log(`\n⚠️  Projects without domains/URLs (will be filtered out):`);
-      projectsWithoutDomains.forEach(p => {
-        console.log(`  - ${p.name} (ID: ${p.id})`);
-      });
-    }
-    
-    // Log projects that only have vercel.app domains
-    const projectsOnlyVercelApp = projectsWithDomains.filter((project) => {
-      if (project.domains.length === 0) return false;
-      return !project.domains.some(domain => !domain.includes('.vercel.app'));
-    });
-    if (projectsOnlyVercelApp.length > 0) {
-      console.log(`\n⚠️  Projects with only vercel.app domains (will be filtered out):`);
-      projectsOnlyVercelApp.forEach(p => {
-        console.log(`  - ${p.name}: ${p.domains.join(', ')}`);
-      });
-    }
-    
     // Filter out projects with no domains/URLs, and projects that only have vercel.app domains
     const filteredProjects = projectsWithDomains
       .filter((project) => {
@@ -285,36 +243,9 @@ export async function fetchVercelProjects(): Promise<VercelProjectWithDomains[]>
       })
       .sort((a, b) => b.updatedAt - a.updatedAt);
     
-    console.log(`\n✅ Returning ${filteredProjects.length} projects with domains/URLs`);
-    filteredProjects.forEach(p => {
-      console.log(`  - ${p.name}: ${p.domains.join(', ')}`);
-    });
-    
-    // Check if ys-teras-maju is in the list
-    const allProjectNames = uniqueProjects.map(p => p.name.toLowerCase());
-    if (allProjectNames.includes('ys-teras-maju')) {
-      console.log(`\n✅ Found "ys-teras-maju" in project list!`);
-      const terasProject = projectsWithDomains.find(p => p.name.toLowerCase() === 'ys-teras-maju');
-      if (terasProject) {
-        console.log(`   Domains: ${terasProject.domains.length > 0 ? terasProject.domains.join(', ') : 'NONE'}`);
-        console.log(`   Production URL: ${terasProject.productionUrl || 'NONE'}`);
-      }
-    } else {
-      console.log(`\n❌ "ys-teras-maju" NOT found in project list.`);
-      console.log(`   Searching for similar names...`);
-      const similarNames = allProjectNames.filter(name => 
-        name.includes('teras') || name.includes('maju') || name.includes('ys')
-      );
-      if (similarNames.length > 0) {
-        console.log(`   Similar project names found:`, similarNames);
-      } else {
-        console.log(`   No similar project names found.`);
-      }
-    }
     
     return filteredProjects;
   } catch (error) {
-    console.error('Error fetching Vercel projects:', error);
     return [];
   }
 }
@@ -390,9 +321,6 @@ async function fetchWebsiteTitle(url: string): Promise<string | null> {
       return null;
     } catch (fetchError: any) {
       clearTimeout(timeoutId);
-      if (fetchError.name !== 'AbortError') {
-        console.warn(`Error fetching title for ${url}:`, fetchError.message);
-      }
       return null;
     }
   } catch (error) {

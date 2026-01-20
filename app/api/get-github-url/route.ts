@@ -42,7 +42,6 @@ async function getGitHubUrlMap(): Promise<{ [key: string]: string }> {
 
     return urlMap;
   } catch (error) {
-    console.error('Error building GitHub URL map:', error);
     return {};
   }
 }
@@ -86,7 +85,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ url: githubUrl, paid: true });
   } catch (error: any) {
-    console.error('Error getting GitHub URL:', error);
     return NextResponse.json(
       { error: 'Failed to get GitHub URL' },
       { status: 500 }

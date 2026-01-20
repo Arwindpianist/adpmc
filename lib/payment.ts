@@ -22,7 +22,6 @@ export async function createCheckoutSession(priceId: string): Promise<string | n
 
     return data.url;
   } catch (error) {
-    console.error('Error creating checkout session:', error);
     return null;
   }
 }
@@ -75,7 +74,6 @@ export async function verifyPaymentSession(sessionId: string): Promise<boolean> 
 
     return false;
   } catch (error) {
-    console.error('Error verifying payment:', error);
     return false;
   }
 }

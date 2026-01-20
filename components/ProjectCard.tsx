@@ -81,7 +81,6 @@ const ProjectCard = ({
           alert('Unable to access repository. Please try again.');
         }
       } catch (error) {
-        console.error('Error fetching GitHub URL:', error);
         alert('An error occurred. Please try again.');
       } finally {
         setLoadingUrl(false);
