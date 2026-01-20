@@ -28,7 +28,7 @@ export async function GET() {
       getGitHubRepos()
     ]);
     
-    const detectedProjects = transformVercelProjectsToDetected(projects, githubRepos);
+    const detectedProjects = await transformVercelProjectsToDetected(projects, githubRepos);
 
     return NextResponse.json({
       success: true,
