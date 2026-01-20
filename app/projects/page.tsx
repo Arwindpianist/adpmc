@@ -16,22 +16,18 @@ const ParticleBackground = dynamic(
 );
 
 interface Repository {
-  id: number;
-  name: string;
-  description: string | null;
-  html_url: string;
-  created_at: string;
-  updated_at: string;
-  homepage?: string;
-  fork: boolean;
+  id: string; // Hashed ID, not actual GitHub ID
+  displayName: string; // Obfuscated name
+  description: string;
+  updatedAt: string;
 }
 
 interface DetectedProject {
   title: string;
   description: string;
   url: string;
-  githubUrl?: string;
   detected: boolean;
+  // githubUrl is not included - kept server-side only for security
 }
 
 const ProjectsPage = () => {
@@ -44,26 +40,26 @@ const ProjectsPage = () => {
 
   const fetchRepositories = useCallback(async (currentDetectedProjects: DetectedProject[] = []) => {
     try {
-      const response = await fetch(
-        "https://api.github.com/users/Arwindpianist/repos?per_page=100&sort=updated"
-      );
+      // Fetch repositories from server-side API (hides GitHub URLs)
+      const response = await fetch("/api/get-repositories");
       const data = await response.json();
 
-      // Filter out deployed projects and forks, but include all repositories
-      const allProjectNames = currentDetectedProjects.map(p => p.title.toLowerCase());
-      const filteredData = data.filter((repo: Repository) => 
-        !allProjectNames.includes(repo.name.toLowerCase()) &&
-        !repo.fork // Exclude forked repositories
-      );
+      if (data.success && data.repositories) {
+        // Filter out deployed projects
+        const allProjectNames = currentDetectedProjects.map(p => p.title.toLowerCase());
+        const filteredData = data.repositories.filter((repo: any) => 
+          !allProjectNames.includes(repo.displayName.toLowerCase())
+        );
 
-      // Sort repositories by update date (newest first)
-      const sortedData = filteredData.sort(
-        (a: Repository, b: Repository) => 
-          new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
-      );
+        // Sort repositories by update date (newest first)
+        const sortedData = filteredData.sort(
+          (a: any, b: any) => 
+            new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+        );
 
-      setRepositories(sortedData);
-      setLastRefresh(new Date());
+        setRepositories(sortedData);
+        setLastRefresh(new Date());
+      }
     } catch (error) {
       console.error("Error fetching repositories:", error);
     } finally {
@@ -111,11 +107,11 @@ const ProjectsPage = () => {
   }, [detectProjects]);
 
   // Convert detected projects to deployed projects format
+  // Note: githubUrl is not included - deployed sites don't show unlock buttons
   const allDeployedProjects = detectedProjects.map(project => ({
     title: project.title,
     description: project.description,
     url: project.url,
-    githubUrl: project.githubUrl,
     detected: true
   }));
 
@@ -187,8 +183,8 @@ const ProjectsPage = () => {
                   title={project.title}
                   description={project.description}
                   url={project.url}
-                  githubUrl={project.githubUrl}
                   isDeployed={true}
+                  // Don't pass githubUrl - deployed sites don't need unlock buttons
                 />
               ))}
               {allDeployedProjects.length === 0 && !detecting && (
@@ -203,9 +199,14 @@ const ProjectsPage = () => {
         {/* GitHub Projects Section */}
         <section className="py-12 sm:py-16 lg:py-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 sm:mb-8 text-center">
-              GitHub Projects ({repositories.length} repositories)
-            </h2>
+            <div className="text-center mb-6 sm:mb-8">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3">
+                GitHub Projects ({repositories.length} repositories)
+              </h2>
+              <p className="text-sm md:text-base text-gray-400 max-w-2xl mx-auto">
+                Unlock access to view all GitHub repository source code. Click on any project to purchase access.
+              </p>
+            </div>
             {loading ? (
               <div className="text-center">
                 <div className="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-b-2 border-teal-400 mx-auto mb-4"></div>
@@ -216,11 +217,12 @@ const ProjectsPage = () => {
                 {repositories.map((repo) => (
                   <ProjectCard
                     key={repo.id}
-                    title={repo.name}
-                    description={repo.description || "No description available."}
-                    url={repo.html_url}
-                    githubUrl={repo.html_url}
+                    title={repo.displayName}
+                    description={repo.description}
+                    url="#" // No direct URL - only unlock button
+                    projectId={repo.id}
                     isDeployed={false}
+                    isGitHubRepo={true}
                   />
                 ))}
               </div>

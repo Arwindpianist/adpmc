@@ -36,12 +36,6 @@ const features = [
   },
 ]
 
-const brandPartners = [
-  { name: "Extreme Networks", description: "Authorized Partner" },
-  { name: "Aruba", description: "Authorized Partner" },
-  { name: "Huawei", description: "Authorized Partner" },
-  { name: "IBM", description: "Authorized Partner" },
-]
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -92,53 +86,20 @@ const Features = () => {
               key={index}
               variants={itemVariants}
               whileHover={{ y: -8, scale: 1.02 }}
-              className="glassmorphism p-6 rounded-xl card-hover group relative overflow-hidden"
+              className="glassmorphism p-4 md:p-6 rounded-xl card-hover group relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-teal-400/0 via-teal-400/5 to-cyan-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="relative z-10">
                 <div className="text-teal-400 mb-4 group-hover:scale-110 transition-transform duration-300">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-semibold mb-3 group-hover:text-teal-400 transition-colors">
+                <h3 className="text-lg md:text-xl font-semibold mb-3 group-hover:text-teal-400 transition-colors">
                   {feature.title}
                 </h3>
-                <p className="text-gray-300 leading-relaxed">{feature.description}</p>
+                <p className="text-sm md:text-base text-gray-300 leading-relaxed">{feature.description}</p>
               </div>
             </motion.div>
           ))}
-        </motion.div>
-
-        {/* Brand Partnerships Section */}
-        <motion.div
-          className="mt-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          <h2 className="section-title mb-8">Authorized Brand Partnerships</h2>
-          <p className="text-center text-gray-300 mb-8 max-w-2xl mx-auto">
-            We maintain strong partnerships with leading technology manufacturers, ensuring access to the latest products, competitive pricing, and expert support.
-          </p>
-          <motion.div
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            {brandPartners.map((partner, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                whileHover={{ scale: 1.05, y: -4 }}
-                className="glassmorphism p-6 rounded-xl text-center card-hover border border-teal-400/30 hover:border-teal-400/60 transition-colors"
-              >
-                <h3 className="text-lg font-semibold mb-2 text-teal-400">{partner.name}</h3>
-                <p className="text-sm text-gray-400">{partner.description}</p>
-              </motion.div>
-            ))}
-          </motion.div>
         </motion.div>
       </div>
     </section>

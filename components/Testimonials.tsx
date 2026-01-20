@@ -20,9 +20,9 @@ const Testimonials = () => {
         <h2 className="section-title">What Our Clients Say</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <div key={index} className="glassmorphism p-6 rounded-lg transition duration-300 hover:scale-105">
-              <p className="text-gray-300 mb-4">"{testimonial.quote}"</p>
-              <p className="font-semibold text-right">- {testimonial.author}</p>
+            <div key={index} className="glassmorphism p-4 md:p-6 rounded-lg transition duration-300 hover:scale-105">
+              <p className="text-sm md:text-base text-gray-300 mb-4">"{testimonial.quote}"</p>
+              <p className="text-xs md:text-sm font-semibold text-right">- {testimonial.author}</p>
             </div>
           ))}
         </div>

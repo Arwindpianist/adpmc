@@ -19,14 +19,14 @@ const CallToAction = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="glassmorphism p-8 md:p-12 rounded-2xl max-w-4xl mx-auto"
+          className="glassmorphism p-4 md:p-12 rounded-2xl max-w-4xl mx-auto"
         >
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white via-teal-200 to-white bg-clip-text text-transparent"
+            className="text-2xl md:text-4xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-white via-teal-200 to-white bg-clip-text text-transparent"
           >
             Ready to Transform Your IT Infrastructure?
           </motion.h2>
@@ -36,7 +36,7 @@ const CallToAction = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-gray-300"
+            className="text-base md:text-xl mb-6 md:mb-8 max-w-2xl mx-auto text-gray-300"
           >
             Whether you need managed services, hardware solutions, custom software, or expert consulting, 
             we're here to help your business succeed.
@@ -47,12 +47,12 @@ const CallToAction = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center"
           >
             <motion.a 
               href="#pricing" 
               onClick={(e) => scrollToSection(e, 'pricing')}
-              className="btn-primary inline-flex items-center gap-2"
+              className="btn-primary inline-flex items-center gap-2 text-sm md:text-base px-4 md:px-8 py-2 md:py-3"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -60,7 +60,7 @@ const CallToAction = () => {
             </motion.a>
             <motion.a 
               href="/projects"
-              className="btn-secondary inline-flex items-center gap-2"
+              className="btn-secondary inline-flex items-center gap-2 text-sm md:text-base px-4 md:px-8 py-2 md:py-3"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >

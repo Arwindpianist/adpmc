@@ -13,8 +13,8 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: "Arwindpianist Multimedia & Consulting - MSP & IT Solutions",
-  description: "Managed Service Provider offering IT hardware sales (new & refurbished), software solutions, music production solutions, and IT/Construction consulting. Authorized partners with Extreme Networks, Aruba, Huawei, and IBM.",
-  keywords: "MSP, managed services, IT hardware, network equipment, enterprise solutions, Extreme Networks, Aruba, Huawei, IBM, refurbished IT equipment, software solutions, music production, IT consulting, construction IT, myceliumlink",
+  description: "Managed Service Provider offering IT hardware sales (new & refurbished), software solutions, music production solutions, and IT/Construction consulting. Strategic authorized partnerships with leading technology manufacturers across enterprise networking, cloud platforms, and surveillance systems.",
+  keywords: "MSP, managed services, IT hardware, network equipment, enterprise solutions, Extreme Networks, Aruba, Huawei, IBM, Xero, Zoho, Vercel, Supabase, Cisco, Juniper, Hikvision, refurbished IT equipment, software solutions, music production, IT consulting, construction IT, myceliumlink",
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -58,19 +58,6 @@ export default function RootLayout({
             gtag('config', 'G-4FLE1RWKVX');
           `}
         </Script>
-        {/* Zoho SalesIQ Live Chat */}
-        <Script
-          id="zoho-salesiq-init"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `window.$zoho=window.$zoho || {};$zoho.salesiq=$zoho.salesiq||{ready:function(){}}`,
-          }}
-        />
-        <Script
-          id="zsiqscript"
-          src="https://salesiq.zohopublic.com/widget?wc=siq632e43d1367354f184fe2c85c108331e7581c3e9732136b97589a6f8eed110545f834f7087883f72a11fc35c9dc49043"
-          strategy="afterInteractive"
-        />
         {children}
       </body>
     </html>

@@ -7,7 +7,7 @@ const reasons = [
   {
     icon: <Network size={32} />,
     title: "Strong Industry Connections",
-    description: "Direct partnerships with leading technology manufacturers including Extreme Networks, Aruba, Huawei, and IBM. This means better pricing, faster delivery, and access to the latest products and technologies.",
+    description: "Strategic authorized partnerships with leading technology manufacturers across networking, cloud platforms, surveillance systems, and creative technology. This means better pricing, faster delivery, and access to the latest products and technologies.",
     highlight: "Authorized Partner Status"
   },
   {
@@ -59,14 +59,14 @@ const WhyChooseUs = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="glassmorphism p-6 rounded-lg border border-teal-400/20 hover:border-teal-400/50 transition-all hover:scale-105"
+              className="glassmorphism p-4 md:p-6 rounded-lg border border-teal-400/20 hover:border-teal-400/50 transition-all hover:scale-105"
             >
               <div className="text-teal-400 mb-4">{reason.icon}</div>
               <div className="inline-block px-3 py-1 bg-teal-400/20 text-teal-400 text-xs font-semibold rounded-full mb-3">
                 {reason.highlight}
               </div>
-              <h3 className="text-xl font-semibold mb-3">{reason.title}</h3>
-              <p className="text-gray-300 text-sm leading-relaxed">{reason.description}</p>
+              <h3 className="text-lg md:text-xl font-semibold mb-3">{reason.title}</h3>
+              <p className="text-gray-300 text-xs md:text-sm leading-relaxed">{reason.description}</p>
             </motion.div>
           ))}
         </div>
@@ -79,12 +79,12 @@ const WhyChooseUs = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mt-12 text-center"
         >
-          <p className="text-lg text-gray-300 mb-6">
+          <p className="text-base md:text-lg text-gray-300 mb-6">
             Ready to experience the difference? Let's discuss how we can help your business thrive.
           </p>
           <a
             href="#pricing"
-            className="btn-primary inline-block"
+            className="btn-primary inline-block text-sm md:text-base px-4 md:px-8 py-2 md:py-3"
             onClick={(e) => {
               e.preventDefault()
               const element = document.getElementById("pricing")

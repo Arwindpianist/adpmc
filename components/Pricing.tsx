@@ -77,15 +77,15 @@ const Pricing = () => {
     <section id="pricing" className="py-40">
       <div className="container mx-auto px-4">
         <h2 className="section-title">Get a Custom Quote</h2>
-        <p className="text-center text-gray-300 mb-8 max-w-2xl mx-auto">
+        <p className="text-center text-sm md:text-base text-gray-300 mb-8 max-w-2xl mx-auto">
           Tell us about your project and we'll provide a customized solution tailored to your needs.
         </p>
-        <div className="max-w-2xl mx-auto glassmorphism p-8 rounded-lg">
+        <div className="max-w-2xl mx-auto glassmorphism p-4 md:p-8 rounded-lg">
           {submitStatus === "success" ? (
             <div className="text-center py-8">
               <CheckCircle2 size={64} className="mx-auto mb-4 text-green-500" />
-              <h3 className="text-2xl font-bold mb-4">Thank You!</h3>
-              <p className="text-gray-300 mb-6">
+              <h3 className="text-xl md:text-2xl font-bold mb-4">Thank You!</h3>
+              <p className="text-sm md:text-base text-gray-300 mb-6">
                 Your request has been submitted successfully. Our team will review your inquiry and get back to you within 24 hours.
               </p>
               <p className="text-sm text-gray-400 mb-4">

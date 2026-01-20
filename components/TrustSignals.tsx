@@ -15,6 +15,7 @@ const certifications = [
   "Authorized Aruba Partner",
   "Authorized Huawei Partner",
   "Authorized IBM Partner",
+  "Authorized Xero Partner",
   "Certified MSP Provider",
   "ISO Compliant Services",
 ]
@@ -23,7 +24,7 @@ const advantages = [
   {
     icon: <Shield size={24} />,
     title: "Industry-Leading Partnerships",
-    description: "Direct relationships with Extreme Networks, Aruba, Huawei, and IBM ensure access to latest technology and competitive pricing."
+    description: "Strategic authorized partnerships with leading technology manufacturers, combined with comprehensive product expertise across enterprise networking, surveillance, cloud platforms, and creative technology solutions."
   },
   {
     icon: <Award size={24} />,
@@ -67,11 +68,11 @@ const TrustSignals = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="glassmorphism p-6 rounded-lg text-center border border-teal-400/20"
+                className="glassmorphism p-4 md:p-6 rounded-lg text-center border border-teal-400/20"
               >
                 <div className="text-teal-400 mb-3 flex justify-center">{stat.icon}</div>
-                <div className="text-3xl font-bold mb-2 text-teal-400">{stat.value}</div>
-                <div className="text-gray-300 text-sm">{stat.label}</div>
+                <div className="text-2xl md:text-3xl font-bold mb-2 text-teal-400">{stat.value}</div>
+                <div className="text-gray-300 text-xs md:text-sm">{stat.label}</div>
               </motion.div>
             ))}
           </div>
@@ -88,7 +89,7 @@ const TrustSignals = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="glassmorphism p-4 rounded-lg border border-teal-400/30 flex items-center gap-3"
+                className="glassmorphism p-3 md:p-4 rounded-lg border border-teal-400/30 flex items-center gap-3"
               >
                 <CheckCircle2 size={20} className="text-teal-400 flex-shrink-0" />
                 <span className="text-gray-300">{cert}</span>
@@ -108,11 +109,11 @@ const TrustSignals = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="glassmorphism p-6 rounded-lg border border-teal-400/20 hover:border-teal-400/40 transition-all"
+                className="glassmorphism p-4 md:p-6 rounded-lg border border-teal-400/20 hover:border-teal-400/40 transition-all"
               >
                 <div className="text-teal-400 mb-4">{advantage.icon}</div>
-                <h3 className="text-xl font-semibold mb-3">{advantage.title}</h3>
-                <p className="text-gray-300 text-sm">{advantage.description}</p>
+                <h3 className="text-lg md:text-xl font-semibold mb-3">{advantage.title}</h3>
+                <p className="text-gray-300 text-xs md:text-sm">{advantage.description}</p>
               </motion.div>
             ))}
           </div>

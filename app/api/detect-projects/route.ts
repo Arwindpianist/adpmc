@@ -18,7 +18,8 @@ async function detectFromVercel() {
     const githubRepos = githubResponse.ok ? await githubResponse.json() : [];
     
     const projects = await fetchVercelProjects();
-    return transformVercelProjectsToDetected(projects, githubRepos);
+    // transformVercelProjectsToDetected is now async, so we need to await it
+    return await transformVercelProjectsToDetected(projects, githubRepos);
   } catch (error) {
     console.error('Error fetching Vercel projects:', error);
     return [];
@@ -29,6 +30,11 @@ export async function GET() {
   try {
     // Only fetch from Vercel - this is the single source of truth
     const vercelProjects = await detectFromVercel();
+    
+    console.log(`Detected ${vercelProjects.length} projects from Vercel`);
+    vercelProjects.forEach(p => {
+      console.log(`  - ${p.title}: ${p.url}`);
+    });
     
     return NextResponse.json({
       success: true,

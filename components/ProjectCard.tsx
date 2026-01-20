@@ -1,14 +1,18 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { ExternalLink, Globe, Code, Zap, Lock } from 'lucide-react';
+import { getPaymentStatus } from '@/lib/payment';
+import PaymentModal from './PaymentModal';
 
 interface ProjectCardProps {
   title: string;
   description: string;
   url: string;
-  githubUrl?: string;
+  projectId?: string; // Hashed project ID, not the actual GitHub URL
   isDeployed?: boolean;
+  isGitHubRepo?: boolean; // Flag to indicate if this is a GitHub repo
   fallbackImage?: string;
 }
 
@@ -16,171 +20,204 @@ const ProjectCard = ({
   title, 
   description, 
   url, 
-  githubUrl, 
+  projectId,
   isDeployed = false,
-  fallbackImage 
+  isGitHubRepo = false
 }: ProjectCardProps) => {
-  const [imageUrl, setImageUrl] = useState<string>('');
-  const [imageError, setImageError] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [hasAccess, setHasAccess] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [loadingUrl, setLoadingUrl] = useState(false);
+  
+  // Store projectId in a closure to prevent DOM inspection
+  // This reference is not exposed in the component's render output
+  const projectIdRef = { current: projectId };
 
   useEffect(() => {
-    const generateScreenshot = async () => {
-      try {
-        setLoading(true);
-        setImageError(false);
-        
-        const response = await fetch(`/api/screenshot?url=${encodeURIComponent(url)}`);
-        
-        if (response.ok) {
-          // Check content type to determine if response is JSON or SVG
-          const contentType = response.headers.get('content-type') || '';
-          
-          if (contentType.includes('application/json')) {
-            // Parse as JSON if it's JSON
-            try {
-              const data = await response.json();
-              
-              if (data.success && data.screenshotUrl) {
-                setImageUrl(data.screenshotUrl);
-              } else {
-                // Fallback to API endpoint which will return SVG
-                setImageUrl(`/api/screenshot?url=${encodeURIComponent(url)}`);
-              }
-            } catch (parseError) {
-              // If JSON parsing fails, use API URL directly
-              console.error('Failed to parse JSON response:', parseError);
-              setImageUrl(`/api/screenshot?url=${encodeURIComponent(url)}`);
-            }
-          } else {
-            // SVG or other image type - use the API URL directly
-            setImageUrl(`/api/screenshot?url=${encodeURIComponent(url)}`);
-          }
-        } else {
-          setImageError(true);
-        }
-      } catch (error) {
-        console.error('Error generating screenshot:', error);
-        setImageError(true);
-      } finally {
-        setLoading(false);
-      }
+    setHasAccess(getPaymentStatus());
+    
+    // Listen for payment status changes (e.g., after successful payment)
+    const handleStorageChange = () => {
+      setHasAccess(getPaymentStatus());
     };
-
-    const getGitHubPreviewImage = () => {
-      try {
-        // Extract repository name from GitHub URL
-        const urlParts = url.split('/');
-        const repoIndex = urlParts.findIndex(part => part === 'github.com');
-        if (repoIndex !== -1 && urlParts[repoIndex + 1] && urlParts[repoIndex + 2]) {
-          const owner = urlParts[repoIndex + 1];
-          const repo = urlParts[repoIndex + 2];
-          // Use GitHub's social preview image
-          return `https://opengraph.githubassets.com/${owner}/${repo}`;
-        }
-      } catch (error) {
-        console.error('Error parsing GitHub URL:', error);
-      }
-      return null;
+    
+    window.addEventListener('storage', handleStorageChange);
+    // Also check on focus (in case payment completed in another tab)
+    window.addEventListener('focus', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('focus', handleStorageChange);
     };
+  }, []);
 
-    if (fallbackImage) {
-      setImageUrl(fallbackImage);
-      setLoading(false);
-    } else if (isDeployed) {
-      generateScreenshot();
-    } else if (url.includes('github.com')) {
-      // For GitHub repositories, use GitHub's social preview image
-      const githubImage = getGitHubPreviewImage();
-      if (githubImage) {
-        setImageUrl(githubImage);
-        setLoading(false);
-      } else {
-        setLoading(false);
-      }
-    } else {
-      setLoading(false);
+  const handleUnlockClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    if (!hasAccess) {
+      setShowPaymentModal(true);
+      return;
     }
-  }, [url, isDeployed, fallbackImage]);
 
-  const handleImageError = () => {
-    setImageError(true);
-    setLoading(false);
+    // If user has access, fetch GitHub URL server-side
+    // Use ref to avoid exposing projectId in function scope
+    const currentProjectId = projectIdRef.current;
+    if (currentProjectId && isGitHubRepo) {
+      setLoadingUrl(true);
+      try {
+        const response = await fetch('/api/get-github-url', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ projectId: currentProjectId }),
+        });
+
+        const data = await response.json();
+        
+        if (data.url) {
+          // Open in new tab
+          window.open(data.url, '_blank', 'noopener,noreferrer');
+        } else {
+          alert('Unable to access repository. Please try again.');
+        }
+      } catch (error) {
+        console.error('Error fetching GitHub URL:', error);
+        alert('An error occurred. Please try again.');
+      } finally {
+        setLoadingUrl(false);
+      }
+    }
+  };
+
+  // Update access status when modal closes (in case payment was completed)
+  const handleModalClose = () => {
+    setShowPaymentModal(false);
+    setHasAccess(getPaymentStatus());
+  };
+  const getDomain = (url: string) => {
+    try {
+      return new URL(url).hostname.replace('www.', '');
+    } catch {
+      return url;
+    }
+  };
+
+  const getProjectIcon = () => {
+    if (isDeployed) return <Globe size={24} className="text-teal-400" />;
+    if (isGitHubRepo) return <Code size={24} className="text-teal-400" />;
+    return <Code size={24} className="text-teal-400" />;
+  };
+
+  // Generate a gradient based on the project name for visual variety
+  const getGradient = (name: string) => {
+    const gradients = [
+      'from-teal-500/20 via-cyan-500/10 to-teal-500/20',
+      'from-purple-500/20 via-pink-500/10 to-purple-500/20',
+      'from-blue-500/20 via-indigo-500/10 to-blue-500/20',
+      'from-emerald-500/20 via-teal-500/10 to-emerald-500/20',
+      'from-orange-500/20 via-red-500/10 to-orange-500/20',
+    ];
+    const index = name.charCodeAt(0) % gradients.length;
+    return gradients[index];
   };
 
   return (
-    <div className="glassmorphism p-4 sm:p-6 rounded-xl card-hover group relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-teal-400/0 via-teal-400/5 to-cyan-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      <a
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block relative z-10"
-      >
-        <div className="relative h-40 sm:h-48 mb-3 sm:mb-4 bg-gray-800 rounded-lg overflow-hidden group/image">
-          {loading ? (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-teal-400"></div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="glassmorphism p-5 md:p-6 rounded-xl card-hover group relative overflow-hidden border border-white/10"
+    >
+      {/* Animated gradient background */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${getGradient(title)} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+      
+      <div className="relative z-10">
+        {/* Header with icon and badge */}
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-lg bg-teal-400/10 group-hover:bg-teal-400/20 transition-colors">
+              {getProjectIcon()}
             </div>
-          ) : imageError || !imageUrl ? (
-            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-700 to-gray-800">
-              <div className="text-gray-400 text-center">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-2 sm:mb-3 bg-gray-600 rounded-lg flex items-center justify-center">
-                  <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                  </svg>
+            <div>
+              <h3 className="text-lg md:text-xl font-bold group-hover:text-teal-400 transition-colors">
+                {title}
+              </h3>
+              {isDeployed && (
+                <div className="flex items-center gap-1.5 mt-1">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-teal-400/20 text-teal-400 text-xs font-medium">
+                    <Zap size={12} />
+                    Live
+                  </span>
+                  <span className="text-xs text-gray-500">{getDomain(url)}</span>
                 </div>
-                <p className="text-xs sm:text-sm font-medium">{title}</p>
-                <p className="text-xs text-gray-500 mt-1">Live Preview</p>
-              </div>
+              )}
             </div>
-          ) : (
-            <Image
-              src={imageUrl}
-              alt={title}
-              fill
-              className="object-cover group-hover/image:scale-110 transition-transform duration-500"
-              onError={handleImageError}
-              unoptimized
-            />
-          )}
+          </div>
         </div>
         
-        <h3 className="text-lg sm:text-xl font-bold mb-2 group-hover:text-teal-400 transition-colors">
-          {title}
+        {/* Description */}
+        <p className="text-sm md:text-base text-gray-300 mb-5 line-clamp-3 leading-relaxed">
+          {description}
+        </p>
+        
+        {/* Action buttons */}
+        <div className="flex flex-wrap gap-2">
+          {/* For deployed projects, show Visit Site button */}
           {isDeployed && (
-            <span className="text-gray-400 text-xs sm:text-sm ml-1 sm:ml-2 block sm:inline">
-              ({new URL(url).hostname})
-            </span>
+            <motion.a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-teal-400/10 hover:bg-teal-400/20 text-teal-400 hover:text-white text-sm font-medium transition-all duration-300 border border-teal-400/20 hover:border-teal-400/40"
+            >
+              <Globe size={16} />
+              Visit Site
+            </motion.a>
           )}
-        </h3>
-      </a>
-      
-      <p className="text-gray-400 mb-3 sm:mb-4 text-sm sm:text-base line-clamp-3">
-        {description}
-      </p>
-      
-      <div className="flex flex-col sm:flex-row gap-2 sm:gap-2 relative z-10">
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-teal-400 hover:text-white text-xs sm:text-sm text-center sm:text-left py-2 px-4 rounded-lg bg-teal-400/10 hover:bg-teal-400/30 transition-all duration-300 hover:scale-105"
-        >
-          {isDeployed ? 'Visit Site' : 'View Project'}
-        </a>
-        {githubUrl && (
-          <a
-            href={githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-teal-400 hover:text-white text-xs sm:text-sm text-center sm:text-left py-2 px-4 rounded-lg bg-teal-400/10 hover:bg-teal-400/30 transition-all duration-300 hover:scale-105"
-          >
-            View on GitHub
-          </a>
-        )}
+
+          {/* For GitHub repos, only show unlock button (no direct link) */}
+          {isGitHubRepo && (
+            <motion.button
+              onClick={handleUnlockClick}
+              disabled={loadingUrl}
+              whileHover={{ scale: hasAccess && !loadingUrl ? 1.05 : 1 }}
+              whileTap={{ scale: hasAccess && !loadingUrl ? 0.95 : 1 }}
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 border ${
+                hasAccess && !loadingUrl
+                  ? 'bg-gray-700/50 hover:bg-gray-700/70 text-gray-300 hover:text-white border-white/10 hover:border-white/20'
+                  : 'bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 hover:text-amber-300 border-amber-500/20 hover:border-amber-500/40'
+              } ${loadingUrl ? 'opacity-50 cursor-wait' : 'cursor-pointer'}`}
+            >
+              {loadingUrl ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-amber-400" />
+                  Loading...
+                </>
+              ) : hasAccess ? (
+                <>
+                  <Code size={16} />
+                  View Code
+                </>
+              ) : (
+                <>
+                  <Lock size={16} />
+                  Unlock Code
+                </>
+              )}
+            </motion.button>
+          )}
+        </div>
       </div>
-    </div>
+
+      {/* Payment Modal */}
+      <PaymentModal
+        isOpen={showPaymentModal}
+        onClose={handleModalClose}
+      />
+    </motion.div>
   );
 };
 

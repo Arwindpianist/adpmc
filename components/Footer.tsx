@@ -7,14 +7,14 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-xl font-semibold mb-4">Arwindpianist Multimedia & Consulting (JR0170970-M)</h3>
-            <p className="text-gray-400">
+            <h3 className="text-lg md:text-xl font-semibold mb-4">Arwindpianist Multimedia & Consulting (JR0170970-M)</h3>
+            <p className="text-sm md:text-base text-gray-400">
               Your trusted Managed Service Provider offering IT hardware sales (new & refurbished), software solutions, 
-              music production services, and IT/Construction consulting. Authorized partners with Extreme Networks, Aruba, Huawei, and IBM.
+              music production services, and IT/Construction consulting. Strategic authorized partnerships with leading technology manufacturers.
             </p>
           </div>
           <div>
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-base md:text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
                 <Link href="/services" className="text-gray-400 hover:text-white transition duration-300">
@@ -39,7 +39,7 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <h4 className="text-lg font-semibold mb-4">Connect With Us</h4>
+            <h4 className="text-base md:text-lg font-semibold mb-4">Connect With Us</h4>
             <div className="space-y-3">
               <a href="mailto:hello@arwindpianist.com" className="text-gray-400 hover:text-white transition duration-300 block">
                 hello@arwindpianist.com

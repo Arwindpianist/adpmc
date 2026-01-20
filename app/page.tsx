@@ -3,6 +3,8 @@ import dynamic from "next/dynamic"
 import Header from "@/components/Header"
 import Hero from "@/components/Hero"
 import Features from "@/components/Features"
+import Partnerships from "@/components/Partnerships"
+import TicketOS from "@/components/TicketOS"
 import WhyChooseUs from "@/components/WhyChooseUs"
 import TrustSignals from "@/components/TrustSignals"
 import LeadMagnets from "@/components/LeadMagnets"
@@ -59,6 +61,24 @@ export default function Home() {
           variants={fadeInUp}
         >
           <Features />
+        </motion.div>
+
+        <motion.div
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          <Partnerships />
+        </motion.div>
+
+        <motion.div
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          <TicketOS />
         </motion.div>
 
         <motion.div
