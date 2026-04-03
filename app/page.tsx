@@ -5,7 +5,14 @@ import HomeClient from "./HomeClient"
 export default function Home() {
   return (
     <HomeClient
-      faq={<FAQ items={homeFaqItems} jsonLdPath="/#faq" />}
+      faq={
+        <FAQ
+          items={homeFaqItems}
+          jsonLdPath="/#knowledge-base"
+          heading="Knowledge base"
+          id="knowledge-base"
+        />
+      }
     />
   )
 }

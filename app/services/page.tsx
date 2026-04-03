@@ -5,7 +5,14 @@ import ServicesClient from "./ServicesClient"
 export default function ServicesPage() {
   return (
     <ServicesClient
-      faq={<FAQ items={servicesFaqItems} jsonLdPath="/services#faq" />}
+      faq={
+        <FAQ
+          items={servicesFaqItems}
+          jsonLdPath="/services#knowledge-base"
+          heading="Knowledge base"
+          id="knowledge-base"
+        />
+      }
     />
   )
 }

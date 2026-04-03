@@ -20,7 +20,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <head />
+      <head>
+        {/* Canonical: Next.js injects <link rel="canonical"> from metadata.alternates.canonical (root + route layouts). */}
+      </head>
       <body className={poppins.className}>
         <script
           type="application/ld+json"

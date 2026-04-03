@@ -4,10 +4,10 @@ import { faqAnswerPlainText, siteUrl } from "@/lib/site-seo"
 
 type FAQProps = {
   items: FaqItem[]
-  /** Anchor id for deep links, e.g. #faq */
+  /** Anchor id for deep links, e.g. #knowledge-base */
   id?: string
   heading?: string
-  /** Path for JSON-LD @id (e.g. "/#faq" or "/services#faq") */
+  /** Path for JSON-LD @id (e.g. "/#knowledge-base" or "/services#knowledge-base") */
   jsonLdPath?: string
 }
 
@@ -33,9 +33,9 @@ function FaqAnswerBody({ item }: { item: FaqItem }) {
 
 export default function FAQ({
   items,
-  id = "faq",
-  heading = "Frequently asked questions",
-  jsonLdPath = "/#faq",
+  id = "knowledge-base",
+  heading = "Knowledge base",
+  jsonLdPath = "/#knowledge-base",
 }: FAQProps) {
   const faqJsonLd = {
     "@context": "https://schema.org",

@@ -136,7 +136,7 @@ export default function HomeClient({ faq }: { faq: ReactNode }) {
         </motion.section>
 
         <motion.section
-          aria-label="Frequently asked questions"
+          aria-label="Knowledge base"
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}

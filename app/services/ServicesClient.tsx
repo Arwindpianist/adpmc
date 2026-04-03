@@ -19,6 +19,7 @@ const ParticleBackground = dynamic(
 type ServiceBlock = {
   icon: ReactNode
   title: string
+  techStack: readonly string[]
   description: ReactNode
   features: string[]
   benefits: string
@@ -28,6 +29,7 @@ const services: ServiceBlock[] = [
   {
     icon: <Server size={48} />,
     title: "Managed IT Services (MSP)",
+    techStack: ["Extreme Networks", "Aruba", "Cisco", "Huawei", "TicketOS", "Supabase"],
     description: (
       <>
         Comprehensive managed service provider solutions to keep your IT infrastructure running smoothly. Our enterprise
@@ -57,6 +59,7 @@ const services: ServiceBlock[] = [
   {
     icon: <ShoppingCart size={48} />,
     title: "IT Hardware Sales",
+    techStack: ["Cisco", "HPE", "Dell", "Axis", "Hikvision", "Ubiquiti"],
     description: (
       <>
         New and refurbished IT hardware from leading manufacturers at competitive prices, sourced through{" "}
@@ -85,6 +88,7 @@ const services: ServiceBlock[] = [
   {
     icon: <Code size={48} />,
     title: "Software Solutions",
+    techStack: ["Next.js", "TypeScript", "Supabase", "Prisma", "Vercel", "PostgreSQL"],
     description: (
       <>
         Custom software development and enterprise applications tailored to your business needs. Explore live builds and
@@ -114,6 +118,7 @@ const services: ServiceBlock[] = [
   {
     icon: <Music size={48} />,
     title: "Music Production Solutions",
+    techStack: ["Pro Tools", "Logic Pro", "Ableton", "Dante", "Waves", "iZotope"],
     description: (
       <>
         Professional music production services and audio technology consulting. When engagements include studio or
@@ -138,6 +143,7 @@ const services: ServiceBlock[] = [
   {
     icon: <Wrench size={48} />,
     title: "IT Consulting",
+    techStack: ["ITIL", "Zero Trust", "Microsoft 365", "AWS", "Azure", "Cisco"],
     description: (
       <>
         Expert IT consulting for infrastructure planning, technology strategy, and digital transformation. We ground
@@ -167,6 +173,7 @@ const services: ServiceBlock[] = [
   {
     icon: <Building2 size={48} />,
     title: "Construction IT",
+    techStack: ["Meraki", "Ubiquiti", "Microsoft 365", "Axis", "Fortinet", "5G / LTE"],
     description: (
       <>
         Specialized IT solutions for construction projects including site connectivity and project management systems—
@@ -243,7 +250,19 @@ export default function ServicesClient({ faq }: { faq: ReactNode }) {
                   <div className="flex flex-col md:flex-row gap-8">
                     <div className="flex-shrink-0">
                       <div className="text-teal-400 mb-4">{service.icon}</div>
-                      <h2 className="text-2xl md:text-3xl font-bold mb-4">{service.title}</h2>
+                      <h2 className="text-2xl md:text-3xl font-bold mb-3">{service.title}</h2>
+                      <p className="text-xs font-medium uppercase tracking-wide text-gray-500 mb-2">
+                        Technical stack
+                      </p>
+                      <ul className="flex flex-wrap gap-2 mb-4 list-none p-0" aria-label={`Technical stack for ${service.title}`}>
+                        {service.techStack.map((tag) => (
+                          <li key={tag}>
+                            <span className="inline-block text-xs px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-gray-300">
+                              {tag}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
                       <p className="text-gray-300 mb-4">{service.description}</p>
                       <div className="bg-teal-400/10 border border-teal-400/30 rounded-lg p-4">
                         <p className="text-sm text-gray-300">
@@ -272,7 +291,7 @@ export default function ServicesClient({ faq }: { faq: ReactNode }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              aria-label="Frequently asked questions"
+              aria-label="Knowledge base"
             >
               {faq}
             </motion.div>

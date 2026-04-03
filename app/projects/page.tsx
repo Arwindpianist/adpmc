@@ -4,7 +4,12 @@ import { useEffect, useState, useCallback } from "react";
 import Header from "@/components/Header";
 import dynamic from "next/dynamic";
 import Footer from "@/components/Footer";
+import ImpactCaseStudyCard from "@/components/ImpactCaseStudyCard";
 import ProjectCard from "@/components/ProjectCard";
+import {
+  featuredImpactCaseStudies,
+  isFeaturedImpactDeployedTitle,
+} from "@/lib/site-seo";
 import { RefreshCw } from "lucide-react";
 
 const ParticleBackground = dynamic(
@@ -115,6 +120,10 @@ const ProjectsPage = () => {
     detected: true
   }));
 
+  const deployedProjectsFiltered = allDeployedProjects.filter(
+    (p) => !isFeaturedImpactDeployedTitle(p.title)
+  );
+
   return (
     <main className="flex min-h-screen flex-col relative">
       {/* Particle Background */}
@@ -126,13 +135,16 @@ const ProjectsPage = () => {
       <div className="relative z-10">
         <Header />
         
-        {/* Featured Project: MyceliumLink */}
+        {/* Featured Product: MyceliumLink */}
         <section className="pt-32 pb-16 sm:pb-24" aria-labelledby="projects-page-heading">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h1 id="projects-page-heading" className="sr-only">Projects & Portfolio</h1>
-            <div className="glassmorphism p-8 rounded-lg max-w-4xl mx-auto border-2 border-teal-400/50">
+            <article
+              className="glassmorphism p-8 rounded-lg max-w-4xl mx-auto border-2 border-teal-400/50"
+              aria-labelledby="myceliumlink-feature-heading"
+            >
               <div className="text-center mb-6">
-                <h2 className="text-3xl md:text-4xl font-bold mb-3 text-teal-400">
+                <h2 id="myceliumlink-feature-heading" className="text-3xl md:text-4xl font-bold mb-3 text-teal-400">
                   Featured Product: MyceliumLink
                 </h2>
                 <p className="text-lg text-gray-300 mb-6">
@@ -150,6 +162,26 @@ const ProjectsPage = () => {
                   </svg>
                 </a>
               </div>
+            </article>
+          </div>
+        </section>
+
+        {/* Quantified impact case studies (static, crawler-visible narrative depth) */}
+        <section className="pb-16 sm:pb-20" aria-labelledby="impact-case-studies-heading">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 id="impact-case-studies-heading" className="text-2xl sm:text-3xl font-bold text-center mb-10">
+              Impact case studies
+            </h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
+              {featuredImpactCaseStudies.map((study) => (
+                <ImpactCaseStudyCard
+                  key={study.anchorId}
+                  anchorId={study.anchorId}
+                  title={study.title}
+                  description={study.description}
+                  keyResults={study.keyResults}
+                />
+              ))}
             </div>
           </div>
         </section>
@@ -178,9 +210,9 @@ const ProjectsPage = () => {
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-              {allDeployedProjects.map((project, index) => (
+              {deployedProjectsFiltered.map((project, index) => (
                 <ProjectCard
-                  key={index}
+                  key={`${project.title}-${index}`}
                   title={project.title}
                   description={project.description}
                   url={project.url}
@@ -188,7 +220,7 @@ const ProjectsPage = () => {
                   // Don't pass githubUrl - deployed sites don't need unlock buttons
                 />
               ))}
-              {allDeployedProjects.length === 0 && !detecting && (
+              {deployedProjectsFiltered.length === 0 && !detecting && (
                 <div className="col-span-full text-center text-gray-400 py-12">
                   No deployed projects found. Projects are automatically synced from your Vercel account.
                 </div>

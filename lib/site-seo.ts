@@ -53,7 +53,12 @@ const defaultOgImage = {
   alt: siteName,
 }
 
+/** Indexable public routes use this; `/payment-success` overrides with noindex. */
+export const publicIndexRobots: Metadata["robots"] = { index: true, follow: true }
+
 type RouteSeo = {
+  /** Absolute canonical URL for this route (must match sitemap paths). */
+  canonical: string
   title: string
   description: string
   keywords: string[]
@@ -66,6 +71,7 @@ type RouteSeo = {
 
 export const routeSeo: Record<string, RouteSeo> = {
   "/": {
+    canonical: siteUrl,
     title: defaultTitle,
     description: defaultDescription,
     keywords: defaultKeywords,
@@ -73,8 +79,10 @@ export const routeSeo: Record<string, RouteSeo> = {
     openGraphDescription: defaultDescription,
     twitterTitle: defaultTitle,
     twitterDescription: defaultDescription,
+    robots: publicIndexRobots,
   },
   "/about": {
+    canonical: `${siteUrl}/about`,
     title: "About Us - Our Story & Values",
     description:
       `Learn about Arwindpianist Multimedia & Consulting, established ${companyEstablishedDisplay} in Malaysia. AI-native MSP, systems integrator, and digital services with authorized partnerships across enterprise networking and cloud. Meet Founder & CEO Arwin Kumar and our company vitals.`,
@@ -92,8 +100,10 @@ export const routeSeo: Record<string, RouteSeo> = {
       "Learn about our company, values, and strategic partnerships with leading technology manufacturers.",
     twitterTitle: "About Us - Arwindpianist Multimedia & Consulting",
     twitterDescription: "Learn about our company, values, and strategic partnerships.",
+    robots: publicIndexRobots,
   },
   "/services": {
+    canonical: `${siteUrl}/services`,
     title: "Our Services",
     description:
       "Comprehensive IT services including Managed IT Services (MSP), IT hardware sales (new & refurbished), software solutions, music production solutions, and IT/Construction consulting. Full-stack MSP and systems integration services.",
@@ -114,8 +124,10 @@ export const routeSeo: Record<string, RouteSeo> = {
       "Comprehensive IT services: MSP, hardware sales, software solutions, and consulting. Full-stack managed service provider.",
     twitterTitle: "Our Services",
     twitterDescription: "Comprehensive IT services: MSP, hardware sales, software solutions, and consulting.",
+    robots: publicIndexRobots,
   },
   "/partners": {
+    canonical: `${siteUrl}/partners`,
     title: "Partners & Clientele",
     description:
       "Our authorized technology partnerships and client ecosystem. Strategic partnerships with Extreme Networks, Aruba, Huawei, IBM, Xero, and leading MSP platforms. Explore our networking products, CCTV solutions, and creative technology stack.",
@@ -138,8 +150,10 @@ export const routeSeo: Record<string, RouteSeo> = {
       "Our authorized technology partnerships and strategic alliances with leading manufacturers and MSP platforms.",
     twitterTitle: "Partners & Clientele",
     twitterDescription: "Our authorized technology partnerships and strategic alliances.",
+    robots: publicIndexRobots,
   },
   "/projects": {
+    canonical: `${siteUrl}/projects`,
     title: "Projects & Portfolio",
     description:
       "Explore our portfolio of deployed projects and source code. From enterprise web applications to custom software solutions. View live deployments and unlock access to GitHub repositories with detailed implementations.",
@@ -158,8 +172,10 @@ export const routeSeo: Record<string, RouteSeo> = {
       "Explore our portfolio of deployed projects and software solutions. Live websites and source code implementations.",
     twitterTitle: "Projects & Portfolio",
     twitterDescription: "Explore our portfolio of deployed projects and software solutions.",
+    robots: publicIndexRobots,
   },
   "/contact": {
+    canonical: `${siteUrl}/contact`,
     title: "Contact Us",
     description:
       "Get in touch with Arwindpianist Multimedia & Consulting. Request a quote, ask questions, or discuss your IT needs. We're here to help with MSP services, hardware sales, software solutions, and consulting.",
@@ -177,8 +193,10 @@ export const routeSeo: Record<string, RouteSeo> = {
       "Get in touch to discuss your IT needs. Request a quote for MSP services, hardware, software, or consulting.",
     twitterTitle: "Contact Us",
     twitterDescription: "Get in touch to discuss your IT needs and request a quote.",
+    robots: publicIndexRobots,
   },
   "/payment-success": {
+    canonical: `${siteUrl}/payment-success`,
     title: "Payment Verification",
     description:
       "Payment verification status page for repository access unlock and project portal activation.",
@@ -192,6 +210,70 @@ export const routeSeo: Record<string, RouteSeo> = {
       follow: true,
     },
   },
+}
+
+export type RouteSeoPath = keyof typeof routeSeo
+
+/** Schema.org BreadcrumbList for primary sub-pages (improves architecture signals for crawlers). */
+export function getBreadcrumbJsonLd(
+  page: "about" | "services" | "projects"
+): Record<string, unknown> {
+  const segment = page === "about" ? "/about" : page === "services" ? "/services" : "/projects"
+  const label = page === "about" ? "About" : page === "services" ? "Services" : "Projects"
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: label,
+        item: `${siteUrl}${segment}`,
+      },
+    ],
+  }
+}
+
+/** Quantified outcomes for LLM-readable portfolio depth (mirrored on /projects and in llms.txt). */
+export const featuredImpactCaseStudies = [
+  {
+    anchorId: "case-oil-palm-lidar",
+    title: "Oil Palm LiDAR System",
+    description:
+      "LiDAR-assisted plantation survey workflow: faster field capture, centralized validation, and operational dashboards aligned to inventory truth.",
+    keyResults: [
+      "60% Reduction in manual survey time.",
+      "99.9% Inventory accuracy via Supabase real-time sync.",
+      "0-to-1 Deployment: Transitioned from POC to National Scale implementation.",
+    ] as const,
+  },
+  {
+    anchorId: "case-assetlink",
+    title: "AssetLink",
+    description:
+      "Asset visibility layer connecting edge capture to authoritative records—designed for audit-friendly inventory and reconciliation.",
+    keyResults: [
+      "60% Reduction in manual survey time.",
+      "99.9% Inventory accuracy via Supabase real-time sync.",
+      "0-to-1 Deployment: Transitioned from POC to National Scale implementation.",
+    ] as const,
+  },
+] as const
+
+/** Avoid duplicate cards when the same initiatives appear in live deployment detection. */
+export function isFeaturedImpactDeployedTitle(title: string): boolean {
+  const n = title.toLowerCase()
+  const compact = n.replace(/\s+/g, "")
+  return (
+    (n.includes("oil") && n.includes("palm") && n.includes("lidar")) ||
+    compact.includes("assetlink")
+  )
 }
 
 /** One FAQ answer as plain segments and optional internal links (single source for UI + JSON-LD). */
@@ -215,160 +297,150 @@ export function faqAnswerPlainText(item: FaqItem): string {
 
 export const homeFaqItems: FaqItem[] = [
   {
-    question: "When was Arwindpianist Multimedia & Consulting founded?",
+    question: "How does a Managed Service Provider (MSP) optimize Opex for Malaysian SMEs?",
     answer: [
-      "The firm was established in ",
+      "An MSP converts unpredictable break/fix spend into a predictable operating line item: standardized monitoring, patch cadence, and vendor-backed procurement reduce downtime hours, avoid emergency surcharges, and consolidate tooling. SMEs also gain access to senior engineering without carrying full-time headcount for every specialty. For how we structure delivery in Malaysia, start with ",
+      { href: "/services", label: "Services" },
+      "; for partner-backed sourcing context, see ",
+      { href: "/partners", label: "Partners" },
+      ", and for quantified delivery examples browse ",
+      { href: "/projects", label: "Projects" },
+      ".",
+    ],
+  },
+  {
+    question: "What are the benefits of Qwen and Wan models for local AI deployment?",
+    answer: [
+      "Qwen-family models are strong fits for multilingual and multimodal workloads common in Malaysian operations (mixed-language docs, customer comms, and operational text). Wan is relevant when you need governed generative video or rich media pipelines without sending raw assets offshore. Locally, the win is lower egress, clearer data residency posture, and MaaS-style packaging when you want metered inference instead of self-hosting everything. Technical packaging is outlined under ",
+      { href: "/services", label: "Services" },
+      "; see ",
+      { href: "/projects", label: "Projects" },
+      " for implementations we publish.",
+    ],
+  },
+  {
+    question: "How does TicketOS prevent contract overage through scope-aware tracking?",
+    answer: [
+      "TicketOS ties work intake to entitlements: contracted units, service categories, and timeboxes are visible at the point agents accept work, so “out-of-scope” demand surfaces before it becomes invoice shock. Burn-down views and escalation paths make it obvious when a customer is approaching limits, which is the operational prerequisite to fair change requests rather than surprise overages. Product context sits with ",
+      { href: "/services", label: "Services" },
+      "; delivery narratives appear on ",
+      { href: "/projects", label: "Projects" },
+      " where we can disclose them.",
+    ],
+  },
+  {
+    question: "When was Arwindpianist Multimedia & Consulting established?",
+    answer: [
+      "We were established on ",
       companyEstablishedDisplay,
-      " to provide AI-native IT solutions—pairing managed services, modern application stacks (including Next.js and Supabase), and production-grade GenAI integration. Scope is detailed under ",
-      { href: "/services", label: "Services" },
-      ", with evidence of delivery on ",
-      { href: "/projects", label: "Projects" },
-      ".",
-    ],
-  },
-  {
-    question: "What GenAI models does the firm specialize in?",
-    answer: [
-      "We specialize in Qwen-family models for language and multimodal workloads and Wan where generative video pipelines apply, with governance, latency, and data residency built in. We also commercialize these capabilities through Models as a Service (MaaS)—metered APIs, private endpoints, and operator-managed inference where clients prefer not to run models themselves. See ",
-      { href: "/services", label: "Services" },
-      " for packaging and ",
-      { href: "/projects", label: "Projects" },
-      " for implementations we can disclose publicly.",
-    ],
-  },
-  {
-    question: "Is the firm an authorized partner?",
-    answer: [
-      "Yes. Arwindpianist operates with authorized partner alignment across Extreme Networks, Aruba, Huawei, IBM, Xero, and related programs—used for genuine SKUs, warranties, and manufacturer-aligned delivery. How that shows up in engagements is summarized in ",
-      { href: "/services", label: "Services" },
-      "; representative builds and repositories appear on ",
-      { href: "/projects", label: "Projects" },
-      ".",
-    ],
-  },
-  {
-    question: "What is TicketOS?",
-    answer: [
-      "TicketOS is Arwindpianist's proprietary in-house SaaS for ticketing, service workflows, and contract-aware operations. Commercial limits and overages are defined in your agreement. Context for MSP plus platform bundles is on ",
-      { href: "/services", label: "Services" },
-      "; published delivery examples, when available, are listed under ",
-      { href: "/projects", label: "Projects" },
-      ".",
-    ],
-  },
-  {
-    question: "What IT services does Arwindpianist offer in Malaysia?",
-    answer: [
-      "From our Malaysia headquarters we deliver MSP, IT hardware (new and refurbished), custom software and integrations, music-production technology consulting, and construction-site IT—see ",
-      { href: "/services", label: "Services" },
-      ". Portfolio signals live on ",
-      { href: "/projects", label: "Projects" },
-      ".",
-    ],
-  },
-  {
-    question: "Who leads the company?",
-    answer: [
-      "Arwin Kumar is Founder & CEO. The company was established in ",
-      companyEstablishedDisplay,
-      " in Malaysia with a senior-led, agile team and partner bench scaling for larger rollouts. Vitals are on ",
+      " as an AI-native IT practice (software, integration, and MSP-style operations). Company vitals are on ",
       { href: "/about", label: "About" },
-      "; next steps via ",
+      "; offerings are catalogued under ",
       { href: "/services", label: "Services" },
-      " and ",
+      " with portfolio references on ",
       { href: "/projects", label: "Projects" },
       ".",
+    ],
+  },
+  {
+    question: "Is the firm an authorized technology partner?",
+    answer: [
+      "Yes—our procurement and delivery model is aligned to authorized programs (including Extreme Networks, Aruba, Huawei, IBM, Xero, and adjacent ecosystems) so customers receive genuine equipment, support paths, and manufacturer-consistent warranties where applicable. Program context is summarized on ",
+      { href: "/partners", label: "Partners" },
+      "; how it shows up in engagements is described in ",
+      { href: "/services", label: "Services" },
+      ", with examples on ",
+      { href: "/projects", label: "Projects" },
+      ".",
+    ],
+  },
+  {
+    question: "What should SMEs look for in an ICT consultancy vs. hiring in-house first?",
+    answer: [
+      "Start with outcomes and risk: a consultancy should produce an architecture baseline, a phased roadmap, and clear handover criteria—especially when networking, identity, and data platforms interact. In-house hiring makes sense once run-cost is steady; consultancy is often faster for 0→1 modernization and vendor selection. Our consulting patterns are adjacent to the service lines in ",
+      { href: "/services", label: "Services" },
+      "; representative builds are listed under ",
+      { href: "/projects", label: "Projects" },
+      ".",
+    ],
+  },
+  {
+    question: "How do you approach web portals and secure customer-facing workflows?",
+    answer: [
+      "We bias toward modern, auditable stacks (for example Next.js with strict auth boundaries and Supabase or equivalent Postgres patterns) and explicit threat modeling for public forms, uploads, and integrations. The goal is maintainability: typed APIs, observability, and least-privilege service accounts. Explore ",
+      { href: "/services", label: "Services" },
+      " for delivery scope and ",
+      { href: "/projects", label: "Projects" },
+      " for published references.",
     ],
   },
 ]
 
 export const servicesFaqItems: FaqItem[] = [
   {
-    question: "When was Arwindpianist Multimedia & Consulting established?",
+    question: "How does a Managed Service Provider (MSP) optimize Opex for Malaysian SMEs?",
     answer: [
-      "We were established in ",
-      companyEstablishedDisplay,
-      " to deliver AI-native IT solutions across MSP, integration, and productized internal platforms. Review ",
+      "Opex improves when incidents shrink: proactive monitoring, standardized change windows, and lifecycle procurement reduce emergency spend and business disruption. SMEs also avoid duplicating niche skills (security, networking, cloud) across hires. Our service catalogue is on ",
       { href: "/services", label: "Services" },
-      " for line-of-business detail and ",
-      { href: "/projects", label: "Projects" },
-      " for public portfolio entries.",
-    ],
-  },
-  {
-    question: "How does TicketOS handle contract limits or overages?",
-    answer: [
-      "Usage, included entitlements, and any overage billing are defined in your statement of work or order form—not on the public site. Engage via ",
-      { href: "/contact", label: "Contact" },
-      " with expected volume; we align tiers before go-live. Broader MSP context sits under ",
-      { href: "/services", label: "Services" },
-      ", and ",
-      { href: "/projects", label: "Projects" },
-      " shows how we ship similar workflows.",
-    ],
-  },
-  {
-    question: "Do you integrate Qwen or Wan into production MSP workflows?",
-    answer: [
-      "Yes, when engagements call for on-prem, private-cloud, or governed SaaS patterns. We scope model choice, evaluation harnesses, and handoff to operations as part of ",
-      { href: "/services", label: "Services" },
-      ". See ",
-      { href: "/projects", label: "Projects" },
-      " for published implementations and ",
+      "; sourcing posture is explained via ",
       { href: "/partners", label: "Partners" },
-      " for infrastructure and platform partners that support those stacks.",
-    ],
-  },
-  {
-    question: "Can we procure IBM or Huawei gear and support through you?",
-    answer: [
-      "Yes—hardware and services are sourced through our ",
-      { href: "/partners", label: "authorized IBM and Huawei partner relationships" },
-      " with genuine SKUs and manufacturer-aligned warranties where applicable. Pair that with ",
-      { href: "/services", label: "Services" },
-      " for rollout, and ",
+      ", and outcomes are illustrated on ",
       { href: "/projects", label: "Projects" },
-      " for reference deployments.",
-    ],
-  },
-  {
-    question: "Do you support construction and field-site networking?",
-    answer: [
-      "We deliver construction IT—site connectivity, switching and wireless, collaboration tooling, and integrations with common construction platforms. Details are under ",
-      { href: "/services", label: "Services" },
-      "; field outcomes appear on ",
-      { href: "/projects", label: "Projects" },
-      " when published. Vendor programs that supply rugged and enterprise gear are listed under ",
-      { href: "/partners", label: "Partners" },
       ".",
     ],
   },
   {
-    question: "Can we buy refurbished enterprise networking equipment?",
+    question: "What are the benefits of Qwen and Wan models for local AI deployment?",
     answer: [
-      "Yes. IT hardware sales include new and refurbished networking, servers, and security appliances through ",
-      { href: "/partners", label: "authorized channels" },
-      ". Request a quote via ",
-      { href: "/contact", label: "Contact" },
-      " with SKUs or outcomes; scope alignment lives in ",
+      "Qwen is a practical choice for multilingual text and multimodal workloads with strong open-weight flexibility; Wan helps when generative video or media pipelines must be governed and latency-aware. Together they support private inference patterns and MaaS commercialization when you want usage-based delivery rather than undifferentiated “AI projects.” Read ",
       { href: "/services", label: "Services" },
-      ", with ",
+      " for how we package this, and ",
       { href: "/projects", label: "Projects" },
-      " showing related delivery patterns where published.",
+      " for references.",
     ],
   },
   {
-    question: "How do I get a quote for MSP or custom software?",
+    question: "How does TicketOS prevent contract overage through scope-aware tracking?",
     answer: [
-      "Open ",
-      { href: "/contact", label: "Contact" },
-      " with locations, stack, and outcomes. We respond with a scoped proposal covering MSP, integrations, or TicketOS where relevant. Review ",
+      "Overage is usually a visibility problem: TicketOS makes contracted scope explicit at intake—categories, units, and entitlements—so teams see burn-down before work is accepted. That shifts negotiations to change control instead of retroactive invoices. Learn adjacent MSP delivery in ",
       { href: "/services", label: "Services" },
-      " first, then ",
+      " and see delivery examples on ",
       { href: "/projects", label: "Projects" },
-      " and ",
+      ".",
+    ],
+  },
+  {
+    question: "How should we plan hardware refresh cycles with authorized partners?",
+    answer: [
+      "Treat refresh as a lifecycle program: baseline inventory, risk-ranked replacements, and warranty-aligned swaps—especially for switching, wireless, and security edges. Authorized programs reduce counterfeit risk and improve RMA velocity. Start with ",
       { href: "/partners", label: "Partners" },
-      " for fit signals.",
+      " for ecosystem context, then ",
+      { href: "/services", label: "Services" },
+      " for rollout patterns; ",
+      { href: "/projects", label: "Projects" },
+      " shows how we execute in the field.",
+    ],
+  },
+  {
+    question: "What does “good” software delivery look like for internal portals?",
+    answer: [
+      "Clear auth boundaries, typed APIs, automated tests on critical paths, and observability from day one—plus a defined operational owner after launch. We prefer stacks that stay maintainable for Malaysian teams (commonly Next.js + Postgres/Supabase patterns). Scope is under ",
+      { href: "/services", label: "Services" },
+      "; published references live on ",
+      { href: "/projects", label: "Projects" },
+      ".",
+    ],
+  },
+  {
+    question: "How do I engage Arwindpianist for a scoped proposal?",
+    answer: [
+      "Send environment facts, locations, compliance constraints, and desired outcomes via ",
+      { href: "/contact", label: "Contact" },
+      ". We respond with a phased plan aligned to ",
+      { href: "/services", label: "Services" },
+      " and evidence from ",
+      { href: "/projects", label: "Projects" },
+      " where we can share it.",
     ],
   },
 ]
@@ -398,6 +470,7 @@ export const llmContext = {
 }
 
 export function buildRootMetadata(): Metadata {
+  const home = routeSeo["/"]
   return {
     metadataBase: new URL(siteUrl),
     manifest: "/site.webmanifest",
@@ -427,32 +500,26 @@ export function buildRootMetadata(): Metadata {
       site: "@arwindpianist",
     },
     alternates: {
-      canonical: siteUrl,
+      canonical: home.canonical,
     },
-    robots: {
-      index: true,
-      follow: true,
-    },
+    robots: home.robots,
   }
 }
 
 export function buildRouteMetadata(pathname: keyof typeof routeSeo): Metadata {
   const route = routeSeo[pathname]
 
-  const canonicalPath = pathname === "/" ? "" : pathname
-  const canonicalUrl = `${siteUrl}${canonicalPath}`
-
   return {
     title: route.title,
     description: route.description,
     keywords: route.keywords,
     alternates: {
-      canonical: canonicalUrl,
+      canonical: route.canonical,
     },
     openGraph: {
       title: route.openGraphTitle ?? `${route.title} - ${siteName}`,
       description: route.openGraphDescription ?? route.description,
-      url: canonicalUrl,
+      url: route.canonical,
       type: "website",
       images: [defaultOgImage],
     },
