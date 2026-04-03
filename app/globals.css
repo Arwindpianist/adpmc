@@ -74,6 +74,27 @@ body {
     @apply animate-pulse;
   }
 
+  /* FAQ / neumorphic panels — base #16191E with dual soft shadows */
+  .faq-neumorphic {
+    background-color: #16191e;
+    border-radius: 1rem;
+    box-shadow:
+      6px 6px 14px rgba(0, 0, 0, 0.45),
+      -5px -5px 12px rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+
+  .faq-neumorphic:hover {
+    box-shadow:
+      8px 8px 18px rgba(0, 0, 0, 0.5),
+      -6px -6px 14px rgba(255, 255, 255, 0.05);
+  }
+
+  details.faq-neumorphic[open] summary {
+    border-bottom: 1px solid rgba(45, 212, 191, 0.12);
+  }
+
   .card-hover {
     @apply transition-all duration-300 ease-out;
     @apply hover:scale-[1.02] hover:shadow-2xl hover:shadow-teal-400/20;
