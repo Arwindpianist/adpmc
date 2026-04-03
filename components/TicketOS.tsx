@@ -54,7 +54,7 @@ const TicketOS = () => {
   ]
 
   return (
-    <section className="py-20 md:py-32 relative">
+    <section id="ticket-os" className="py-20 md:py-32 relative" aria-label="TicketOS product overview">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left Column: Text Content */}
@@ -80,6 +80,10 @@ const TicketOS = () => {
               TicketOS revolutionizes how you manage client relationships with centralized ticketing, 
               scope-aware contracts, and white-labeled branding. Streamline operations, prevent 
               contract overages, and deliver a professional client portal that reflects your brand.
+            </p>
+
+            <p className="text-gray-300 mb-8 leading-relaxed">
+              TicketOS is a proprietary in-house SaaS platform developed by Arwindpianist Multimedia & Consulting for ticketing, contract management, and branded client operations.
             </p>
 
             {/* Benefits List */}
@@ -111,6 +115,7 @@ const TicketOS = () => {
               <button 
                 onClick={() => setShowModal(true)}
                 className="btn-primary text-sm md:text-lg px-4 md:px-8 py-2 md:py-4"
+                aria-label="Learn more about TicketOS proprietary SaaS platform"
               >
                 Learn More
               </button>
@@ -174,6 +179,7 @@ const TicketOS = () => {
                           : 'bg-white/40 hover:bg-white/60'
                       }`}
                       aria-label={`View ${video.title}`}
+                      aria-current={index === currentVideoIndex ? "true" : undefined}
                     />
                   ))}
                 </div>
@@ -253,6 +259,7 @@ const TicketOS = () => {
                       setShowModal(false)
                     }}
                     className="btn-primary inline-flex items-center gap-2 text-sm md:text-lg px-4 md:px-8 py-2 md:py-4 w-full justify-center md:w-auto"
+                    aria-label="Request access to TicketOS"
                   >
                     <Mail size={20} />
                     Request Access

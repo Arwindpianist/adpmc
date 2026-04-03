@@ -1,23 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      'sunrise-2025.com',
-      'gridhealth.arwindpianist.store',
-      'askitchen.arwindpianist.store',
-      'pogopass.arwindpianist.store',
-      'www.kmtcs.com.my',
-      'typescripttutor.arwindpianist.store',
-      'arwindpianist.com',
-      'www.arwindpianist.com',
-      'arwindpianist.store',
-      'www.arwindpianist.store'
-    ],
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
+      { protocol: 'https', hostname: 'sunrise-2025.com' },
+      { protocol: 'https', hostname: 'gridhealth.arwindpianist.store' },
+      { protocol: 'https', hostname: 'askitchen.arwindpianist.store' },
+      { protocol: 'https', hostname: 'pogopass.arwindpianist.store' },
+      { protocol: 'https', hostname: 'www.kmtcs.com.my' },
+      { protocol: 'https', hostname: 'typescripttutor.arwindpianist.store' },
+      { protocol: 'https', hostname: 'arwindpianist.com' },
+      { protocol: 'https', hostname: 'www.arwindpianist.com' },
+      { protocol: 'https', hostname: 'arwindpianist.store' },
+      { protocol: 'https', hostname: 'www.arwindpianist.store' },
     ],
   },
 };

@@ -30,7 +30,7 @@ const Hero = () => {
   }
 
   return (
-    <section className="min-h-screen flex items-center justify-center text-center pt-32 pb-20 relative overflow-hidden">
+    <section className="min-h-screen flex items-center justify-center text-center pt-32 pb-20 relative overflow-hidden" aria-labelledby="hero-heading">
       {/* Animated background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-cyan-500/5 animate-pulse" />
       
@@ -50,12 +50,13 @@ const Hero = () => {
           </h1>
         </motion.div>
         
-        <motion.h2
+        <motion.p
+          id="hero-heading"
           className="text-xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-teal-200 to-white bg-clip-text text-transparent"
           variants={itemVariants}
         >
           Your Trusted Managed Service Provider & IT Solutions Partner
-        </motion.h2>
+        </motion.p>
         
         <motion.p
           className="text-base md:text-xl mb-10 max-w-3xl mx-auto text-gray-300 leading-relaxed"

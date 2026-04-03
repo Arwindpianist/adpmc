@@ -15,15 +15,15 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section id="testimonials" className="py-40">
+    <section id="testimonials" className="py-40" aria-labelledby="testimonials-heading">
       <div className="container mx-auto px-4">
-        <h2 className="section-title">What Our Clients Say</h2>
+        <h2 id="testimonials-heading" className="section-title">What Our Clients Say</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <div key={index} className="glassmorphism p-4 md:p-6 rounded-lg transition duration-300 hover:scale-105">
-              <p className="text-sm md:text-base text-gray-300 mb-4">"{testimonial.quote}"</p>
-              <p className="text-xs md:text-sm font-semibold text-right">- {testimonial.author}</p>
-            </div>
+            <article key={index} className="glassmorphism p-4 md:p-6 rounded-lg transition duration-300 hover:scale-105">
+              <blockquote className="text-sm md:text-base text-gray-300 mb-4">"{testimonial.quote}"</blockquote>
+              <cite className="text-xs md:text-sm font-semibold text-right not-italic block">- {testimonial.author}</cite>
+            </article>
           ))}
         </div>
       </div>

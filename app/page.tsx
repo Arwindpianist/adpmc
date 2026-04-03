@@ -45,95 +45,105 @@ export default function Home() {
       {/* Content */}
       <div className="relative z-10">
         <Header />
-        <motion.div
+        <motion.section
+          id="hero"
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
           variants={fadeInUp}
         >
           <Hero />
-        </motion.div>
+        </motion.section>
 
-        <motion.div
+        <motion.section
+          id="services-overview"
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
           variants={fadeInUp}
         >
           <Features />
-        </motion.div>
+        </motion.section>
 
-        <motion.div
+        <motion.section
+          aria-label="Partnerships and ecosystem"
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
           variants={fadeInUp}
         >
           <Partnerships />
-        </motion.div>
+        </motion.section>
 
-        <motion.div
+        <motion.section
+          aria-label="TicketOS product highlight"
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
           variants={fadeInUp}
         >
           <TicketOS />
-        </motion.div>
+        </motion.section>
 
-        <motion.div
+        <motion.section
+          aria-label="Why choose us"
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
           variants={fadeInUp}
         >
           <WhyChooseUs />
-        </motion.div>
+        </motion.section>
 
-        <motion.div
+        <motion.section
+          aria-label="Trust signals"
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
           variants={fadeInUp}
         >
           <TrustSignals />
-        </motion.div>
+        </motion.section>
 
-        <motion.div
+        <motion.section
+          aria-label="Lead magnets"
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
           variants={fadeInUp}
         >
           <LeadMagnets />
-        </motion.div>
+        </motion.section>
 
-        <motion.div
+        <motion.section
+          aria-label="Client testimonials"
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
           variants={fadeInUp}
         >
           <Testimonials />
-        </motion.div>
+        </motion.section>
 
-        <motion.div
+        <motion.section
+          aria-label="Pricing and quote request"
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
           variants={fadeInUp}
         >
           <Pricing />
-        </motion.div>
+        </motion.section>
 
-        <motion.div
+        <motion.section
+          aria-label="Call to action"
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
           variants={fadeInUp}
         >
           <CallToAction />
-        </motion.div>
+        </motion.section>
 
         <Footer />
       </div>

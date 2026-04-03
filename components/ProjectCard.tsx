@@ -121,12 +121,13 @@ const ProjectCard = ({
   };
 
   return (
-    <motion.div
+    <motion.article
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
       className="glassmorphism p-5 md:p-6 rounded-xl card-hover group relative overflow-hidden border border-white/10"
+      aria-label={`Project card for ${title}`}
     >
       {/* Animated gradient background */}
       <div className={`absolute inset-0 bg-gradient-to-br ${getGradient(title)} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
@@ -216,7 +217,7 @@ const ProjectCard = ({
         isOpen={showPaymentModal}
         onClose={handleModalClose}
       />
-    </motion.div>
+    </motion.article>
   );
 };
 

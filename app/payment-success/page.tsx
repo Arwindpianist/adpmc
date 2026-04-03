@@ -48,8 +48,9 @@ function PaymentSuccessContent() {
   }, [sessionId, router]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black relative">
+    <main className="min-h-screen flex items-center justify-center bg-black relative" aria-labelledby="payment-status-heading">
       <div className="glassmorphism p-8 md:p-12 rounded-xl max-w-md w-full mx-4 text-center">
+        <h1 id="payment-status-heading" className="sr-only">Payment Status</h1>
         {status === 'loading' && (
           <>
             <Loader2 className="w-16 h-16 text-teal-400 animate-spin mx-auto mb-4" />
@@ -90,7 +91,7 @@ function PaymentSuccessContent() {
           </>
         )}
       </div>
-    </div>
+    </main>
   );
 }
 

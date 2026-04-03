@@ -46,6 +46,25 @@ const partnerships = [
   "Xero - Authorized Partner",
 ]
 
+const technicalCapabilities = [
+  {
+    title: "Web & Product Engineering",
+    items: ["Next.js", "TypeScript", "Supabase", "Prisma", "API integrations"],
+  },
+  {
+    title: "AI & Automation",
+    items: ["GenAI solutions", "Python automation", "LLM-assisted workflows", "RAG-ready architecture"],
+  },
+  {
+    title: "Infrastructure & Networking",
+    items: ["Enterprise switching and routing", "Wireless infrastructure", "Firewall and perimeter security", "Cloud migration and optimization"],
+  },
+  {
+    title: "Surveillance & Operations",
+    items: ["CCTV and NVR deployments", "Site connectivity", "Ticketing and contract operations", "Managed support workflows"],
+  },
+]
+
 export default function AboutPage() {
   return (
     <main className="flex min-h-screen flex-col relative">
@@ -56,7 +75,7 @@ export default function AboutPage() {
       <div className="relative z-10">
         <Header />
         
-        <section className="pt-32 pb-16">
+        <section className="pt-32 pb-16" aria-labelledby="about-page-heading">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -64,9 +83,12 @@ export default function AboutPage() {
               transition={{ duration: 0.6 }}
               className="text-center mb-16"
             >
-              <h1 className="text-2xl md:text-5xl font-bold mb-4">About Us</h1>
+              <h1 id="about-page-heading" className="text-2xl md:text-5xl font-bold mb-4">About Us</h1>
               <p className="text-base md:text-xl text-gray-300 max-w-3xl mx-auto">
                 Arwindpianist Multimedia & Consulting (JR0170970-M) - Your trusted partner for comprehensive IT solutions
+              </p>
+              <p className="text-sm md:text-lg text-gray-400 max-w-4xl mx-auto mt-5 leading-relaxed">
+                Founded by Arwin Kumar, Arwindpianist Multimedia & Consulting is a Malaysia-based systems integrator and managed service provider delivering AI-enabled software, IT infrastructure, networking, and multimedia solutions for growing teams and enterprises.
               </p>
             </motion.div>
 
@@ -91,6 +113,47 @@ export default function AboutPage() {
                 </p>
               </div>
             </motion.div>
+
+            <motion.section
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="glassmorphism p-8 rounded-lg mb-16"
+              aria-label="Company facts"
+            >
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">Company Facts</h2>
+              <dl className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm md:text-base">
+                <div>
+                  <dt className="text-teal-400 font-semibold mb-1">Legal Entity</dt>
+                  <dd className="text-gray-300">Arwindpianist Multimedia & Consulting (JR0170970-M)</dd>
+                </div>
+                <div>
+                  <dt className="text-teal-400 font-semibold mb-1">Founder</dt>
+                  <dd className="text-gray-300">Arwin Kumar (Founder & CEO)</dd>
+                </div>
+                <div>
+                  <dt className="text-teal-400 font-semibold mb-1">Operating Base</dt>
+                  <dd className="text-gray-300">Malaysia</dd>
+                </div>
+                <div>
+                  <dt className="text-teal-400 font-semibold mb-1">Business Model</dt>
+                  <dd className="text-gray-300">Managed Service Provider (MSP) and systems integrator</dd>
+                </div>
+                <div>
+                  <dt className="text-teal-400 font-semibold mb-1">Partnership Model</dt>
+                  <dd className="text-gray-300">Authorized partner ecosystem across networking, cloud, and surveillance technologies</dd>
+                </div>
+                <div>
+                  <dt className="text-teal-400 font-semibold mb-1">Flagship Platform</dt>
+                  <dd className="text-gray-300">TicketOS (proprietary in-house SaaS)</dd>
+                </div>
+                <div>
+                  <dt className="text-teal-400 font-semibold mb-1">Proprietary Platform</dt>
+                  <dd className="text-gray-300">MyceliumLink (proprietary in-house software platform)</dd>
+                </div>
+              </dl>
+            </motion.section>
 
             {/* What We Do */}
             <motion.div
@@ -120,6 +183,35 @@ export default function AboutPage() {
                 </div>
               </div>
             </motion.div>
+
+            <motion.section
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="glassmorphism p-8 rounded-lg mb-16"
+              aria-label="Our technical capabilities"
+            >
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">Our Technical Capabilities</h2>
+              <p className="text-gray-300 mb-6">
+                We combine modern software engineering with enterprise infrastructure delivery so clients can source strategy, implementation, and ongoing managed support from one team.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {technicalCapabilities.map((capability) => (
+                  <article key={capability.title} className="rounded-lg border border-teal-400/25 bg-teal-400/5 p-5">
+                    <h3 className="text-lg md:text-xl font-semibold mb-3 text-teal-400">{capability.title}</h3>
+                    <ul className="space-y-2">
+                      {capability.items.map((item) => (
+                        <li key={item} className="text-gray-300 text-sm md:text-base flex items-start gap-2">
+                          <CheckCircle2 size={16} className="text-teal-400 flex-shrink-0 mt-1" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
+                ))}
+              </div>
+            </motion.section>
 
             {/* Our Values */}
             <motion.div

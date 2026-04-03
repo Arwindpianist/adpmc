@@ -435,7 +435,7 @@ const PartnershipSection = ({ title, subtitle, partners, icon }: PartnershipSect
 
 const Partnerships = () => {
   return (
-    <section id="partnerships" className="py-16 md:py-32 lg:py-40 relative">
+    <section id="partnerships" className="py-16 md:py-32 lg:py-40 relative" aria-labelledby="partnerships-heading">
       <div className="container mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -444,7 +444,7 @@ const Partnerships = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12 md:mb-16"
         >
-          <h2 className="section-title mb-4">Partnerships & Technology Ecosystem</h2>
+          <h2 id="partnerships-heading" className="section-title mb-4">Partnerships & Technology Ecosystem</h2>
           <p className="text-gray-300 max-w-3xl mx-auto text-sm md:text-base lg:text-lg px-4">
             Full-stack MSP, systems integrator, and digital services provider delivering enterprise-grade solutions across networking, surveillance, cloud platforms, and creative technology.
           </p>

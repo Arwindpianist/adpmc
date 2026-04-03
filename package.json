@@ -9,7 +9,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "postbuild": "next-sitemap",
+    "postbuild": "next-sitemap && node --experimental-strip-types scripts/generate-llms-txt.ts",
     "lint": "next lint"
   },
   "dependencies": {

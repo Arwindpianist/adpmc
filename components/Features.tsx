@@ -82,7 +82,7 @@ const Features = () => {
           viewport={{ once: true, margin: "-100px" }}
         >
           {features.map((feature, index) => (
-            <motion.div
+            <motion.article
               key={index}
               variants={itemVariants}
               whileHover={{ y: -8, scale: 1.02 }}
@@ -98,7 +98,7 @@ const Features = () => {
                 </h3>
                 <p className="text-sm md:text-base text-gray-300 leading-relaxed">{feature.description}</p>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </motion.div>
       </div>

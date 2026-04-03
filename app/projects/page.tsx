@@ -127,15 +127,16 @@ const ProjectsPage = () => {
         <Header />
         
         {/* Featured Project: MyceliumLink */}
-        <section className="pt-32 pb-16 sm:pb-24">
+        <section className="pt-32 pb-16 sm:pb-24" aria-labelledby="projects-page-heading">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 id="projects-page-heading" className="sr-only">Projects & Portfolio</h1>
             <div className="glassmorphism p-8 rounded-lg max-w-4xl mx-auto border-2 border-teal-400/50">
               <div className="text-center mb-6">
                 <h2 className="text-3xl md:text-4xl font-bold mb-3 text-teal-400">
                   Featured Product: MyceliumLink
                 </h2>
                 <p className="text-lg text-gray-300 mb-6">
-                  Our latest innovation in network solutions and connectivity
+                  MyceliumLink is our proprietary in-house software platform for decentralized data connectivity and modern network solutions.
                 </p>
                 <a
                   href="https://myceliumlink.com"

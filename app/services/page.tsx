@@ -118,7 +118,7 @@ export default function ServicesPage() {
       <div className="relative z-10">
         <Header />
         
-        <section className="pt-32 pb-16">
+        <section className="pt-32 pb-16" aria-labelledby="services-page-heading">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -126,7 +126,7 @@ export default function ServicesPage() {
               transition={{ duration: 0.6 }}
               className="text-center mb-12"
             >
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Services</h1>
+              <h1 id="services-page-heading" className="text-4xl md:text-5xl font-bold mb-4">Our Services</h1>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
                 Comprehensive IT solutions tailored to your business needs. From managed services to custom software, we've got you covered.
               </p>
@@ -134,7 +134,7 @@ export default function ServicesPage() {
 
             <div className="space-y-16">
               {services.map((service, index) => (
-                <motion.div
+                <motion.article
                   key={index}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -163,7 +163,7 @@ export default function ServicesPage() {
                       </ul>
                     </div>
                   </div>
-                </motion.div>
+                </motion.article>
               ))}
             </div>
 
@@ -180,10 +180,10 @@ export default function ServicesPage() {
                   Let's discuss how our services can help your business succeed.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Link href="/contact" className="btn-primary">
+                  <Link href="/contact" className="btn-primary" aria-label="Contact us about IT services">
                     Contact Us
                   </Link>
-                  <Link href="#pricing" className="btn-secondary">
+                  <Link href="/contact" className="btn-secondary" aria-label="Get a quote for managed IT and software services">
                     Get a Quote
                   </Link>
                 </div>

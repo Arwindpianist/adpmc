@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://www.arwindpianist.store
+Host: https://www.arwindpianist.com
 
 # Sitemaps
-Sitemap: https://www.arwindpianist.store/sitemap.xml
+Sitemap: https://www.arwindpianist.com/sitemap.xml

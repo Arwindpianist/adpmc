@@ -73,9 +73,9 @@ const Pricing = () => {
   }
 
   return (
-    <section id="pricing" className="py-40">
+    <section id="pricing" className="py-40" aria-labelledby="pricing-heading">
       <div className="container mx-auto px-4">
-        <h2 className="section-title">Get a Custom Quote</h2>
+        <h2 id="pricing-heading" className="section-title">Get a Custom Quote</h2>
         <p className="text-center text-sm md:text-base text-gray-300 mb-8 max-w-2xl mx-auto">
           Tell us about your project and we'll provide a customized solution tailored to your needs.
         </p>
@@ -98,7 +98,7 @@ const Pricing = () => {
               </ul>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6" aria-label="Custom quote request form">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Input
                   type="text"

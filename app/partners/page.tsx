@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
-import { Award, Cloud, Music2, Network, Cctv, ArrowLeft, Building2, Users } from "lucide-react"
+import { Award, Cloud, Music2, Network, Cctv, ArrowLeft, Building2, Users, Lock } from "lucide-react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 
@@ -259,6 +259,197 @@ const creativeTech = [
   },
 ]
 
+const clientele = [
+  {
+    company: "RTA Services",
+    project: "Enterprise SLA Grade Maintenance Services & Support Partner",
+    url: "https://rtaservices.net",
+    type: "external" as const,
+    privacy: "public" as const,
+  },
+  {
+    company: "Asian Worldwide Services (AWS PKG)",
+    project: "Sea Freight & Logistics Platform",
+    url: "https://aws.arwindpianist.com",
+    type: "external" as const,
+    privacy: "public" as const,
+  },
+  {
+    company: "YS Teras Maju (M) Sdn Bhd",
+    project: "IT, M&E & Civil Solutions Website",
+    url: "https://terasmaju.com",
+    type: "external" as const,
+    privacy: "public" as const,
+  },
+  {
+    company: "Afiintra Technologies",
+    project: "Corporate Web Platform",
+    url: "https://afiintra.arwindpianist.com",
+    type: "external" as const,
+    privacy: "public" as const,
+  },
+  {
+    company: "KVT Jewellers",
+    project: "Premium Gold and Silver Trading Website",
+    url: "https://kvt.arwindpianist.com",
+    type: "external" as const,
+    privacy: "public" as const,
+  },
+  {
+    company: "KIT Consulting (KITCON)",
+    project: "Engineering & Project Management Platform",
+    url: "https://kitengineeringconsulting.net",
+    type: "external" as const,
+    privacy: "public" as const,
+  },
+  {
+    company: "NAS IT Smart Solutions",
+    project: "Business IT Services Website",
+    url: "https://nasitssolutions.com",
+    type: "external" as const,
+    privacy: "public" as const,
+  },
+  {
+    company: "TW Group",
+    project: "Logistics & Shipping Partner Platform",
+    url: "https://tw.arwindpianist.com",
+    type: "external" as const,
+    privacy: "public" as const,
+  },
+  {
+    company: "TicketOS",
+    project: "Proprietary in-house SaaS for ticketing and contract operations",
+    url: "https://portal.arwindpianist.com",
+    type: "internal" as const,
+    privacy: "public" as const,
+  },
+  {
+    company: "MyceliumLink",
+    project: "Proprietary in-house software for decentralized data connectivity",
+    url: "https://myceliumlink.com",
+    type: "internal" as const,
+    privacy: "public" as const,
+  },
+  {
+    company: "CasaLink",
+    project: "Internal SaaS product for condominium management operations",
+    url: "https://casalink.arwindpianist.com",
+    type: "internal" as const,
+    privacy: "public" as const,
+  },
+  {
+    company: "Trainer Toolkit",
+    project: "Internal training toolkit platform",
+    url: "https://trainer-toolkit.arwindpianist.com",
+    type: "internal" as const,
+    privacy: "public" as const,
+  },
+  {
+    company: "Regional Logistics Enterprise",
+    project: "Customer portal for multi-site shipment visibility and SLA tracking",
+    url: "",
+    type: "external" as const,
+    privacy: "private" as const,
+  },
+  {
+    company: "Integrated Healthcare Provider",
+    project: "Patient operations dashboard with secure ticket escalation workflow",
+    url: "",
+    type: "external" as const,
+    privacy: "private" as const,
+  },
+  {
+    company: "Manufacturing Operations Partner",
+    project: "Plant monitoring interface with incident and maintenance workflows",
+    url: "",
+    type: "external" as const,
+    privacy: "private" as const,
+  },
+  {
+    company: "Academic & Training Organization",
+    project: "Learning operations portal with enrollment and support automation",
+    url: "",
+    type: "external" as const,
+    privacy: "private" as const,
+  },
+  {
+    company: "Service Delivery Console",
+    project: "Operations control panel for coordinated service delivery",
+    url: "",
+    type: "internal" as const,
+    privacy: "private" as const,
+  },
+  {
+    company: "Unified Device Lifecycle Platform",
+    project: "Asset lifecycle tracking and device provisioning workflow",
+    url: "",
+    type: "internal" as const,
+    privacy: "private" as const,
+  },
+  {
+    company: "Managed Security Workspace",
+    project: "Threat triage and CVE response workspace for managed environments",
+    url: "",
+    type: "internal" as const,
+    privacy: "private" as const,
+  },
+  {
+    company: "Commercial Performance Suite",
+    project: "Executive BI for contracts, renewals, and pipeline metrics",
+    url: "",
+    type: "internal" as const,
+    privacy: "private" as const,
+  },
+  {
+    company: "National Networking Distributor",
+    project:
+      "Internal partner portal, deal registration, and quote-to-order workflow for a Malaysian distribution house",
+    url: "",
+    type: "external" as const,
+    privacy: "private" as const,
+  },
+  {
+    company: "Value-Added Distribution Partner",
+    project:
+      "Channel enablement workspace: SKU intelligence, partner onboarding, and MDF program tracking for distributor teams",
+    url: "",
+    type: "external" as const,
+    privacy: "private" as const,
+  },
+  {
+    company: "Enterprise Systems Integrator",
+    project:
+      "Delivery operations console for Malaysian SI practice—BOM staging, site handover packs, and project billing alignment",
+    url: "",
+    type: "external" as const,
+    privacy: "private" as const,
+  },
+  {
+    company: "Regional Infrastructure Integrator",
+    project:
+      "Multi-branch presales tooling: configuration validation, margin guardrails, and shared pipeline for SI sales engineers",
+    url: "",
+    type: "external" as const,
+    privacy: "private" as const,
+  },
+  {
+    company: "Telecom & Networking Channel Partner",
+    project:
+      "RMA and logistics handoff system between warehouse, field engineers, and vendor escalation for a networking-focused distributor",
+    url: "",
+    type: "external" as const,
+    privacy: "private" as const,
+  },
+  {
+    company: "Integration Practice Operations",
+    project:
+      "Managed internal stack for an SI: ticketing bridge to NOC, asset registry for CPE, and SLA reporting for enterprise accounts",
+    url: "",
+    type: "external" as const,
+    privacy: "private" as const,
+  },
+]
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -434,7 +625,7 @@ export default function PartnersPage() {
       <div className="relative z-10">
         <Header />
         
-        <section className="pt-32 pb-16">
+        <section className="pt-32 pb-16" aria-labelledby="partners-page-heading">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             {/* Back Button */}
             <motion.div
@@ -462,7 +653,7 @@ export default function PartnersPage() {
               <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-teal-400/20 mb-6">
                 <Building2 size={40} className="text-teal-400" />
               </div>
-              <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold mb-4">
+              <h1 id="partners-page-heading" className="text-2xl md:text-5xl lg:text-6xl font-bold mb-4">
                 Partners & Clientele
               </h1>
               <p className="text-base md:text-xl text-gray-300 max-w-3xl mx-auto">
@@ -527,6 +718,114 @@ export default function PartnersPage() {
               partners={creativeTech}
               icon={<Music2 size={28} />}
             />
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6 }}
+              className="mb-16 md:mb-20"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="text-teal-400">
+                  <Users size={28} />
+                </div>
+                <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-white via-teal-200 to-white bg-clip-text text-transparent">
+                  Clientele
+                </h2>
+              </div>
+              <p className="text-gray-300 mb-4 max-w-3xl text-sm md:text-base leading-relaxed">
+                Selected organizations we have supported through deployments, consulting, and managed solution delivery.
+              </p>
+              <p className="text-gray-500 mb-8 max-w-3xl text-xs md:text-sm leading-relaxed">
+                Where an engagement is not named, it is shown in sector terms at the organization&apos;s request.
+              </p>
+
+              <motion.div
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+              >
+                {clientele.map((client, index) => {
+                  const cardClassName =
+                    "glassmorphism p-6 rounded-xl card-hover border border-emerald-400/30 hover:border-emerald-400/70 hover:shadow-xl hover:shadow-emerald-400/20 group relative overflow-hidden transition-all duration-300" +
+                    (client.privacy === "private" ? " cursor-default" : "")
+
+                  const cardBody = (
+                    <>
+                      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="relative z-10">
+                        <div className="flex items-start gap-3 mb-2">
+                          {client.privacy === "private" ? (
+                            <div className="w-8 h-8 rounded-md bg-white/10 p-1 flex items-center justify-center flex-shrink-0">
+                              <Lock size={16} className="text-gray-300" aria-hidden />
+                            </div>
+                          ) : (
+                            <img
+                              src={`https://www.google.com/s2/favicons?sz=128&domain_url=${encodeURIComponent(client.url)}`}
+                              alt=""
+                              className="w-8 h-8 rounded-md bg-white/10 p-1 flex-shrink-0"
+                              loading="lazy"
+                            />
+                          )}
+                          <div className="min-w-0">
+                            <h3 className="text-lg font-semibold group-hover:text-emerald-300 transition-colors">
+                              {client.company}
+                              {client.privacy === "private" ? "*" : ""}
+                            </h3>
+                            <span
+                              className={`inline-flex mt-1 px-2 py-0.5 rounded-full text-xs border ${
+                                client.type === "internal"
+                                  ? "text-cyan-300 border-cyan-300/40 bg-cyan-400/10"
+                                  : "text-emerald-300 border-emerald-300/40 bg-emerald-400/10"
+                              }`}
+                            >
+                              {client.type === "internal" ? "Platform" : "Client engagement"}
+                            </span>
+                          </div>
+                        </div>
+                        <p className="text-sm text-gray-400 leading-relaxed">{client.project}</p>
+                      </div>
+                    </>
+                  )
+
+                  if (client.privacy === "private") {
+                    return (
+                      <motion.div
+                        key={`${client.company}-${index}`}
+                        variants={itemVariants}
+                        whileHover={{ scale: 1.02, y: -4 }}
+                        className={cardClassName}
+                        role="article"
+                        aria-label={`${client.company}: ${client.project}`}
+                      >
+                        {cardBody}
+                      </motion.div>
+                    )
+                  }
+
+                  return (
+                    <motion.a
+                      key={`${client.company}-${index}`}
+                      href={client.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variants={itemVariants}
+                      whileHover={{ scale: 1.03, y: -6 }}
+                      className={cardClassName}
+                      aria-label={`Visit ${client.company}`}
+                    >
+                      {cardBody}
+                    </motion.a>
+                  )
+                })}
+              </motion.div>
+              <p className="text-gray-500 mt-6 max-w-3xl text-xs md:text-sm leading-relaxed">
+                * Some customers prefer to remain undisclosed because these systems handle sensitive operational and business information.
+              </p>
+            </motion.div>
 
             {/* CTA Section */}
             <motion.div
