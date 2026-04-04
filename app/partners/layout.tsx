@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd"
 import { buildRouteMetadata } from "@/lib/site-seo"
 
 export const metadata: Metadata = buildRouteMetadata("/partners")
@@ -8,5 +9,10 @@ export default function PartnersLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <>{children}</>
+  return (
+    <>
+      <BreadcrumbJsonLd page="partners" />
+      {children}
+    </>
+  )
 }

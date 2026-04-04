@@ -23,7 +23,7 @@ export default function ImpactCaseStudyCard({
       </h2>
       <p className="text-sm md:text-base text-gray-300 mb-6 flex-1 leading-relaxed">{description}</p>
       <div>
-        <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-3">Key results</h3>
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-3">Success metrics</h3>
         <ul className="space-y-3 list-none pl-0">
           {keyResults.map((line) => (
             <li key={line} className="text-sm md:text-base text-gray-300 leading-snug">

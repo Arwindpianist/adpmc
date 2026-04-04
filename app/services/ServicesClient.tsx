@@ -88,7 +88,7 @@ const services: ServiceBlock[] = [
   {
     icon: <Code size={48} />,
     title: "Software Solutions",
-    techStack: ["Next.js", "TypeScript", "Supabase", "Prisma", "Vercel", "PostgreSQL"],
+    techStack: ["Next.js", "TypeScript", "Python", "Supabase", "Prisma", "Vercel", "PostgreSQL"],
     description: (
       <>
         Custom software development and enterprise applications tailored to your business needs. Explore live builds and
@@ -251,10 +251,14 @@ export default function ServicesClient({ faq }: { faq: ReactNode }) {
                     <div className="flex-shrink-0">
                       <div className="text-teal-400 mb-4">{service.icon}</div>
                       <h2 className="text-2xl md:text-3xl font-bold mb-3">{service.title}</h2>
+                      <p className="text-gray-300 mb-4">{service.description}</p>
                       <p className="text-xs font-medium uppercase tracking-wide text-gray-500 mb-2">
-                        Technical stack
+                        Technologies used
                       </p>
-                      <ul className="flex flex-wrap gap-2 mb-4 list-none p-0" aria-label={`Technical stack for ${service.title}`}>
+                      <ul
+                        className="flex flex-wrap gap-2 mb-4 list-none p-0"
+                        aria-label={`Technologies used for ${service.title}`}
+                      >
                         {service.techStack.map((tag) => (
                           <li key={tag}>
                             <span className="inline-block text-xs px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-gray-300">
@@ -263,7 +267,6 @@ export default function ServicesClient({ faq }: { faq: ReactNode }) {
                           </li>
                         ))}
                       </ul>
-                      <p className="text-gray-300 mb-4">{service.description}</p>
                       <div className="bg-teal-400/10 border border-teal-400/30 rounded-lg p-4">
                         <p className="text-sm text-gray-300">
                           <strong className="text-teal-400">Key Benefit:</strong> {service.benefits}

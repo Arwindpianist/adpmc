@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 
-export const siteUrl = "https://www.arwindpianist.com"
+/** Canonical site origin (apex). Keep sitemap + metadata + JSON-LD aligned. */
+export const siteUrl = "https://arwindpianist.com"
 export const siteName = "Arwindpianist Multimedia & Consulting"
 /** SSM / business registration number (Malaysia). */
 export const companyRegistrationNumber = "JR0170970-M"
@@ -214,12 +215,19 @@ export const routeSeo: Record<string, RouteSeo> = {
 
 export type RouteSeoPath = keyof typeof routeSeo
 
-/** Schema.org BreadcrumbList for primary sub-pages (improves architecture signals for crawlers). */
-export function getBreadcrumbJsonLd(
-  page: "about" | "services" | "projects"
-): Record<string, unknown> {
-  const segment = page === "about" ? "/about" : page === "services" ? "/services" : "/projects"
-  const label = page === "about" ? "About" : page === "services" ? "Services" : "Projects"
+export type BreadcrumbPageKey = "about" | "services" | "projects" | "contact" | "partners"
+
+const breadcrumbMeta: Record<BreadcrumbPageKey, { path: string; label: string }> = {
+  about: { path: "/about", label: "About" },
+  services: { path: "/services", label: "Services" },
+  projects: { path: "/projects", label: "Projects" },
+  contact: { path: "/contact", label: "Contact" },
+  partners: { path: "/partners", label: "Partners" },
+}
+
+/** Schema.org BreadcrumbList for indexable sub-pages. */
+export function getBreadcrumbJsonLd(page: BreadcrumbPageKey): Record<string, unknown> {
+  const { path: segment, label } = breadcrumbMeta[page]
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -243,36 +251,31 @@ export function getBreadcrumbJsonLd(
 /** Quantified outcomes for LLM-readable portfolio depth (mirrored on /projects and in llms.txt). */
 export const featuredImpactCaseStudies = [
   {
-    anchorId: "case-oil-palm-lidar",
-    title: "Oil Palm LiDAR System",
+    anchorId: "case-lidar-analytics",
+    title: "LiDAR Analytics System",
     description:
-      "LiDAR-assisted plantation survey workflow: faster field capture, centralized validation, and operational dashboards aligned to inventory truth.",
+      "LiDAR capture-to-insight pipeline for large-scale field analytics: faster processing, validated geometry, and operational reporting aligned to ground truth.",
     keyResults: [
-      "60% Reduction in manual survey time.",
-      "99.9% Inventory accuracy via Supabase real-time sync.",
-      "0-to-1 Deployment: Transitioned from POC to National Scale implementation.",
+      "Achieved 60% reduction in data processing time and 40% cost-saving vs manual surveys.",
     ] as const,
   },
   {
     anchorId: "case-assetlink",
     title: "AssetLink",
     description:
-      "Asset visibility layer connecting edge capture to authoritative records—designed for audit-friendly inventory and reconciliation.",
+      "Enterprise asset registry and synchronization layer—edge updates reconciled to authoritative ICT records for audit-ready inventory.",
     keyResults: [
-      "60% Reduction in manual survey time.",
-      "99.9% Inventory accuracy via Supabase real-time sync.",
-      "0-to-1 Deployment: Transitioned from POC to National Scale implementation.",
+      "Scaled to manage over 10,000+ ICT assets with 99.9% real-time tracking accuracy.",
     ] as const,
   },
 ] as const
 
 /** Avoid duplicate cards when the same initiatives appear in live deployment detection. */
 export function isFeaturedImpactDeployedTitle(title: string): boolean {
-  const n = title.toLowerCase()
-  const compact = n.replace(/\s+/g, "")
+  const n = title.toLowerCase().replace(/\s+/g, "")
   return (
-    (n.includes("oil") && n.includes("palm") && n.includes("lidar")) ||
-    compact.includes("assetlink")
+    (n.includes("lidar") && (n.includes("analytics") || n.includes("palm") || n.includes("oilpalm"))) ||
+    n.includes("assetlink")
   )
 }
 
@@ -295,155 +298,90 @@ export function faqAnswerPlainText(item: FaqItem): string {
     .join("")
 }
 
-export const homeFaqItems: FaqItem[] = [
+/**
+ * Six questions: lighter positioning → deep consulting. Single source for home + services FAQ JSON-LD.
+ * Every answer includes at least one internal link.
+ */
+export const knowledgeBaseFaqItems: FaqItem[] = [
   {
-    question: "How does a Managed Service Provider (MSP) optimize Opex for Malaysian SMEs?",
+    question: "What does Arwindpianist solve for Malaysian businesses in practice?",
     answer: [
-      "An MSP converts unpredictable break/fix spend into a predictable operating line item: standardized monitoring, patch cadence, and vendor-backed procurement reduce downtime hours, avoid emergency surcharges, and consolidate tooling. SMEs also gain access to senior engineering without carrying full-time headcount for every specialty. For how we structure delivery in Malaysia, start with ",
-      { href: "/services", label: "Services" },
-      "; for partner-backed sourcing context, see ",
-      { href: "/partners", label: "Partners" },
-      ", and for quantified delivery examples browse ",
-      { href: "/projects", label: "Projects" },
-      ".",
-    ],
-  },
-  {
-    question: "What are the benefits of Qwen and Wan models for local AI deployment?",
-    answer: [
-      "Qwen-family models are strong fits for multilingual and multimodal workloads common in Malaysian operations (mixed-language docs, customer comms, and operational text). Wan is relevant when you need governed generative video or rich media pipelines without sending raw assets offshore. Locally, the win is lower egress, clearer data residency posture, and MaaS-style packaging when you want metered inference instead of self-hosting everything. Technical packaging is outlined under ",
-      { href: "/services", label: "Services" },
-      "; see ",
-      { href: "/projects", label: "Projects" },
-      " for implementations we publish.",
-    ],
-  },
-  {
-    question: "How does TicketOS prevent contract overage through scope-aware tracking?",
-    answer: [
-      "TicketOS ties work intake to entitlements: contracted units, service categories, and timeboxes are visible at the point agents accept work, so “out-of-scope” demand surfaces before it becomes invoice shock. Burn-down views and escalation paths make it obvious when a customer is approaching limits, which is the operational prerequisite to fair change requests rather than surprise overages. Product context sits with ",
-      { href: "/services", label: "Services" },
-      "; delivery narratives appear on ",
-      { href: "/projects", label: "Projects" },
-      " where we can disclose them.",
-    ],
-  },
-  {
-    question: "When was Arwindpianist Multimedia & Consulting established?",
-    answer: [
-      "We were established on ",
-      companyEstablishedDisplay,
-      " as an AI-native IT practice (software, integration, and MSP-style operations). Company vitals are on ",
+      "We help teams modernize operations without losing control: managed infrastructure, partner-backed procurement, custom software, and AI-enabled workflows that map to how you actually run the business—not generic slide decks. Start with our ",
+      { href: "/services", label: "service lines" },
+      ", validate fit on ",
       { href: "/about", label: "About" },
-      "; offerings are catalogued under ",
-      { href: "/services", label: "Services" },
-      " with portfolio references on ",
-      { href: "/projects", label: "Projects" },
-      ".",
+      ", and see ",
+      { href: "/partners", label: "our full partner list" },
+      " for the authorized stack we deploy with.",
     ],
   },
   {
-    question: "Is the firm an authorized technology partner?",
+    question:
+      "How does Arwindpianist help Malaysian businesses navigate cloud migration with Huawei and Microsoft Azure?",
     answer: [
-      "Yes—our procurement and delivery model is aligned to authorized programs (including Extreme Networks, Aruba, Huawei, IBM, Xero, and adjacent ecosystems) so customers receive genuine equipment, support paths, and manufacturer-consistent warranties where applicable. Program context is summarized on ",
+      "We treat migration as a program, not a lift-and-shift weekend: discovery and dependency mapping, landing-zone design (identity, networking, backup, and cost guardrails), phased workload moves, and cutover rehearsals. Huawei and Azure each have different strengths—hybrid connectivity, compliance posture, and SKU economics—so the strategy is vendor-aligned but not vendor-locked. See ",
       { href: "/partners", label: "Partners" },
-      "; how it shows up in engagements is described in ",
+      " for program context, ",
       { href: "/services", label: "Services" },
-      ", with examples on ",
+      " for delivery scope, and ",
       { href: "/projects", label: "Projects" },
+      " for outcomes we can publish.",
+    ],
+  },
+  {
+    question: "What are the ROI benefits of implementing TicketOS for contract management?",
+    answer: [
+      "TicketOS reduces revenue leakage and rework: entitlements and burn-down are visible at intake, so scope debates happen before work is done—not on the invoice. Teams spend less time reconciling spreadsheets, escalations shorten, and renewal conversations start from shared data. Explore how we bundle platform + MSP in ",
+      { href: "/services", label: "Services" },
+      ", review ",
+      { href: "/projects", label: "Projects" },
+      " for delivery patterns, and ",
+      { href: "/contact", label: "Contact" },
+      " us to model ROI for your contract mix.",
+    ],
+  },
+  {
+    question: "How does a Managed Service Provider (MSP) improve Opex predictability for SMEs?",
+    answer: [
+      "Predictability comes from fewer surprises: monitored baselines, disciplined change windows, and lifecycle procurement replace emergency spend spikes. SMEs get senior coverage across networking, identity, and cloud without hiring a full bench. Our catalogue is under ",
+      { href: "/services", label: "Services" },
+      "; sourcing integrity is explained via ",
+      { href: "/partners", label: "Partners" },
+      ", and hard metrics appear alongside ",
+      { href: "/projects", label: "case studies on Projects" },
       ".",
     ],
   },
   {
-    question: "What should SMEs look for in an ICT consultancy vs. hiring in-house first?",
+    question: "When should Malaysian teams choose on-prem, private cloud, or MaaS for GenAI?",
     answer: [
-      "Start with outcomes and risk: a consultancy should produce an architecture baseline, a phased roadmap, and clear handover criteria—especially when networking, identity, and data platforms interact. In-house hiring makes sense once run-cost is steady; consultancy is often faster for 0→1 modernization and vendor selection. Our consulting patterns are adjacent to the service lines in ",
+      "Choose based on data sensitivity, latency, and operating model: on-prem or private cloud when residency and air-gapped patterns matter; MaaS when you want metered inference and faster iteration without running GPU fleets. Models like Qwen and Wan are evaluated against those constraints—not the other way around. Read ",
       { href: "/services", label: "Services" },
-      "; representative builds are listed under ",
+      " for packaging, ",
       { href: "/projects", label: "Projects" },
-      ".",
+      " for references, and ",
+      { href: "/partners", label: "Partners" },
+      " for infrastructure programs we integrate with.",
     ],
   },
   {
-    question: "How do you approach web portals and secure customer-facing workflows?",
+    question: "How do you advise leadership on vendor-neutral architecture versus single-vendor roadmaps?",
     answer: [
-      "We bias toward modern, auditable stacks (for example Next.js with strict auth boundaries and Supabase or equivalent Postgres patterns) and explicit threat modeling for public forms, uploads, and integrations. The goal is maintainability: typed APIs, observability, and least-privilege service accounts. Explore ",
+      "We document decision criteria up front: portability, TCO over 36–60 months, operational skill depth, and exit cost. A single-vendor roadmap can be right when support and warranties dominate; neutrality wins when integration agility and procurement leverage matter more. Company posture is on ",
+      { href: "/about", label: "About" },
+      "; programs and OEM alignment are on ",
+      { href: "/partners", label: "Partners" },
+      ", with execution detail in ",
       { href: "/services", label: "Services" },
-      " for delivery scope and ",
+      " and proof points on ",
       { href: "/projects", label: "Projects" },
-      " for published references.",
+      ".",
     ],
   },
 ]
 
-export const servicesFaqItems: FaqItem[] = [
-  {
-    question: "How does a Managed Service Provider (MSP) optimize Opex for Malaysian SMEs?",
-    answer: [
-      "Opex improves when incidents shrink: proactive monitoring, standardized change windows, and lifecycle procurement reduce emergency spend and business disruption. SMEs also avoid duplicating niche skills (security, networking, cloud) across hires. Our service catalogue is on ",
-      { href: "/services", label: "Services" },
-      "; sourcing posture is explained via ",
-      { href: "/partners", label: "Partners" },
-      ", and outcomes are illustrated on ",
-      { href: "/projects", label: "Projects" },
-      ".",
-    ],
-  },
-  {
-    question: "What are the benefits of Qwen and Wan models for local AI deployment?",
-    answer: [
-      "Qwen is a practical choice for multilingual text and multimodal workloads with strong open-weight flexibility; Wan helps when generative video or media pipelines must be governed and latency-aware. Together they support private inference patterns and MaaS commercialization when you want usage-based delivery rather than undifferentiated “AI projects.” Read ",
-      { href: "/services", label: "Services" },
-      " for how we package this, and ",
-      { href: "/projects", label: "Projects" },
-      " for references.",
-    ],
-  },
-  {
-    question: "How does TicketOS prevent contract overage through scope-aware tracking?",
-    answer: [
-      "Overage is usually a visibility problem: TicketOS makes contracted scope explicit at intake—categories, units, and entitlements—so teams see burn-down before work is accepted. That shifts negotiations to change control instead of retroactive invoices. Learn adjacent MSP delivery in ",
-      { href: "/services", label: "Services" },
-      " and see delivery examples on ",
-      { href: "/projects", label: "Projects" },
-      ".",
-    ],
-  },
-  {
-    question: "How should we plan hardware refresh cycles with authorized partners?",
-    answer: [
-      "Treat refresh as a lifecycle program: baseline inventory, risk-ranked replacements, and warranty-aligned swaps—especially for switching, wireless, and security edges. Authorized programs reduce counterfeit risk and improve RMA velocity. Start with ",
-      { href: "/partners", label: "Partners" },
-      " for ecosystem context, then ",
-      { href: "/services", label: "Services" },
-      " for rollout patterns; ",
-      { href: "/projects", label: "Projects" },
-      " shows how we execute in the field.",
-    ],
-  },
-  {
-    question: "What does “good” software delivery look like for internal portals?",
-    answer: [
-      "Clear auth boundaries, typed APIs, automated tests on critical paths, and observability from day one—plus a defined operational owner after launch. We prefer stacks that stay maintainable for Malaysian teams (commonly Next.js + Postgres/Supabase patterns). Scope is under ",
-      { href: "/services", label: "Services" },
-      "; published references live on ",
-      { href: "/projects", label: "Projects" },
-      ".",
-    ],
-  },
-  {
-    question: "How do I engage Arwindpianist for a scoped proposal?",
-    answer: [
-      "Send environment facts, locations, compliance constraints, and desired outcomes via ",
-      { href: "/contact", label: "Contact" },
-      ". We respond with a phased plan aligned to ",
-      { href: "/services", label: "Services" },
-      " and evidence from ",
-      { href: "/projects", label: "Projects" },
-      " where we can share it.",
-    ],
-  },
-]
+export const homeFaqItems = knowledgeBaseFaqItems
+export const servicesFaqItems = knowledgeBaseFaqItems
 
 export const llmContext = {
   entityFacts: [

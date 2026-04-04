@@ -1,8 +1,6 @@
-import { getBreadcrumbJsonLd } from "@/lib/site-seo"
+import { getBreadcrumbJsonLd, type BreadcrumbPageKey } from "@/lib/site-seo"
 
-type BreadcrumbPage = "about" | "services" | "projects"
-
-export default function BreadcrumbJsonLd({ page }: { page: BreadcrumbPage }) {
+export default function BreadcrumbJsonLd({ page }: { page: BreadcrumbPageKey }) {
   const schema = getBreadcrumbJsonLd(page)
   return (
     <script
