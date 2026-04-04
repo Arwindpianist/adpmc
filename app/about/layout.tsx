@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import ArticleJsonLd from "@/components/ArticleJsonLd"
 import BreadcrumbJsonLd from "@/components/BreadcrumbJsonLd"
 import { buildRouteMetadata } from "@/lib/site-seo"
 
@@ -12,6 +13,7 @@ export default function AboutLayout({
   return (
     <>
       <BreadcrumbJsonLd page="about" />
+      <ArticleJsonLd page="/about" />
       {children}
     </>
   )

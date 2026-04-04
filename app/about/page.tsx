@@ -31,7 +31,7 @@ export default function AboutPage() {
         aria-labelledby="company-vitals-heading"
       >
         <h2 id="company-vitals-heading" className="text-2xl md:text-3xl font-bold mb-6">
-          Company Vitals
+          What are the company registration and leadership details?
         </h2>
         <dl className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm md:text-base">
           <div>

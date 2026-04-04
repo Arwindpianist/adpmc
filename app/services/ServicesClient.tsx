@@ -7,6 +7,7 @@ import Footer from "@/components/Footer"
 import { Server, ShoppingCart, Code, Music, Wrench, Building2, CheckCircle2 } from "lucide-react"
 import { motion } from "framer-motion"
 import Link from "next/link"
+import { servicesEngagementSteps } from "@/lib/site-seo"
 
 const ParticleBackground = dynamic(
   () => import("@/components/ParticleBackground"),
@@ -236,6 +237,26 @@ export default function ServicesClient({ faq }: { faq: ReactNode }) {
                 .
               </p>
             </motion.div>
+
+            <section
+              id="how-we-engage"
+              className="glassmorphism p-8 rounded-lg mb-16 max-w-3xl mx-auto border border-teal-400/20"
+              aria-labelledby="how-we-engage-heading"
+            >
+              <h2 id="how-we-engage-heading" className="text-2xl md:text-3xl font-bold mb-4 text-center">
+                How do we engage from first contact to managed operations?
+              </h2>
+              <p className="text-gray-400 text-sm text-center mb-8 max-w-2xl mx-auto">
+                A typical delivery path—mirrored in HowTo structured data for this page.
+              </p>
+              <ol className="space-y-6 list-decimal list-inside text-gray-300 text-sm md:text-base">
+                {servicesEngagementSteps.map((step) => (
+                  <li key={step.name} className="leading-relaxed pl-1">
+                    <strong className="text-teal-400">{step.name}.</strong> {step.text}
+                  </li>
+                ))}
+              </ol>
+            </section>
 
             <div className="space-y-16">
               {services.map((service, index) => (

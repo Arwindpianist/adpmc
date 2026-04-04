@@ -5,6 +5,9 @@ import Typewriter from "react-ts-typewriter"
 import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 
+const brandName = "Arwindpianist Multimedia & Consulting"
+const tagline = "Your Trusted Managed Service Provider & IT Solutions Partner"
+
 const Hero = () => {
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -30,58 +33,55 @@ const Hero = () => {
   }
 
   return (
-    <section className="min-h-screen flex items-center justify-center text-center pt-32 pb-20 relative overflow-hidden" aria-labelledby="hero-heading">
-      {/* Animated background gradient */}
+    <section
+      className="min-h-screen flex items-center justify-center text-center pt-32 pb-20 relative overflow-hidden"
+      aria-labelledby="hero-heading"
+    >
       <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-cyan-500/5 animate-pulse" />
-      
+
       <motion.div
         className="container mx-auto px-4 relative z-10"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        {/* Centered H1 */}
-        <motion.div className="flex justify-center mb-6" variants={itemVariants}>
-          <h1 className="text-lg md:text-4xl font-bold">
-            <Typewriter
-              text="Arwindpianist Multimedia & Consulting"
-              speed={100}
-            />
-          </h1>
-        </motion.div>
-        
-        <motion.p
-          id="hero-heading"
-          className="text-xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-teal-200 to-white bg-clip-text text-transparent"
-          variants={itemVariants}
-        >
-          Your Trusted Managed Service Provider & IT Solutions Partner
-        </motion.p>
-        
+        <h1 id="hero-heading" className="text-xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+          <span className="sr-only">
+            {brandName} — {tagline}
+          </span>
+          <span className="flex flex-col items-center gap-3" aria-hidden="true">
+            <span className="text-lg md:text-4xl font-bold text-white">
+              <Typewriter text={brandName} speed={100} />
+            </span>
+            <span className="bg-gradient-to-r from-white via-teal-200 to-white bg-clip-text text-transparent">
+              {tagline}
+            </span>
+          </span>
+        </h1>
+
         <motion.p
           className="text-base md:text-xl mb-10 max-w-3xl mx-auto text-gray-300 leading-relaxed"
           variants={itemVariants}
         >
-          Comprehensive MSP services, IT hardware sales (new & refurbished), software solutions, music production services, and IT/Construction consulting. Strategic authorized partnerships with leading technology manufacturers across enterprise networking, cloud platforms, and surveillance systems.
+          Comprehensive MSP services, IT hardware sales (new & refurbished), software solutions, music production
+          services, and IT/Construction consulting. Strategic authorized partnerships with leading technology
+          manufacturers across enterprise networking, cloud platforms, and surveillance systems.
         </motion.p>
 
         <motion.div
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           variants={itemVariants}
         >
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Link href="/services" className="btn-primary inline-flex items-center gap-2 group text-sm md:text-base px-4 md:px-8 py-2 md:py-3">
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link
+              href="/services"
+              className="btn-primary inline-flex items-center gap-2 group text-sm md:text-base px-4 md:px-8 py-2 md:py-3"
+            >
               Explore Our Services
               <ArrowRight size={16} className="md:w-[18px] md:h-[18px] group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Link href="#pricing" className="btn-secondary text-sm md:text-base px-4 md:px-8 py-2 md:py-3">
               Get a Quote
             </Link>

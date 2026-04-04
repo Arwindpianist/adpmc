@@ -37,10 +37,14 @@ Quantified outcomes published for crawler and LLM extraction on /projects.
 ### LiDAR Analytics System
 LiDAR capture-to-insight pipeline for large-scale field analytics: faster processing, validated geometry, and operational reporting aligned to ground truth.
 - Achieved 60% reduction in data processing time and 40% cost-saving vs manual surveys.
+- Context: Figures describe outcomes from an internal delivery engagement; they are not independently audited third-party statistics.
+- Reference: https://arwindpianist.com/projects#case-lidar-analytics
 
 ### AssetLink
 Enterprise asset registry and synchronization layer—edge updates reconciled to authoritative ICT records for audit-ready inventory.
 - Scaled to manage over 10,000+ ICT assets with 99.9% real-time tracking accuracy.
+- Context: Metrics reflect program design targets and operational telemetry from the referenced engagement, not a public benchmark report.
+- Reference: https://arwindpianist.com/projects#case-assetlink
 
 ## Canonical URLs (sitemap routes)
 - /about | canonical: https://arwindpianist.com/about
@@ -112,5 +116,15 @@ Enterprise asset registry and synchronization layer—edge updates reconciled to
 - Website: https://arwindpianist.com
 
 ## Freshness
-- Generated automatically during postbuild from sitemap output and shared SEO metadata.
+- Site content revision (ISO-8601): 2026-04-04
+- Generated during postbuild from sitemap output, shared SEO metadata, and lib/site-seo.ts.
+
+## Per-route last updated (canonical pages)
+- /about | lastUpdated: 2026-04-04
+- /contact | lastUpdated: 2026-04-04
+- / | lastUpdated: 2026-04-04
+- /partners | lastUpdated: 2026-04-04
+- /payment-success | lastUpdated: 2026-04-04
+- /projects | lastUpdated: 2026-04-04
+- /services | lastUpdated: 2026-04-04
 

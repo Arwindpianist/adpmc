@@ -3,7 +3,7 @@ import "./globals.css"
 import type { Metadata } from "next"
 import { Poppins } from "next/font/google"
 import Script from "next/script"
-import { buildRootMetadata, getLocalBusinessSchema } from "@/lib/site-seo"
+import { buildRootMetadata, getRootJsonLdGraph } from "@/lib/site-seo"
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
@@ -26,7 +26,7 @@ export default function RootLayout({
       <body className={poppins.className}>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(getLocalBusinessSchema()) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(getRootJsonLdGraph()) }}
         />
         {/* Google tag (gtag.js) */}
         <Script

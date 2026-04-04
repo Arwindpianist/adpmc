@@ -7,6 +7,7 @@ import {
   homeFaqItems,
   llmContext,
   routeSeo,
+  siteContentRevision,
   siteName,
   siteUrl,
 } from "../lib/site-seo.ts"
@@ -57,6 +58,8 @@ const impactLines = featuredImpactCaseStudies.flatMap((study) => [
   `### ${study.title}`,
   study.description,
   ...study.keyResults.map((line) => `- ${line}`),
+  `- Context: ${study.metricsContext}`,
+  `- Reference: ${study.sourceUrl}`,
   "",
 ])
 
@@ -139,7 +142,16 @@ const lines = [
   `- Website: ${siteUrl}`,
   "",
   "## Freshness",
-  "- Generated automatically during postbuild from sitemap output and shared SEO metadata.",
+  `- Site content revision (ISO-8601): ${siteContentRevision}`,
+  "- Generated during postbuild from sitemap output, shared SEO metadata, and lib/site-seo.ts.",
+  "",
+  "## Per-route last updated (canonical pages)",
+  ...sitemapPathnames
+    .filter((path) => path in routeSeo && routeSeo[path as keyof typeof routeSeo].lastUpdated)
+    .map((path) => {
+      const r = routeSeo[path as keyof typeof routeSeo]
+      return `- ${path} | lastUpdated: ${r.lastUpdated}`
+    }),
   "",
 ]
 

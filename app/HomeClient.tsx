@@ -36,7 +36,7 @@ const fadeInUp = {
   },
 }
 
-export default function HomeClient({ faq }: { faq: ReactNode }) {
+export default function HomeClient({ intro, faq }: { intro?: ReactNode; faq: ReactNode }) {
   return (
     <main className="flex min-h-screen flex-col relative">
       <div className="absolute inset-0 z-0">
@@ -45,6 +45,7 @@ export default function HomeClient({ faq }: { faq: ReactNode }) {
 
       <div className="relative z-10">
         <Header />
+        {intro}
         <motion.section
           id="hero"
           initial="initial"
