@@ -93,7 +93,7 @@ const lines = [
   "Educational answers (home page); each mirrors FAQPage JSON-LD on the live site.",
   ...faqKnowledgeLines,
   "",
-  "## Featured Impact Metrics (portfolio depth)",
+  "## Featured Impact Metrics (case study depth)",
   "Quantified outcomes published for crawler and LLM extraction on /projects.",
   ...impactLines,
   "## Canonical URLs (sitemap routes)",

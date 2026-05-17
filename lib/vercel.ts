@@ -34,6 +34,8 @@ export interface DetectedProject {
   // githubUrl is not included - kept server-side only for security
 }
 
+type GitHubRepo = { name: string; html_url: string; description: string | null }
+
 export async function fetchVercelProjects(): Promise<VercelProjectWithDomains[]> {
   const token = process.env.VERCEL_TOKEN;
 
@@ -330,8 +332,81 @@ async function fetchWebsiteTitle(url: string): Promise<string | null> {
 
 export async function transformVercelProjectsToDetected(
   projects: VercelProjectWithDomains[],
-  githubRepos?: Array<{ name: string; html_url: string; description: string | null }>
+  githubRepos?: GitHubRepo[]
 ): Promise<DetectedProject[]> {
+  const normalizeName = (name: string): string =>
+    name
+      .toLowerCase()
+      .trim()
+      .replace(/\.(vercel|com|net|org|io|app)$/g, "")
+      .replace(/[_\-.]/g, "")
+      .replace(/\d+/g, "");
+
+  const tokenizeName = (name: string): string[] =>
+    name
+      .toLowerCase()
+      .trim()
+      .replace(/[._]/g, "-")
+      .split(/[^a-z0-9]+/)
+      .filter(Boolean)
+      .filter((token) => !/^\d+$/.test(token))
+      .filter((token) => token !== "vercel");
+
+  const jaccardScore = (a: string[], b: string[]): number => {
+    if (a.length === 0 || b.length === 0) return 0;
+    const aSet = new Set(a);
+    const bSet = new Set(b);
+    const intersection = [...aSet].filter((token) => bSet.has(token)).length;
+    const union = new Set([...aSet, ...bSet]).size;
+    return union === 0 ? 0 : intersection / union;
+  };
+
+  const findBestMatchingRepo = (
+    projectName: string,
+    primaryDomain: string,
+    websiteTitle: string | null
+  ): GitHubRepo | undefined => {
+    if (!githubRepos || githubRepos.length === 0) return undefined;
+
+    const projectNorm = normalizeName(projectName);
+    const projectTokens = tokenizeName(projectName);
+    const domainHost = primaryDomain
+      .replace(/^https?:\/\//, "")
+      .replace(/^www\./, "")
+      .split("/")[0] ?? "";
+    const domainTokens = tokenizeName(domainHost);
+    const titleTokens = websiteTitle ? tokenizeName(websiteTitle) : [];
+
+    let best: { repo: GitHubRepo; score: number } | undefined;
+
+    for (const repo of githubRepos) {
+      const repoNorm = normalizeName(repo.name);
+      const repoTokens = tokenizeName(repo.name);
+
+      // Fast-path exact/containment checks
+      if (
+        repo.name.toLowerCase() === projectName.toLowerCase() ||
+        repoNorm === projectNorm ||
+        (projectNorm.length > 0 && repoNorm.includes(projectNorm)) ||
+        (repoNorm.length > 0 && projectNorm.includes(repoNorm))
+      ) {
+        return repo;
+      }
+
+      const score =
+        jaccardScore(projectTokens, repoTokens) * 0.65 +
+        jaccardScore(domainTokens, repoTokens) * 0.25 +
+        jaccardScore(titleTokens, repoTokens) * 0.1;
+
+      if (!best || score > best.score) {
+        best = { repo, score };
+      }
+    }
+
+    // Conservative threshold to avoid wrong repo assignment.
+    return best && best.score >= 0.34 ? best.repo : undefined;
+  };
+
   // Process projects in parallel, fetching titles
   const detectedProjects = await Promise.all(
     projects.map(async (project) => {
@@ -350,27 +425,15 @@ export async function transformVercelProjectsToDetected(
       // Use website title if available, otherwise fallback to project name
       const title = websiteTitle || project.name;
 
-      // Try to find matching GitHub repository
-      // Match by exact name, or by normalized name (handle hyphens, case differences)
+      // Try to find matching GitHub repository.
+      // Prefer GitHub description when a confident match is found.
       let githubUrl: string | undefined;
       let description = `Vercel deployment for ${project.name}`;
       
-      if (githubRepos) {
-        // Normalize names for matching (remove hyphens, convert to lowercase)
-        const normalizeName = (name: string) => name.toLowerCase().replace(/[-_]/g, '');
-        const projectNormalized = normalizeName(project.name);
-        
-        const matchingRepo = githubRepos.find((repo) => {
-          const repoNormalized = normalizeName(repo.name);
-          // Try exact match first, then normalized match
-          return repo.name.toLowerCase() === project.name.toLowerCase() ||
-                 repoNormalized === projectNormalized;
-        });
-        
-        if (matchingRepo) {
-          githubUrl = matchingRepo.html_url;
-          description = matchingRepo.description || description;
-        }
+      const matchingRepo = findBestMatchingRepo(project.name, primaryDomain, websiteTitle);
+      if (matchingRepo) {
+        githubUrl = matchingRepo.html_url;
+        description = matchingRepo.description || description;
       }
 
       return {

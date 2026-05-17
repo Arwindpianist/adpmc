@@ -4,7 +4,7 @@ export default function FeaturedCaseStudiesJsonLd() {
   return (
     <script
       type="application/ld+json"
-      // eslint-disable-next-line react/no-danger -- ItemList JSON-LD for portfolio cases
+      // eslint-disable-next-line react/no-danger -- ItemList JSON-LD for infrastructure case studies
       dangerouslySetInnerHTML={{ __html: JSON.stringify(getFeaturedCaseStudiesItemListJsonLd()) }}
     />
   )

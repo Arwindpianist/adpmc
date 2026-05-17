@@ -1,14 +1,14 @@
 import type React from "react"
 import "./globals.css"
 import type { Metadata } from "next"
-import { Poppins } from "next/font/google"
+import { Inter } from "next/font/google"
 import Script from "next/script"
 import { buildRootMetadata, getRootJsonLdGraph } from "@/lib/site-seo"
 
-const poppins = Poppins({
-  weight: ["300", "400", "500", "600", "700"],
+const inter = Inter({
   subsets: ["latin"],
   display: "swap",
+  variable: "--font-inter",
 })
 
 export const metadata: Metadata = buildRootMetadata()
@@ -19,11 +19,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className={`dark ${inter.variable}`}>
       <head>
         {/* Canonical: emitted per URL from metadata.alternates.canonical (see lib/site-seo routeSeo.canonical, apex siteUrl). */}
       </head>
-      <body className={poppins.className}>
+      <body className="bg-background text-foreground antialiased">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(getRootJsonLdGraph()) }}

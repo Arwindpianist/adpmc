@@ -20,26 +20,27 @@ export default function ImpactCaseStudyCard({
   return (
     <article
       id={anchorId}
-      className="glassmorphism p-6 md:p-8 rounded-xl border border-teal-400/25 h-full flex flex-col scroll-mt-24"
+      className="surface-card-soft flex h-full scroll-mt-24 flex-col rounded-[2rem] p-6 sm:p-8"
       aria-labelledby={headingId}
     >
-      <h3 id={headingId} className="text-xl md:text-2xl font-bold text-teal-400 mb-3">
+      <p className="section-kicker">Impact story</p>
+      <h3 id={headingId} className="mt-4 text-2xl font-semibold tracking-[-0.03em] text-heading sm:text-3xl">
         {title}
       </h3>
-      <p className="text-sm md:text-base text-gray-300 mb-6 flex-1 leading-relaxed">{description}</p>
+      <p className="mb-6 mt-4 flex-1 text-sm leading-7 text-zinc-400 sm:text-base">{description}</p>
       <div>
-        <h4 className="text-sm font-semibold uppercase tracking-wide text-gray-400 mb-3">Success metrics</h4>
+        <h4 className="text-sm font-semibold uppercase tracking-[0.18em] text-zinc-500">Success metrics</h4>
         <ul className="space-y-3 list-none pl-0">
           {keyResults.map((line) => (
-            <li key={line} className="text-sm md:text-base text-gray-300 leading-snug">
-              <strong className="font-semibold text-gray-100">{line}</strong>
+            <li key={line} className="rounded-[1.5rem] border border-white/8 bg-white/[0.03] px-4 py-3 text-sm leading-7 text-zinc-200 sm:text-base">
+              <strong className="font-semibold text-white">{line}</strong>
             </li>
           ))}
         </ul>
-        <p className="mt-4 text-xs text-gray-500 leading-relaxed border-t border-white/[0.06] pt-4">
-          <span className="font-medium text-gray-400">Context: </span>
+        <p className="mt-5 border-t border-white/8 pt-5 text-xs leading-6 text-zinc-500">
+          <span className="font-medium text-zinc-400">Context: </span>
           {metricsContext}{" "}
-          <a href={sourceUrl} className="text-teal-400 hover:text-teal-300 underline underline-offset-2 break-all">
+          <a href={sourceUrl} className="break-all text-zinc-300 underline underline-offset-2 transition hover:text-white">
             Reference
           </a>
           .

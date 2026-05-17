@@ -1,214 +1,181 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Menu, X, Building2, Wrench, FolderKanban, Info, Mail } from "lucide-react"
-import { motion } from "framer-motion"
 import Image from "next/image"
-import SVGIMG from "../public/logo.svg"
-import { Drawer } from "vaul"
+import { usePathname } from "next/navigation"
+import { ArrowUpRight, Menu, Sparkles } from "lucide-react"
+
+import logo from "../public/logo.svg"
+import MagneticButton from "@/components/MagneticButton"
+import TransitionLink from "@/components/TransitionLink"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { cn } from "@/lib/utils"
+
+const capabilityNavItems = [
+  { href: "/msp", label: "MSP & procurement" },
+  { href: "/platforms", label: "Platforms & software factory" },
+  { href: "/networking", label: "Networking & field" },
+  { href: "/security", label: "Security & surveillance" },
+  { href: "/ai", label: "GenAI & MaaS" },
+  { href: "/creative", label: "Creative and audio" },
+] as const
+
+const exploreHubItems = [
+  { href: "/services", label: "Operational capabilities hub" },
+  { href: "/partners", label: "Partners" },
+  { href: "/about", label: "About" },
+] as const
+
+const directNavItems = [
+  { href: "/projects", label: "Case studies", ariaLabel: "Case Studies in Infrastructure" as const },
+  { href: "/contact", label: "Contact" },
+] as const
 
 const navLinkClass =
-  "relative whitespace-nowrap rounded-md px-1.5 py-2 hover:text-teal-400 transition-colors duration-300 group outline-none focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+  "gpu-layer inline-flex min-h-11 items-center rounded-full px-4 py-2 text-sm text-[#c9b8e8]/90 transition-colors hover:text-dracula-purple focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dracula-purple/50"
 
-const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+const mobileNavItems = [...capabilityNavItems, ...exploreHubItems, ...directNavItems] as const
+
+export default function Header() {
   const pathname = usePathname()
-
-  const scrollToSection = (e: React.MouseEvent<HTMLElement>, sectionId: string) => {
-    e.preventDefault()
-    if (pathname === "/") {
-      if (sectionId === "") {
-        window.scrollTo({ top: 0, behavior: "smooth" })
-      } else {
-        const element = document.getElementById(sectionId)
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" })
-        }
-      }
-    } else {
-      window.location.href = `/#${sectionId}`
-    }
-    setIsMenuOpen(false)
-  }
+  const [open, setOpen] = useState(false)
 
   return (
-    <header className="glassmorphism fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-slate-900/50 border-b border-white/10">
-      <div className="container mx-auto max-w-[100vw] px-3 sm:px-4 py-2.5 sm:py-3 flex justify-between items-center gap-2 sm:gap-4 min-h-[56px] sm:min-h-[64px]">
-        <Link
+    <header className="sticky top-0 z-40 px-4 pt-4 sm:px-6 lg:px-8">
+      <div className="liquid-layer gpu-layer mx-auto flex w-full max-w-7xl items-center justify-between rounded-[2rem] border border-[rgba(189,147,249,0.15)] bg-[#0a0a0a]/90 px-4 py-3 shadow-[0_20px_80px_rgba(0,0,0,0.55),0_0_80px_-20px_rgba(189,147,249,0.12)] backdrop-blur-xl transition-[border-color] duration-150 hover:border-[rgba(189,147,249,0.35)] sm:px-5">
+        <TransitionLink
           href="/"
-          onClick={(e) => scrollToSection(e, "")}
-          className="shrink-0 flex items-center rounded-md outline-none focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+          className="flex items-center gap-3 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           aria-label="Arwindpianist home"
         >
-          <Image src={SVGIMG} alt="" width={40} height={40} className="h-9 w-9 sm:h-10 sm:w-10" />
-        </Link>
+          <Image src={logo} alt="" width={32} height={32} priority className="h-8 w-8 shrink-0" />
+          <div className="hidden sm:block">
+            <p className="text-sm font-semibold tracking-[-0.02em] text-zinc-50">
+              Arwindpianist Multimedia & Consulting
+            </p>
+            <p className="text-xs text-zinc-400/60">SI &amp; MSP · MaaS · Hardened infrastructure</p>
+          </div>
+        </TransitionLink>
 
-        {/* Desktop / large tablet: full nav only when there is room (xl+) */}
-        <nav
-          className="hidden xl:flex items-center justify-end flex-1 min-w-0 gap-1 2xl:gap-2 mr-2 2xl:mr-4"
-          aria-label="Primary"
-        >
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Link href="/services" className={`${navLinkClass} text-sm 2xl:text-base`}>
-              Services
-              <span className="absolute bottom-0.5 left-1.5 right-1.5 h-0.5 scale-x-0 bg-teal-400 origin-left transition-transform duration-300 group-hover:scale-x-100" />
-            </Link>
-          </motion.div>
-          <motion.a
-            href="#testimonials"
-            onClick={(e) => scrollToSection(e, "testimonials")}
-            className={`${navLinkClass} text-sm 2xl:text-base`}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            Testimonials
-            <span className="absolute bottom-0.5 left-1.5 right-1.5 h-0.5 scale-x-0 bg-teal-400 origin-left transition-transform duration-300 group-hover:scale-x-100" />
-          </motion.a>
-          <motion.a
-            href="#pricing"
-            onClick={(e) => scrollToSection(e, "pricing")}
-            className={`${navLinkClass} text-sm 2xl:text-base`}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            Pricing
-            <span className="absolute bottom-0.5 left-1.5 right-1.5 h-0.5 scale-x-0 bg-teal-400 origin-left transition-transform duration-300 group-hover:scale-x-100" />
-          </motion.a>
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Link href="/partners" className={`${navLinkClass} text-sm 2xl:text-base`}>
-              Partners
-              <span className="absolute bottom-0.5 left-1.5 right-1.5 h-0.5 scale-x-0 bg-teal-400 origin-left transition-transform duration-300 group-hover:scale-x-100" />
-            </Link>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Link href="/projects" className={`${navLinkClass} text-sm 2xl:text-base`}>
-              Projects
-              <span className="absolute bottom-0.5 left-1.5 right-1.5 h-0.5 scale-x-0 bg-teal-400 origin-left transition-transform duration-300 group-hover:scale-x-100" />
-            </Link>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Link href="/about" className={`${navLinkClass} text-sm 2xl:text-base`}>
-              About
-              <span className="absolute bottom-0.5 left-1.5 right-1.5 h-0.5 scale-x-0 bg-teal-400 origin-left transition-transform duration-300 group-hover:scale-x-100" />
-            </Link>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Link href="/contact" className={`${navLinkClass} text-sm 2xl:text-base`}>
-              Contact
-              <span className="absolute bottom-0.5 left-1.5 right-1.5 h-0.5 scale-x-0 bg-teal-400 origin-left transition-transform duration-300 group-hover:scale-x-100" />
-            </Link>
-          </motion.div>
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm" className="text-zinc-300 hover:text-white">
+                <Sparkles className="h-4 w-4 text-dracula-purple" />
+                Explore
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="max-h-[min(28rem,calc(100vh-6rem))] w-72">
+                <DropdownMenuLabel>Dedicated capability pages</DropdownMenuLabel>
+                {capabilityNavItems.map((item) => (
+                  <DropdownMenuItem key={item.href} asChild>
+                    <TransitionLink href={item.href} className="w-full">
+                      {item.label}
+                    </TransitionLink>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel>Site hub</DropdownMenuLabel>
+                {exploreHubItems.map((item) => (
+                  <DropdownMenuItem key={item.href} asChild>
+                    <TransitionLink href={item.href} className="w-full">
+                      {item.label}
+                    </TransitionLink>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <TransitionLink href="/contact" className="w-full text-white">
+                    Request a custom build
+                  </TransitionLink>
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {directNavItems.map((item) => (
+            <MagneticButton key={item.href} intensity={8}>
+              <TransitionLink
+                href={item.href}
+                aria-label={"ariaLabel" in item ? item.ariaLabel : undefined}
+                title={"ariaLabel" in item ? item.ariaLabel : undefined}
+                className={cn(navLinkClass, pathname === item.href && "bg-dracula-purple/12 text-zinc-50")}
+              >
+                {item.label}
+              </TransitionLink>
+            </MagneticButton>
+          ))}
         </nav>
 
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          <motion.button
-            type="button"
-            className="hidden xl:inline-flex btn-primary text-sm px-4 2xl:px-6 py-2 whitespace-nowrap"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ duration: 0.2 }}
-            onClick={(e) => scrollToSection(e, "pricing")}
-          >
-            Get Started
-          </motion.button>
-
-          <Drawer.Root direction="bottom" open={isMenuOpen} onOpenChange={setIsMenuOpen} shouldScaleBackground={false}>
-            <Drawer.Trigger asChild>
-              <motion.button
-                type="button"
-                className="xl:hidden inline-flex h-11 w-11 items-center justify-center rounded-lg text-gray-100 hover:bg-white/10 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-teal-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
-                whileTap={{ scale: 0.95 }}
-                aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-                aria-expanded={isMenuOpen}
-              >
-                {isMenuOpen ? <X size={22} strokeWidth={2} /> : <Menu size={22} strokeWidth={2} />}
-              </motion.button>
-            </Drawer.Trigger>
-            <Drawer.Portal>
-              <Drawer.Overlay className="fixed inset-0 z-[60] bg-black/50 backdrop-blur-[2px]" />
-              <Drawer.Content
-                className="fixed bottom-0 left-0 right-0 z-[70] flex max-h-[min(92dvh,880px)] flex-col rounded-t-2xl border border-white/10 border-b-0 bg-slate-950/95 shadow-[0_-8px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl outline-none"
-                style={{ paddingBottom: "max(1.25rem, env(safe-area-inset-bottom))" }}
-              >
-                <div className="flex flex-col items-center pt-3 pb-2 flex-shrink-0">
-                  <div className="h-1.5 w-14 rounded-full bg-white/25" aria-hidden />
-                  <Drawer.Title className="sr-only">Main navigation</Drawer.Title>
-                  <Drawer.Description className="sr-only">Links to pages on this site</Drawer.Description>
-                </div>
-
-                <div className="flex-1 overflow-y-auto overscroll-contain px-4 sm:px-6 pt-2 pb-6 min-h-0">
-                  <p className="text-xs font-medium uppercase tracking-wider text-gray-500 px-3 mb-3">Pages</p>
-                  <nav className="flex flex-col gap-1.5" aria-label="Mobile primary">
-                    <Drawer.Close asChild>
-                      <Link
-                        href="/services"
-                        className="flex items-center gap-4 min-h-[52px] px-4 rounded-xl text-base font-medium text-gray-100 bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08] hover:border-teal-400/20 active:bg-white/[0.1] transition-colors"
-                      >
-                        <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-500/15 text-teal-400 shrink-0">
-                          <Wrench size={20} strokeWidth={2} />
-                        </span>
-                        <span>Services</span>
-                      </Link>
-                    </Drawer.Close>
-
-                    <Drawer.Close asChild>
-                      <Link
-                        href="/partners"
-                        className="flex items-center gap-4 min-h-[52px] px-4 rounded-xl text-base font-medium text-gray-100 bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08] hover:border-teal-400/20 active:bg-white/[0.1] transition-colors"
-                      >
-                        <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-500/15 text-teal-400 shrink-0">
-                          <Building2 size={20} strokeWidth={2} />
-                        </span>
-                        <span>Partners</span>
-                      </Link>
-                    </Drawer.Close>
-
-                    <Drawer.Close asChild>
-                      <Link
-                        href="/projects"
-                        className="flex items-center gap-4 min-h-[52px] px-4 rounded-xl text-base font-medium text-gray-100 bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08] hover:border-teal-400/20 active:bg-white/[0.1] transition-colors"
-                      >
-                        <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-500/15 text-teal-400 shrink-0">
-                          <FolderKanban size={20} strokeWidth={2} />
-                        </span>
-                        <span>Projects</span>
-                      </Link>
-                    </Drawer.Close>
-
-                    <Drawer.Close asChild>
-                      <Link
-                        href="/about"
-                        className="flex items-center gap-4 min-h-[52px] px-4 rounded-xl text-base font-medium text-gray-100 bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08] hover:border-teal-400/20 active:bg-white/[0.1] transition-colors"
-                      >
-                        <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-500/15 text-teal-400 shrink-0">
-                          <Info size={20} strokeWidth={2} />
-                        </span>
-                        <span>About</span>
-                      </Link>
-                    </Drawer.Close>
-
-                    <Drawer.Close asChild>
-                      <Link
-                        href="/contact"
-                        className="flex items-center gap-4 min-h-[52px] px-4 rounded-xl text-base font-medium text-gray-100 bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08] hover:border-teal-400/20 active:bg-white/[0.1] transition-colors"
-                      >
-                        <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-500/15 text-teal-400 shrink-0">
-                          <Mail size={20} strokeWidth={2} />
-                        </span>
-                        <span>Contact</span>
-                      </Link>
-                    </Drawer.Close>
-                  </nav>
-                </div>
-              </Drawer.Content>
-            </Drawer.Portal>
-          </Drawer.Root>
+        <div className="hidden items-center gap-3 lg:flex">
+          <Button asChild variant="secondary" size="sm">
+            <TransitionLink href="/projects" title="Case Studies in Infrastructure" aria-label="Case Studies in Infrastructure">
+              Case studies
+            </TransitionLink>
+          </Button>
+          <MagneticButton>
+            <Button asChild size="sm">
+              <TransitionLink href="/contact">
+                Request mobilization
+                <ArrowUpRight className="h-4 w-4" />
+              </TransitionLink>
+            </Button>
+          </MagneticButton>
         </div>
+
+        <Sheet open={open} onOpenChange={setOpen}>
+          <SheetTrigger asChild>
+            <Button variant="outline" size="icon" className="lg:hidden" aria-label="Open navigation">
+              <Menu className="h-5 w-5" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right" className="w-[min(24rem,calc(100vw-2rem))]">
+            <SheetHeader>
+              <SheetTitle>Navigate the site</SheetTitle>
+              <SheetDescription>
+                Dedicated capability pages, the operational hub, partners, case studies, and contact.
+              </SheetDescription>
+            </SheetHeader>
+            <nav className="theme-scrollbar grid max-h-[65vh] gap-2 overflow-y-auto pt-4 pr-1" aria-label="Mobile primary">
+              {mobileNavItems.map((item) => (
+                <SheetClose asChild key={item.href}>
+                  <TransitionLink
+                    href={item.href}
+                    aria-label={"ariaLabel" in item ? item.ariaLabel : undefined}
+                    title={"ariaLabel" in item ? item.ariaLabel : undefined}
+                    className={cn(
+                      "surface-card rounded-[1.5rem] px-4 py-3.5 text-base font-medium text-zinc-200 transition hover:text-white",
+                      pathname === item.href && "border-[rgba(189,147,249,0.35)] bg-dracula-purple/10 text-zinc-50"
+                    )}
+                  >
+                    {item.label}
+                  </TransitionLink>
+                </SheetClose>
+              ))}
+            </nav>
+            <div className="mt-6 grid gap-3">
+              <SheetClose asChild>
+                <MagneticButton className="w-full">
+                  <Button asChild className="w-full justify-between">
+                    <TransitionLink href="/contact">
+                      Request mobilization
+                      <ArrowUpRight className="h-4 w-4" />
+                    </TransitionLink>
+                  </Button>
+                </MagneticButton>
+              </SheetClose>
+            </div>
+          </SheetContent>
+        </Sheet>
       </div>
     </header>
   )
 }
-
-export default Header

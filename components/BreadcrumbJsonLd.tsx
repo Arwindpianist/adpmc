@@ -1,7 +1,20 @@
-import { getBreadcrumbJsonLd, type BreadcrumbPageKey } from "@/lib/site-seo"
+import {
+  getBreadcrumbJsonLd,
+  getBreadcrumbTrailJsonLd,
+  getCapabilityBreadcrumbTrail,
+  type BreadcrumbPageKey,
+} from "@/lib/site-seo"
 
-export default function BreadcrumbJsonLd({ page }: { page: BreadcrumbPageKey }) {
-  const schema = getBreadcrumbJsonLd(page)
+type BreadcrumbProps =
+  | { page: BreadcrumbPageKey; capability?: never }
+  | { capability: { path: string; label: string }; page?: never }
+
+export default function BreadcrumbJsonLd(props: BreadcrumbProps) {
+  const schema =
+    "capability" in props
+      ? getBreadcrumbTrailJsonLd(getCapabilityBreadcrumbTrail(props.capability.path, props.capability.label))
+      : getBreadcrumbJsonLd(props.page)
+
   return (
     <script
       type="application/ld+json"

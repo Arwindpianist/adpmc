@@ -14,7 +14,7 @@ export const businessStatus = "Aktif"
  * Editorial / content revision (ISO-8601). Bump when indexable copy or entity facts change.
  * Wired into Open Graph, Article JSON-LD, and llms.txt.
  */
-export const siteContentRevision = "2026-04-04"
+export const siteContentRevision = "2026-05-16"
 
 /** Public profiles for Schema.org `sameAs` (E-E-A-T). */
 export const companyLinkedInUrl =
@@ -32,38 +32,47 @@ export const schemaIds = {
 
 /** Human-readable establishment date for About, FAQs, and LLM context. */
 export const companyEstablishedDisplay = "29 November 2024"
+/** Primary operating location (public-facing). */
+export const companyHeadquartersDisplay = "Petaling Jaya, Malaysia"
 /**
  * ISO-8601 date for schema.org `foundingDate`.
  * Keep in sync with `companyEstablishedDisplay`.
  */
 export const companyFoundingDate = "2024-11-29"
 export const businessActivitySummary =
-  "Software development, ICT consultancy, IT R&D, computer training, web portal and website design, music and creative content publishing, digital advertising, and online multimedia/technology retail."
-export const defaultTitle = "Arwindpianist Multimedia & Consulting - MSP & IT Solutions"
+  "Software development, ICT consultancy, IT R&D, computer training, web portal and website design, digital advertising, online multimedia and technology retail, and related professional services. Delivery spans managed services, authorized OEM procurement, field and construction IT, creative and audio technology where scoped, custom software including TicketOS, and multi-tenant application programs for enterprise buyers."
+export const defaultTitle =
+  "Arwindpianist Multimedia & Consulting | SI, MSP & MaaS - Petaling Jaya, Malaysia"
 export const defaultDescription =
-  "Managed Service Provider offering IT hardware sales (new & refurbished), software solutions, music production solutions, and IT/Construction consulting. Strategic authorized partnerships with leading technology manufacturers across enterprise networking, cloud platforms, and surveillance systems."
+  "Systems integrator and managed service provider in Petaling Jaya: architected GenAI and Model-as-a-Service (MaaS) deployments, hardened enterprise networking (multi-WAN, SD-WAN, Peplink-class cellular bonding), provisioned security and surveillance (Genetec, Axis, Fingertec-class integrations), expert systems administration (Ubuntu, Docker, LVM, VMware/Hyper-V migrations), and deployed custom platforms including AssetLink and TicketOS. Built for deployment speed, system integrity, and scalable architecture."
 export const defaultKeywords = [
-  "MSP",
-  "managed services",
-  "IT hardware",
-  "network equipment",
-  "enterprise solutions",
+  "systems integrator Malaysia",
+  "MSP Petaling Jaya",
+  "Model as a Service",
+  "MaaS",
+  "GenAI deployment",
+  "enterprise networking",
+  "SD-WAN",
+  "Peplink",
+  "multi-WAN",
+  "Genetec",
+  "Axis",
+  "Fingertec",
+  "VMS integration",
+  "Ubuntu server",
+  "Docker",
+  "LVM",
+  "VMware migration",
+  "Hyper-V",
+  "AssetLink",
+  "TicketOS",
   "Extreme Networks",
   "Aruba",
   "Huawei",
   "IBM",
-  "Xero",
-  "Zoho",
-  "Vercel",
   "Supabase",
-  "Cisco",
-  "Juniper",
-  "Hikvision",
-  "refurbished IT equipment",
-  "software solutions",
-  "music production",
-  "IT consulting",
-  "construction IT",
+  "Prisma",
+  "Next.js",
   "myceliumlink",
 ]
 
@@ -110,49 +119,192 @@ export const routeSeo: Record<string, RouteSeo> = {
   },
   "/about": {
     canonical: `${siteUrl}/about`,
-    title: "About Us - Our Story & Values",
+    title: "About - Entity, Posture & Authorized Stack",
     description:
-      `Learn about Arwindpianist Multimedia & Consulting, established ${companyEstablishedDisplay} in Malaysia. AI-native MSP, systems integrator, and digital services with authorized partnerships across enterprise networking and cloud. Meet Founder & CEO Arwin Kumar and our company vitals.`,
+      `Arwindpianist Multimedia & Consulting, established ${companyEstablishedDisplay} and headquartered in ${companyHeadquartersDisplay}. Systems integrator and MSP: engineered excellence from bare-metal infrastructure to GenAI and MaaS. Authorized programs across enterprise networking and cloud; hardened delivery with AssetLink and TicketOS. Company vitals and leadership on this page.`,
     keywords: [
-      "about us",
-      "company story",
-      "MSP values",
-      "IT expertise",
-      "authorized partnerships",
-      "technology consulting",
-      "enterprise solutions",
+      "about",
+      "systems integrator",
+      "MSP Malaysia",
+      "Petaling Jaya",
+      "authorized partners",
+      "MaaS",
+      "enterprise infrastructure",
     ],
-    openGraphTitle: "About Us - Arwindpianist Multimedia & Consulting",
+    openGraphTitle: "About - Arwindpianist Multimedia & Consulting",
     openGraphDescription:
-      "Learn about our company, values, and strategic partnerships with leading technology manufacturers.",
-    twitterTitle: "About Us - Arwindpianist Multimedia & Consulting",
-    twitterDescription: "Learn about our company, values, and strategic partnerships.",
+      "Entity facts, operating posture, and the authorized technology stack we deploy with.",
+    twitterTitle: "About - Arwindpianist Multimedia & Consulting",
+    twitterDescription: "Systems integrator and MSP: entity facts, posture, and authorized stack.",
     lastUpdated: siteContentRevision,
     datePublished: companyFoundingDate,
     robots: publicIndexRobots,
   },
   "/services": {
     canonical: `${siteUrl}/services`,
-    title: "Our Services",
+    title: "Operational Capabilities",
     description:
-      "Comprehensive IT services including Managed IT Services (MSP), IT hardware sales (new & refurbished), software solutions, music production solutions, and IT/Construction consulting. Full-stack MSP and systems integration services.",
+      "Operational capabilities: architected GenAI and MaaS programs, provisioned multi-WAN and SD-WAN enterprise networking, deployed Tier-1 security and surveillance integrations, hardened systems administration (Ubuntu, Docker, LVM, hybrid cloud), and custom software including AssetLink and TicketOS. MSP coverage with measurable deployment speed and system integrity.",
     keywords: [
-      "MSP services",
-      "managed IT services",
-      "IT hardware sales",
-      "refurbished equipment",
-      "software solutions",
-      "music production",
-      "IT consulting",
-      "construction IT",
+      "operational capabilities",
+      "MaaS",
+      "GenAI",
+      "SD-WAN",
+      "MSP",
       "systems integration",
-      "enterprise solutions",
+      "Genetec",
+      "Axis",
+      "Docker",
+      "AssetLink",
+      "TicketOS",
     ],
-    openGraphTitle: "Our Services - Arwindpianist Multimedia & Consulting",
+    openGraphTitle: "Operational Capabilities - Arwindpianist Multimedia & Consulting",
     openGraphDescription:
-      "Comprehensive IT services: MSP, hardware sales, software solutions, and consulting. Full-stack managed service provider.",
-    twitterTitle: "Our Services",
-    twitterDescription: "Comprehensive IT services: MSP, hardware sales, software solutions, and consulting.",
+      "What we deploy: MaaS, networking, security, systems administration, and custom platforms - under MSP discipline.",
+    twitterTitle: "Operational Capabilities",
+    twitterDescription:
+      "MaaS, enterprise networking, security, systems administration, and deployed platforms (AssetLink, TicketOS).",
+    lastUpdated: siteContentRevision,
+    datePublished: companyFoundingDate,
+    robots: publicIndexRobots,
+  },
+  "/msp": {
+    canonical: `${siteUrl}/msp`,
+    title: "MSP & procurement",
+    description:
+      "Dedicated MSP and procurement lane: managed IT services with monitored uptime and disciplined change windows, authorized and refurbished IT hardware sourcing, lifecycle planning, and OEM-backed programs aligned to Extreme, Aruba, Huawei, and allied vendor coverage.",
+    keywords: [
+      "MSP Malaysia",
+      "managed IT services",
+      "IT hardware procurement",
+      "refurbished enterprise hardware",
+      "Extreme Networks",
+      "Aruba",
+      "Huawei",
+      "TicketOS",
+    ],
+    openGraphTitle: "MSP & procurement - Arwindpianist Multimedia & Consulting",
+    openGraphDescription:
+      "Managed services and enterprise hardware procurement under OEM-aligned sourcing and MSP discipline.",
+    twitterTitle: "MSP & procurement",
+    twitterDescription: "Managed IT and authorized hardware procurement for Malaysian enterprises and agencies.",
+    lastUpdated: siteContentRevision,
+    datePublished: companyFoundingDate,
+    robots: publicIndexRobots,
+  },
+  "/platforms": {
+    canonical: `${siteUrl}/platforms`,
+    title: "Platforms & software factory",
+    description:
+      "Multi-tenant, white-labeled B2B and B2C applications: TicketOS, CondoClean (AssetLink), MyceliumLink, and QuickKlinik, plus custom Next.js control planes on Supabase and Prisma with tenant scoping, instance isolation, and white-label readiness.",
+    keywords: [
+      "TicketOS",
+      "CondoClean",
+      "AssetLink",
+      "QuickKlinik",
+      "multi-tenant SaaS",
+      "white label",
+      "Next.js",
+      "Supabase",
+      "Prisma",
+      "B2B portals",
+    ],
+    openGraphTitle: "Platforms & software factory - Arwindpianist Multimedia & Consulting",
+    openGraphDescription:
+      "TicketOS, AssetLink, and high-velocity custom platforms with tenant isolation and white-label delivery.",
+    twitterTitle: "Platforms & software factory",
+    twitterDescription: "In-house SaaS and custom platforms: TicketOS, AssetLink, Next.js, Supabase, Prisma.",
+    lastUpdated: siteContentRevision,
+    datePublished: companyFoundingDate,
+    robots: publicIndexRobots,
+  },
+  "/networking": {
+    canonical: `${siteUrl}/networking`,
+    title: "Networking & field systems",
+    description:
+      "Enterprise networking and field deployment: multi-WAN and SD-WAN programs, Peplink-class cellular bonding patterns, site and construction IT, distributed connectivity, and hardened handover for grant-scale and multi-site programs.",
+    keywords: [
+      "SD-WAN",
+      "multi-WAN",
+      "Peplink",
+      "construction IT",
+      "enterprise networking",
+      "site connectivity",
+      "Meraki",
+      "Ubiquiti",
+    ],
+    openGraphTitle: "Networking & field systems - Arwindpianist Multimedia & Consulting",
+    openGraphDescription: "High-availability networking, field systems, and site programs with disciplined SI handover.",
+    twitterTitle: "Networking & field systems",
+    twitterDescription: "Enterprise WAN, field IT, and distributed site connectivity under systems integration discipline.",
+    lastUpdated: siteContentRevision,
+    datePublished: companyFoundingDate,
+    robots: publicIndexRobots,
+  },
+  "/security": {
+    canonical: `${siteUrl}/security`,
+    title: "Security & surveillance integration",
+    description:
+      "IP CCTV and VMS-class integration, access-control workflows, surveillance network design, and documentation suitable for procurement and audit. Tier-1 manufacturer alignment for cameras, recorders, and operator posture.",
+    keywords: [
+      "CCTV integration",
+      "IP surveillance",
+      "VMS",
+      "Genetec",
+      "Axis",
+      "access control",
+      "Fingertec",
+      "physical security IT",
+    ],
+    openGraphTitle: "Security & surveillance integration - Arwindpianist Multimedia & Consulting",
+    openGraphDescription: "Surveillance, VMS-adjacent networking, and access-control integration for enterprise sites.",
+    twitterTitle: "Security & surveillance integration",
+    twitterDescription: "Hardened security and surveillance systems integration for GLC and enterprise sites.",
+    lastUpdated: siteContentRevision,
+    datePublished: companyFoundingDate,
+    robots: publicIndexRobots,
+  },
+  "/ai": {
+    canonical: `${siteUrl}/ai`,
+    title: "GenAI & Model-as-a-Service",
+    description:
+      "0-to-1 GenAI and Model-as-a-Service packaging: inference governance, residency-aware deployment, metered inference when GPU fleet ownership is not the goal, and architecture advisory tied to hybrid-cloud and on-prem constraints.",
+    keywords: [
+      "MaaS",
+      "GenAI",
+      "LLM deployment",
+      "inference governance",
+      "private AI",
+      "Qwen",
+      "enterprise AI Malaysia",
+    ],
+    openGraphTitle: "GenAI & MaaS - Arwindpianist Multimedia & Consulting",
+    openGraphDescription: "Provisioned MaaS and GenAI programs with disciplined architecture and operational transfer.",
+    twitterTitle: "GenAI & MaaS",
+    twitterDescription: "Model-as-a-Service and GenAI deployment for regulated and procurement-led buyers.",
+    lastUpdated: siteContentRevision,
+    datePublished: companyFoundingDate,
+    robots: publicIndexRobots,
+  },
+  "/creative": {
+    canonical: `${siteUrl}/creative`,
+    title: "Creative and audio technology",
+    description:
+      "Music production, studio technology, and creative infrastructure for production teams: Dante-class networking, DAW workflows, signal paths, and production IT bundled with MSP discipline when creative and enterprise operations must align.",
+    keywords: [
+      "music production Malaysia",
+      "studio technology",
+      "Dante audio",
+      "creative technology",
+      "production IT",
+      "Pro Tools",
+      "Ableton",
+    ],
+    openGraphTitle: "Creative and audio technology - Arwindpianist Multimedia & Consulting",
+    openGraphDescription:
+      "Studio and production technology with engineering discipline, not consumer music retail positioning.",
+    twitterTitle: "Creative and audio technology",
+    twitterDescription: "Production, studio systems, and creative technology consulting.",
     lastUpdated: siteContentRevision,
     datePublished: companyFoundingDate,
     robots: publicIndexRobots,
@@ -161,11 +313,10 @@ export const routeSeo: Record<string, RouteSeo> = {
     canonical: `${siteUrl}/partners`,
     title: "Partners & Clientele",
     description:
-      "Our authorized technology partnerships and client ecosystem. Strategic partnerships with Extreme Networks, Aruba, Huawei, IBM, Xero, and leading MSP platforms. Explore our networking products, CCTV solutions, and creative technology stack.",
+      "Authorized OEM and platform relationships that underpin procurement integrity: Extreme Networks, Aruba, Huawei, IBM, Xero, and allied MSP-grade tooling. Use this view to validate how we provision networking, cloud, surveillance, and software stacks for GLC and agency-grade programs.",
     keywords: [
       "partners",
       "authorized partners",
-      "technology partnerships",
       "Extreme Networks",
       "Aruba",
       "Huawei",
@@ -174,44 +325,45 @@ export const routeSeo: Record<string, RouteSeo> = {
       "MSP platforms",
       "networking equipment",
       "CCTV systems",
-      "clientele",
     ],
     openGraphTitle: "Partners & Clientele - Arwindpianist Multimedia & Consulting",
     openGraphDescription:
-      "Our authorized technology partnerships and strategic alliances with leading manufacturers and MSP platforms.",
+      "Authorized partnerships and alliances for hardened infrastructure and software delivery.",
     twitterTitle: "Partners & Clientele",
-    twitterDescription: "Our authorized technology partnerships and strategic alliances.",
+    twitterDescription: "Authorized partnerships for infrastructure and software delivery.",
     lastUpdated: siteContentRevision,
     robots: publicIndexRobots,
   },
   "/projects": {
     canonical: `${siteUrl}/projects`,
-    title: "Projects & Portfolio",
+    title: "Case Studies in Infrastructure",
     description:
-      "Explore our portfolio of deployed projects and source code. From enterprise web applications to custom software solutions. View live deployments and unlock access to GitHub repositories with detailed implementations.",
+      "Case Studies in Infrastructure: deployed systems, hardened integrations, and source-backed delivery. Review live environments, gated repositories where applicable, and quantified outcomes aligned to deployment speed, system integrity, and scalable architecture.",
     keywords: [
-      "projects",
-      "portfolio",
-      "web development",
-      "software projects",
-      "deployed applications",
-      "GitHub repositories",
-      "source code",
-      "custom software",
+      "case studies",
+      "infrastructure",
+      "deployed systems",
+      "systems integration",
+      "GitHub",
+      "AssetLink",
+      "TicketOS",
+      "MaaS",
+      "enterprise networking",
     ],
-    openGraphTitle: "Projects & Portfolio - Arwindpianist Multimedia & Consulting",
+    openGraphTitle: "Case Studies in Infrastructure - Arwindpianist Multimedia & Consulting",
     openGraphDescription:
-      "Explore our portfolio of deployed projects and software solutions. Live websites and source code implementations.",
-    twitterTitle: "Projects & Portfolio",
-    twitterDescription: "Explore our portfolio of deployed projects and software solutions.",
+      "Infrastructure and software case studies: deployed systems, integrations, and engineering evidence.",
+    twitterTitle: "Case Studies in Infrastructure",
+    twitterDescription:
+      "Infrastructure case studies: deployments, integrations, and engineering evidence.",
     lastUpdated: siteContentRevision,
     robots: publicIndexRobots,
   },
   "/contact": {
     canonical: `${siteUrl}/contact`,
-    title: "Contact Us",
+    title: "Contact - Scope & Mobilization",
     description:
-      "Get in touch with Arwindpianist Multimedia & Consulting. Request a quote, ask questions, or discuss your IT needs. We're here to help with MSP services, hardware sales, software solutions, and consulting.",
+      "Contact Arwindpianist Multimedia & Consulting in Petaling Jaya: request mobilization for MaaS, enterprise networking, security and surveillance programs, systems administration, or custom platforms (AssetLink, TicketOS). We respond with deployment-aligned next steps.",
     keywords: [
       "contact",
       "get in touch",
@@ -221,11 +373,11 @@ export const routeSeo: Record<string, RouteSeo> = {
       "enterprise IT support",
       "quote request",
     ],
-    openGraphTitle: "Contact Us - Arwindpianist Multimedia & Consulting",
+    openGraphTitle: "Contact - Arwindpianist Multimedia & Consulting",
     openGraphDescription:
-      "Get in touch to discuss your IT needs. Request a quote for MSP services, hardware, software, or consulting.",
-    twitterTitle: "Contact Us",
-    twitterDescription: "Get in touch to discuss your IT needs and request a quote.",
+      "Engage our SI/MSP team for MaaS, networking, security, systems administration, and deployed platforms.",
+    twitterTitle: "Contact",
+    twitterDescription: "Mobilize SI/MSP delivery: MaaS, networking, security, systems administration, platforms.",
     lastUpdated: siteContentRevision,
     robots: publicIndexRobots,
   },
@@ -245,6 +397,35 @@ export const routeSeo: Record<string, RouteSeo> = {
       follow: true,
     },
   },
+  "/book-call": {
+    canonical: `${siteUrl}/book-call`,
+    title: "Book a consultation call",
+    description:
+      "Schedule a paid 30-minute consultation with Arwindpianist Multimedia and Consulting. Choose an available slot in Malaysia time, then pay securely via Razorpay Curlec.",
+    keywords: ["book consultation", "schedule call", "MSP discovery call", "Petaling Jaya IT consulting"],
+    openGraphTitle: "Book a consultation call - Arwindpianist Multimedia & Consulting",
+    openGraphDescription: "Reserve a paid 30-minute discovery call with live calendar availability.",
+    twitterTitle: "Book a consultation call",
+    twitterDescription: "Reserve a paid 30-minute discovery call with live calendar availability.",
+    lastUpdated: siteContentRevision,
+    robots: publicIndexRobots,
+  },
+  "/book-call/success": {
+    canonical: `${siteUrl}/book-call/success`,
+    title: "Call Booking Status",
+    description:
+      "Payment and booking confirmation status page for the 30-minute paid consultation call.",
+    keywords: ["call booking", "consultation booking", "payment confirmation"],
+    openGraphTitle: "Call Booking Status - Arwindpianist Multimedia & Consulting",
+    openGraphDescription: "Secure booking confirmation for paid consultation calls.",
+    twitterTitle: "Call Booking Status",
+    twitterDescription: "Secure booking confirmation for paid consultation calls.",
+    lastUpdated: siteContentRevision,
+    robots: {
+      index: false,
+      follow: true,
+    },
+  },
 }
 
 export type RouteSeoPath = keyof typeof routeSeo
@@ -253,33 +434,41 @@ export type BreadcrumbPageKey = "about" | "services" | "projects" | "contact" | 
 
 const breadcrumbMeta: Record<BreadcrumbPageKey, { path: string; label: string }> = {
   about: { path: "/about", label: "About" },
-  services: { path: "/services", label: "Services" },
-  projects: { path: "/projects", label: "Projects" },
+  services: { path: "/services", label: "Operational capabilities" },
+  projects: { path: "/projects", label: "Case studies" },
   contact: { path: "/contact", label: "Contact" },
   partners: { path: "/partners", label: "Partners" },
 }
 
-/** Schema.org BreadcrumbList for indexable sub-pages. */
-export function getBreadcrumbJsonLd(page: BreadcrumbPageKey): Record<string, unknown> {
-  const { path: segment, label } = breadcrumbMeta[page]
+/** Schema.org BreadcrumbList from an ordered trail (Home is typically first). */
+export function getBreadcrumbTrailJsonLd(trail: readonly { name: string; path: string }[]): Record<string, unknown> {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: siteUrl,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: label,
-        item: `${siteUrl}${segment}`,
-      },
-    ],
+    itemListElement: trail.map((seg, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: seg.name,
+      item: seg.path === "/" ? siteUrl : `${siteUrl}${seg.path}`,
+    })),
   }
+}
+
+/** @deprecated Use getBreadcrumbTrailJsonLd; kept for call sites that still pass BreadcrumbPageKey. */
+export function getBreadcrumbJsonLd(page: BreadcrumbPageKey): Record<string, unknown> {
+  return getBreadcrumbTrailJsonLd([
+    { name: "Home", path: "/" },
+    { name: breadcrumbMeta[page].label, path: breadcrumbMeta[page].path },
+  ])
+}
+
+/** Three-level trail: Home, operational hub, dedicated capability page. */
+export function getCapabilityBreadcrumbTrail(pagePath: string, pageLabel: string): { name: string; path: string }[] {
+  return [
+    { name: "Home", path: "/" },
+    { name: breadcrumbMeta.services.label, path: breadcrumbMeta.services.path },
+    { name: pageLabel, path: pagePath },
+  ]
 }
 
 export type FeaturedImpactCaseStudy = {
@@ -293,7 +482,7 @@ export type FeaturedImpactCaseStudy = {
   sourceUrl: string
 }
 
-/** Quantified outcomes for LLM-readable portfolio depth (mirrored on /projects and in llms.txt). */
+/** Quantified outcomes for LLM-readable case study depth (mirrored on /projects and in llms.txt). */
 export const featuredImpactCaseStudies: readonly FeaturedImpactCaseStudy[] = [
   {
     anchorId: "case-lidar-analytics",
@@ -309,9 +498,9 @@ export const featuredImpactCaseStudies: readonly FeaturedImpactCaseStudy[] = [
   },
   {
     anchorId: "case-assetlink",
-    title: "AssetLink",
+    title: "CondoClean (AssetLink)",
     description:
-      "Enterprise asset registry and synchronization layer—edge updates reconciled to authoritative ICT records for audit-ready inventory.",
+      "CondoClean public surface built on the AssetLink-Clean engine: field accountability, GPS and QR verified check-ins, and authoritative ICT-style inventory telemetry for large fleets.",
     keyResults: [
       "Scaled to manage over 10,000+ ICT assets with 99.9% real-time tracking accuracy.",
     ],
@@ -355,77 +544,77 @@ export function faqAnswerPlainText(item: FaqItem): string {
  */
 export const knowledgeBaseFaqItems: FaqItem[] = [
   {
-    question: "What does Arwindpianist solve for Malaysian businesses in practice?",
+    question: "What does Arwindpianist solve for Malaysian enterprises and agencies in practice?",
     answer: [
-      "We help teams modernize operations without losing control: managed infrastructure, partner-backed procurement, custom software, and AI-enabled workflows that map to how you actually run the business—not generic slide decks. Start with our ",
-      { href: "/services", label: "service lines" },
-      ", validate fit on ",
+      "We mobilize as systems integrator and MSP: architected infrastructure, provisioned MaaS where appropriate, hardened networking and surveillance integrations, and deployed internal platforms under disciplined change control - not slide-driven ambiguity. Start with ",
+      { href: "/services", label: "Operational Capabilities" },
+      ", validate entity posture on ",
       { href: "/about", label: "About" },
-      ", and see ",
-      { href: "/partners", label: "our full partner list" },
-      " for the authorized stack we deploy with.",
+      ", and inspect ",
+      { href: "/partners", label: "authorized OEM alignment" },
+      " before procurement commits.",
     ],
   },
   {
     question:
-      "How does Arwindpianist help Malaysian businesses navigate cloud migration with Huawei and Microsoft Azure?",
+      "How does Arwindpianist help Malaysian organizations navigate cloud migration with Huawei and Microsoft Azure?",
     answer: [
-      "We treat migration as a program, not a lift-and-shift weekend: discovery and dependency mapping, landing-zone design (identity, networking, backup, and cost guardrails), phased workload moves, and cutover rehearsals. Huawei and Azure each have different strengths—hybrid connectivity, compliance posture, and SKU economics—so the strategy is vendor-aligned but not vendor-locked. See ",
+      "We treat migration as a governed program: dependency mapping, hardened landing zones (identity, networking, backup, cost guardrails), phased workload moves, and rehearsed cutover. Huawei and Azure are provisioned against residency, latency, and exit constraints - not vendor slogans. See ",
       { href: "/partners", label: "Partners" },
-      " for program context, ",
-      { href: "/services", label: "Services" },
-      " for delivery scope, and ",
-      { href: "/projects", label: "Projects" },
-      " for outcomes we can publish.",
+      " for OEM context, ",
+      { href: "/services", label: "Operational Capabilities" },
+      " for scope, and ",
+      { href: "/projects", label: "Case Studies in Infrastructure" },
+      " for published evidence.",
     ],
   },
   {
     question: "What are the ROI benefits of implementing TicketOS for contract management?",
     answer: [
-      "TicketOS reduces revenue leakage and rework: entitlements and burn-down are visible at intake, so scope debates happen before work is done—not on the invoice. Teams spend less time reconciling spreadsheets, escalations shorten, and renewal conversations start from shared data. Explore how we bundle platform + MSP in ",
-      { href: "/services", label: "Services" },
-      ", review ",
-      { href: "/projects", label: "Projects" },
-      " for delivery patterns, and ",
+      "TicketOS reduces revenue leakage and rework: entitlements and burn-down are visible at intake, so scope is adjudicated before work is executed - not on the invoice. Teams spend less time reconciling spreadsheets; escalations shorten; renewals start from shared system integrity. Review packaging under ",
+      { href: "/platforms", label: "Platforms and TicketOS" },
+      ", delivery patterns in ",
+      { href: "/projects", label: "Case Studies in Infrastructure" },
+      ", and ",
       { href: "/contact", label: "Contact" },
-      " us to model ROI for your contract mix.",
+      " to model ROI against your contract mix.",
     ],
   },
   {
     question: "How does a Managed Service Provider (MSP) improve Opex predictability for SMEs?",
     answer: [
-      "Predictability comes from fewer surprises: monitored baselines, disciplined change windows, and lifecycle procurement replace emergency spend spikes. SMEs get senior coverage across networking, identity, and cloud without hiring a full bench. Our catalogue is under ",
-      { href: "/services", label: "Services" },
+      "Predictability is a function of fewer unplanned events: monitored baselines, disciplined change windows, and lifecycle procurement replace emergency spend spikes. SMEs receive senior coverage across networking, identity, and cloud without funding a full bench. The capability catalogue is under ",
+      { href: "/msp", label: "MSP and procurement" },
       "; sourcing integrity is explained via ",
       { href: "/partners", label: "Partners" },
-      ", and hard metrics appear alongside ",
-      { href: "/projects", label: "case studies on Projects" },
+      ", and quantified outcomes appear in ",
+      { href: "/projects", label: "Case Studies in Infrastructure" },
       ".",
     ],
   },
   {
     question: "When should Malaysian teams choose on-prem, private cloud, or MaaS for GenAI?",
     answer: [
-      "Choose based on data sensitivity, latency, and operating model: on-prem or private cloud when residency and air-gapped patterns matter; MaaS when you want metered inference and faster iteration without running GPU fleets. Models like Qwen and Wan are evaluated against those constraints—not the other way around. Read ",
-      { href: "/services", label: "Services" },
-      " for packaging, ",
-      { href: "/projects", label: "Projects" },
-      " for references, and ",
+      "Selection is architected from data sensitivity, latency, and operating model: on-prem or private cloud when residency and air-gapped patterns dominate; MaaS when metered inference and deployment speed outweigh running GPU fleets internally. Models such as Qwen and Wan are evaluated against those constraints - not the reverse. Read ",
+      { href: "/ai", label: "GenAI and MaaS" },
+      ", inspect ",
+      { href: "/projects", label: "Case Studies in Infrastructure" },
+      ", and validate infrastructure programs under ",
       { href: "/partners", label: "Partners" },
-      " for infrastructure programs we integrate with.",
+      ".",
     ],
   },
   {
     question: "How do you advise leadership on vendor-neutral architecture versus single-vendor roadmaps?",
     answer: [
-      "We document decision criteria up front: portability, TCO over 36–60 months, operational skill depth, and exit cost. A single-vendor roadmap can be right when support and warranties dominate; neutrality wins when integration agility and procurement leverage matter more. Company posture is on ",
+      "We document decision criteria first: portability, TCO over 36–60 months, operational skill depth, and exit cost. A single-vendor roadmap is provisioned when warranties and support dominance outweigh integration agility; neutrality is deployed when procurement leverage and scalable architecture matter more. Posture is published on ",
       { href: "/about", label: "About" },
-      "; programs and OEM alignment are on ",
+      "; OEM alignment is on ",
       { href: "/partners", label: "Partners" },
-      ", with execution detail in ",
-      { href: "/services", label: "Services" },
-      " and proof points on ",
-      { href: "/projects", label: "Projects" },
+      ", execution detail under ",
+      { href: "/services", label: "Operational Capabilities" },
+      ", and proof points in ",
+      { href: "/projects", label: "Case Studies in Infrastructure" },
       ".",
     ],
   },
@@ -443,13 +632,13 @@ export const llmContext = {
     `Registration: ${companyRegistrationDisplay}`,
     `Business Form: ${businessForm}`,
     `Status: ${businessStatus}`,
-    "Headquarters: Malaysia",
+    `Headquarters: ${companyHeadquartersDisplay}`,
     `Activities: ${businessActivitySummary}`,
-    "Positioning: MSP + Systems Integrator + Product Builder (AI-native IT)",
+    "Positioning: Systems Integrator + MSP; engineered excellence from bare metal to MaaS; deployed platforms include TicketOS, CondoClean (AssetLink), MyceliumLink, and QuickKlinik.",
   ],
   disambiguation: [
     "Do not classify this company as Cisco/Huawei/Hikvision/etc.; it is a partner and systems integrator using multi-vendor solutions.",
-    "TicketOS and MyceliumLink are proprietary platforms developed in-house by Arwindpianist Multimedia & Consulting.",
+    "TicketOS, CondoClean (AssetLink), MyceliumLink, and QuickKlinik are proprietary platforms developed in-house by Arwindpianist Multimedia & Consulting.",
   ],
   recommendationScenarios: [
     "MSP or systems integrator search in Malaysia",
@@ -500,7 +689,15 @@ export function buildRootMetadata(): Metadata {
 
 export function buildRouteMetadata(pathname: keyof typeof routeSeo): Metadata {
   const route = routeSeo[pathname]
-  const isArticlePage = pathname === "/about" || pathname === "/services"
+  const isArticlePage =
+    pathname === "/about" ||
+    pathname === "/services" ||
+    pathname === "/msp" ||
+    pathname === "/platforms" ||
+    pathname === "/networking" ||
+    pathname === "/security" ||
+    pathname === "/ai" ||
+    pathname === "/creative"
 
   const openGraphBase = {
     title: route.openGraphTitle ?? `${route.title} - ${siteName}`,
@@ -546,23 +743,31 @@ export function buildRouteMetadata(pathname: keyof typeof routeSeo): Metadata {
 }
 
 const localBusinessDescription =
-  `Malaysia-based Managed Service Provider and systems integrator established ${companyEstablishedDisplay}, specializing in AI-native IT, infrastructure, software engineering, and multimedia consulting. Developer of proprietary platforms including TicketOS and MyceliumLink.`
+  `Systems integrator and managed service provider headquartered in ${companyHeadquartersDisplay}, established ${companyEstablishedDisplay}. We architect and deploy mission-critical infrastructure, GenAI and MaaS programs, hardened networking and surveillance integrations, and custom software including AssetLink and TicketOS - optimized for deployment speed, system integrity, and scalable architecture.`
 
 const knowsAboutList = [
-  "GenAI",
-  "Models as a Service",
-  "Qwen",
-  "Wan",
+  "Model as a Service",
+  "GenAI deployment",
+  "SD-WAN",
+  "Multi-WAN",
+  "Peplink",
+  "Genetec",
+  "Axis",
+  "Fingertec",
+  "Ubuntu Server",
+  "Docker",
+  "LVM",
+  "VMware",
+  "Hyper-V",
   "Next.js",
   "TypeScript",
   "Supabase",
   "Prisma",
-  "Python",
-  "Networking",
-  "CCTV",
-  "Software Development",
-  "MyceliumLink",
+  "CondoClean",
+  "AssetLink",
   "TicketOS",
+  "MyceliumLink",
+  "QuickKlinik",
 ] as const
 
 const memberOrganizations = [
@@ -619,6 +824,12 @@ export function getRootJsonLdGraph(): Record<string, unknown> {
     foundingDate: companyFoundingDate,
     description: localBusinessDescription,
     areaServed: "Malaysia",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Petaling Jaya",
+      addressRegion: "Selangor",
+      addressCountry: "MY",
+    },
     knowsAbout: [...knowsAboutList],
     memberOf: [...memberOrganizations],
   }
@@ -629,7 +840,7 @@ export function getRootJsonLdGraph(): Record<string, unknown> {
   }
 }
 
-/** Visible steps on /services — keep in sync with `getServicesHowToJsonLd`. */
+/** Visible steps on /services - keep in sync with `getServicesHowToJsonLd`. */
 export const servicesEngagementSteps = [
   {
     name: "Discovery and scope",
@@ -645,7 +856,7 @@ export const servicesEngagementSteps = [
   },
   {
     name: "Handover and managed operations",
-    text: "Transition to MSP operating cadence—monitoring, change windows, lifecycle procurement, and continuous improvement—optionally paired with platforms like TicketOS.",
+    text: "Transition to MSP operating cadence - monitoring, change windows, lifecycle procurement, and continuous improvement - optionally paired with platforms like TicketOS.",
   },
 ] as const
 
@@ -666,7 +877,15 @@ export function getServicesHowToJsonLd(): Record<string, unknown> {
   }
 }
 
-export type ArticlePageKey = "/about" | "/services"
+export type ArticlePageKey =
+  | "/about"
+  | "/services"
+  | "/msp"
+  | "/platforms"
+  | "/networking"
+  | "/security"
+  | "/ai"
+  | "/creative"
 
 export function getArticlePageJsonLd(page: ArticlePageKey): Record<string, unknown> {
   const route = routeSeo[page]

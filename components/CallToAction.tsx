@@ -1,87 +1,50 @@
-"use client"
-import { motion } from "framer-motion"
+import { ArrowUpRight } from "lucide-react"
 
-const CallToAction = () => {
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
-    e.preventDefault()
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
+import { BentoCell, BentoGrid } from "@/components/bento"
+import MagneticButton from "@/components/MagneticButton"
+import TransitionLink from "@/components/TransitionLink"
+import { Button } from "@/components/ui/button"
 
+export default function CallToAction() {
   return (
-    <section className="py-20 md:py-32 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-cyan-500/10" />
-      <div className="container mx-auto px-4 text-center relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="glassmorphism p-4 md:p-12 rounded-2xl max-w-4xl mx-auto"
-        >
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-2xl md:text-4xl font-bold mb-3 md:mb-4 bg-gradient-to-r from-white via-teal-200 to-white bg-clip-text text-transparent"
-          >
-            Ready to Transform Your IT Infrastructure?
-          </motion.h2>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-base md:text-xl mb-6 md:mb-8 max-w-2xl mx-auto text-gray-300"
-          >
-            Whether you need managed services, hardware solutions, custom software, or expert consulting, 
-            we're here to help your business succeed.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center"
-          >
-            <motion.a 
-              href="#pricing" 
-              onClick={(e) => scrollToSection(e, 'pricing')}
-              className="btn-primary inline-flex items-center gap-2 text-sm md:text-base px-4 md:px-8 py-2 md:py-3"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Get a Free Quote
-            </motion.a>
-            <motion.a 
-              href="/projects"
-              className="btn-secondary inline-flex items-center gap-2 text-sm md:text-base px-4 md:px-8 py-2 md:py-3"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              View Our Projects
-            </motion.a>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-gray-400 mt-6 text-sm"
-          >
-            Or call us for immediate assistance
-          </motion.p>
-        </motion.div>
+    <section className="min-w-0 px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+      <div className="mx-auto w-full max-w-7xl min-w-0">
+        <BentoGrid>
+            <BentoCell colClassName="col-span-full lg:col-span-8">
+              <div className="flex h-full flex-col justify-center p-6 sm:p-8 lg:p-10">
+                <p className="section-kicker">Mobilization</p>
+                <h2 className="mt-3 text-3xl font-semibold tracking-[-0.02em] text-zinc-50 sm:text-4xl lg:text-5xl">
+                  Architected programs, provisioned infrastructure, deployed control planes.
+                </h2>
+                <p className="mt-4 max-w-2xl text-base leading-relaxed text-[#c9b8e8]/90 sm:text-lg">
+                  Submit a mobilization brief for MaaS, networking, security integration, or managed operations. We
+                  respond with staged delivery, integrity checkpoints, and documentation sized for procurement review.
+                </p>
+              </div>
+            </BentoCell>
+            <BentoCell colClassName="col-span-full lg:col-span-4">
+              <div className="flex h-full min-h-[11rem] flex-col justify-center gap-3 p-6 sm:p-8 lg:p-10">
+                <MagneticButton className="w-full sm:w-auto">
+                  <Button asChild size="lg" className="w-full min-h-11 sm:w-auto">
+                    <TransitionLink href="/contact">
+                      Request mobilization
+                      <ArrowUpRight className="h-4 w-4" />
+                    </TransitionLink>
+                  </Button>
+                </MagneticButton>
+                <Button asChild size="lg" variant="secondary" className="w-full min-h-11 sm:w-auto">
+                  <TransitionLink
+                    href="/services"
+                    title="Operational capabilities"
+                    aria-label="Operational capabilities: systems integration and MSP disciplines"
+                  >
+                    Operational capabilities
+                  </TransitionLink>
+                </Button>
+              </div>
+            </BentoCell>
+        </BentoGrid>
       </div>
     </section>
   )
 }
-
-export default CallToAction
-

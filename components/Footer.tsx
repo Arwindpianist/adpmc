@@ -1,67 +1,110 @@
 import Link from "next/link"
 import { Instagram, Linkedin } from "lucide-react"
+import { companyRegistrationDisplay, siteName } from "@/lib/site-seo"
 
-const Footer = () => {
+const capabilityLinks = [
+  { href: "/services", label: "Operational capabilities" },
+  { href: "/msp", label: "MSP & procurement" },
+  { href: "/platforms", label: "Platforms & software factory" },
+  { href: "/networking", label: "Networking & field" },
+  { href: "/security", label: "Security & surveillance" },
+  { href: "/ai", label: "GenAI & MaaS" },
+  { href: "/creative", label: "Creative and audio" },
+] as const
+
+const siteLinks = [
+  { href: "/projects", label: "Case studies", ariaLabel: "Case Studies in Infrastructure" as const },
+  { href: "/partners", label: "Partners" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+] as const
+
+const footerLinkClass =
+  "text-[#c9b8e8]/90 transition hover:text-dracula-purple focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dracula-purple/50 rounded-sm"
+
+export default function Footer() {
   return (
-    <footer className="py-12 glassmorphism">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <h3 className="text-lg md:text-xl font-semibold mb-4">Arwindpianist Multimedia & Consulting (JR0170970-M)</h3>
-            <p className="text-sm md:text-base text-gray-400">
-              Your trusted Managed Service Provider offering IT hardware sales (new & refurbished), software solutions, 
-              music production services, and IT/Construction consulting. Strategic authorized partnerships with leading technology manufacturers.
+    <footer className="px-4 pb-8 pt-10 sm:px-6 lg:px-8">
+      <div className="surface-card mx-auto grid w-full max-w-7xl gap-8 rounded-[2rem] px-6 py-8 sm:px-8 lg:grid-cols-[1.2fr_0.8fr_0.8fr]">
+        <section className="space-y-4">
+          <p className="section-kicker">Operating posture</p>
+          <div className="space-y-3">
+            <h2 className="text-xl font-semibold text-zinc-50">{siteName}</h2>
+            <p className="max-w-xl text-sm leading-relaxed text-[#c9b8e8]/90">
+              Systems integrator and managed service provider (Petaling Jaya): architected MaaS and GenAI deployments,
+              provisioned enterprise networking and surveillance integrations, hardened systems administration, and
+              deployed platforms including AssetLink and TicketOS. Underwritten by deployment speed, system integrity,
+              and scalable architecture.
             </p>
           </div>
-          <div>
-            <h4 className="text-base md:text-lg font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/services" className="text-gray-400 hover:text-white transition duration-300">
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link href="/projects" className="text-gray-400 hover:text-white transition duration-300">
-                  Projects
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-gray-400 hover:text-white transition duration-300">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-gray-400 hover:text-white transition duration-300">
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-base md:text-lg font-semibold mb-4">Connect With Us</h4>
-            <div className="space-y-3">
-              <a href="mailto:hello@arwindpianist.com" className="text-gray-400 hover:text-white transition duration-300 block">
-                hello@arwindpianist.com
-              </a>
-              <div className="flex space-x-4">
-                <a href="https://www.instagram.com/adpmnc/" className="text-gray-400 hover:text-white transition duration-300">
-                  <Instagram size={24} />
-                </a>
-                <a href="https://www.linkedin.com/company/arwindpianist-multimedia-consulting/" className="text-gray-400 hover:text-white transition duration-300">
-                  <Linkedin size={24} />
-                </a>
-              </div>
+          <p className="text-sm text-[#c9b8e8]/70">Registration: {companyRegistrationDisplay}</p>
+        </section>
+
+        <section className="space-y-3">
+          <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-dracula-purple/80">Explore</h3>
+          <div className="grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+            <div>
+              <p className="mb-1 text-xs font-medium uppercase tracking-wider text-zinc-500">Capabilities</p>
+              <ul className="grid gap-0.5 text-sm leading-snug">
+                {capabilityLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className={footerLinkClass}>
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="mb-1 text-xs font-medium uppercase tracking-wider text-zinc-500">Site</p>
+              <ul className="grid gap-0.5 text-sm leading-snug">
+                {siteLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      aria-label={"ariaLabel" in link ? link.ariaLabel : undefined}
+                      title={"ariaLabel" in link ? link.ariaLabel : undefined}
+                      className={footerLinkClass}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-        </div>
-        <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Arwindpianist Multimedia & Consulting. All rights reserved.</p>
+        </section>
+
+        <section className="space-y-4">
+          <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-dracula-purple/80">Connect</h3>
+          <div className="space-y-1 text-sm">
+            <a href="mailto:hello@arwindpianist.com" className={`block py-0.5 ${footerLinkClass}`}>
+              hello@arwindpianist.com
+            </a>
+            <a href="tel:+601114815030" className={`block py-0.5 ${footerLinkClass}`}>
+              +60 11-1481 5030
+            </a>
+          </div>
+          <div className="flex gap-3">
+            <a
+              href="https://www.instagram.com/adpmnc/"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[rgba(189,147,249,0.15)] text-dracula-purple transition hover:border-[rgba(189,147,249,0.4)]"
+            >
+              <Instagram size={18} />
+            </a>
+            <a
+              href="https://www.linkedin.com/company/arwindpianist-multimedia-consulting/"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[rgba(189,147,249,0.15)] text-dracula-purple transition hover:border-[rgba(189,147,249,0.4)]"
+            >
+              <Linkedin size={18} />
+            </a>
+          </div>
+        </section>
+
+        <div className="col-span-full border-t border-[rgba(189,147,249,0.12)] pt-6 text-sm text-[#c9b8e8]/70">
+          <p>&copy; {new Date().getFullYear()} {siteName}. Crafted for premium, fast, trusted web experiences.</p>
         </div>
       </div>
     </footer>
   )
 }
-
-export default Footer
-

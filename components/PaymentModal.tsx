@@ -1,153 +1,110 @@
-"use client";
+"use client"
 
-import { useState, useEffect } from 'react';
-import { createPortal } from 'react-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Lock, Sparkles } from 'lucide-react';
-import { createCheckoutSession } from '@/lib/payment';
+import { useEffect, useState } from "react"
+import { createPortal } from "react-dom"
+import { AnimatePresence, motion } from "framer-motion"
+import { LockKeyhole, Sparkles, X } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
+import { startProjectAccessCheckout } from "@/lib/payment"
 
 interface PaymentModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  priceId?: string;
+  isOpen: boolean
+  onClose: () => void
 }
 
-const PaymentModal = ({ isOpen, onClose, priceId }: PaymentModalProps) => {
-  const [loading, setLoading] = useState(false);
-  const [mounted, setMounted] = useState(false);
+export default function PaymentModal({ isOpen, onClose }: PaymentModalProps) {
+  const [loading, setLoading] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const priceLabel = process.env.NEXT_PUBLIC_PROJECT_ACCESS_AMOUNT_LABEL?.trim() || "Paid access"
 
-  // Ensure we're mounted before rendering portal
   useEffect(() => {
-    setMounted(true);
-    return () => setMounted(false);
-  }, []);
-
-  // Default to environment variable if priceId not provided
-  const stripePriceId = priceId || process.env.NEXT_PUBLIC_STRIPE_PRICE_ID || '';
+    setMounted(true)
+    return () => setMounted(false)
+  }, [])
 
   const handlePurchase = async () => {
-    if (!stripePriceId) {
-      alert('Price ID not configured. Please set NEXT_PUBLIC_STRIPE_PRICE_ID in your environment variables.');
-      return;
-    }
+    setLoading(true)
 
-    setLoading(true);
     try {
-      const checkoutUrl = await createCheckoutSession(stripePriceId);
-      if (checkoutUrl) {
-        window.location.href = checkoutUrl;
-      } else {
-      alert('Failed to create checkout session. Please try again.');
-      setLoading(false);
-      }
-    } catch (error) {
-      alert('An error occurred. Please try again.');
-      setLoading(false);
+      await startProjectAccessCheckout()
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "An error occurred. Please try again."
+      alert(message)
+    } finally {
+      setLoading(false)
     }
-  };
+  }
 
-  if (!mounted) return null;
+  if (!mounted) {
+    return null
+  }
 
-  const modalContent = (
+  return createPortal(
     <AnimatePresence>
-      {isOpen && (
+      {isOpen ? (
         <>
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[9999]"
+            className="fixed inset-0 z-[9998] bg-black/70 backdrop-blur-md"
           />
-
-          {/* Modal */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center p-4 pointer-events-none"
+            initial={{ opacity: 0, y: 18, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 18, scale: 0.98 }}
+            transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
           >
-            <div className="glassmorphism p-6 md:p-8 rounded-xl max-w-md w-full relative border border-white/20 pointer-events-auto">
-              {/* Close button */}
+            <div className="popover-surface relative w-full max-w-lg rounded-[2rem] p-6 sm:p-8">
               <button
+                type="button"
                 onClick={onClose}
-                className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+                className="absolute right-5 top-5 flex h-10 w-10 items-center justify-center rounded-full border border-[rgba(189,147,249,0.15)] text-[#c9b8e8]/70 transition hover:border-[rgba(189,147,249,0.35)] hover:text-zinc-50"
               >
-                <X size={24} />
+                <X className="h-4 w-4" />
+                <span className="sr-only">Close</span>
               </button>
 
-              {/* Content */}
-              <div className="text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-teal-500/20 to-purple-500/20 mb-4">
-                  <Lock size={32} className="text-teal-400" />
-                </div>
+              <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[rgba(189,147,249,0.15)] text-dracula-purple">
+                <LockKeyhole className="h-6 w-6" />
+              </div>
 
-                <h2 className="text-2xl md:text-3xl font-bold mb-2">
-                  Unlock GitHub Access
-                </h2>
-                <p className="text-gray-300 mb-6">
-                  Get access to all GitHub repository source code and implementations
+              <div className="mt-6 space-y-3">
+                <p className="section-kicker">Repository access</p>
+                <h2 className="text-3xl font-semibold tracking-[-0.04em] text-heading">Unlock source code access</h2>
+                <p className="text-sm leading-7 text-zinc-400 sm:text-base">
+                  Purchase one secure access path for current and future repository listings referenced from Case
+                  Studies in Infrastructure.
                 </p>
+              </div>
 
-                {/* Features */}
-                <div className="text-left space-y-3 mb-6 bg-gray-800/30 rounded-lg p-4">
-                  <div className="flex items-start gap-3">
-                    <Sparkles size={20} className="text-teal-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <h3 className="font-semibold text-sm mb-1">Full Repository Access</h3>
-                      <p className="text-xs text-gray-400">Browse all source code and project implementations</p>
-                    </div>
+              <div className="mt-6 space-y-3 rounded-[1.75rem] border border-[rgba(189,147,249,0.12)] bg-[#050208]/60 p-5">
+                {[
+                  "Full repository visibility for available code listings",
+                  "Permanent access after successful payment verification",
+                  "Source browsing without exposing repository URLs directly in the UI",
+                ].map((item) => (
+                  <div key={item} className="flex items-start gap-3 text-sm leading-7 text-zinc-300">
+                    <Sparkles className="mt-1 h-4 w-4 text-dracula-purple" />
+                    <span>{item}</span>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <Sparkles size={20} className="text-teal-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <h3 className="font-semibold text-sm mb-1">Lifetime Access</h3>
-                      <p className="text-xs text-gray-400">One-time payment for permanent access</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Sparkles size={20} className="text-teal-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <h3 className="font-semibold text-sm mb-1">All Projects Included</h3>
-                      <p className="text-xs text-gray-400">Access to current and future GitHub repositories</p>
-                    </div>
-                  </div>
-                </div>
+                ))}
+              </div>
 
-                {/* Purchase button */}
-                <motion.button
-                  onClick={handlePurchase}
-                  disabled={loading || !stripePriceId}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                >
-                  {loading ? (
-                    <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />
-                      Processing...
-                    </>
-                  ) : (
-                    <>
-                      <Lock size={18} />
-                      Purchase Access
-                    </>
-                  )}
-                </motion.button>
-
-                <p className="text-xs text-gray-400 mt-4">
-                  Secure payment powered by Stripe
-                </p>
+              <div className="mt-6 flex flex-col gap-3">
+                <Button type="button" size="lg" onClick={handlePurchase} disabled={loading}>
+                  {loading ? "Processing..." : `Purchase access (${priceLabel})`}
+                </Button>
+                <p className="text-center text-xs text-[#c9b8e8]/60">Secure payment powered by Razorpay Curlec.</p>
               </div>
             </div>
           </motion.div>
         </>
-      )}
-    </AnimatePresence>
-  );
-
-  return createPortal(modalContent, document.body);
-};
-
-export default PaymentModal;
+      ) : null}
+    </AnimatePresence>,
+    document.body
+  )
+}
