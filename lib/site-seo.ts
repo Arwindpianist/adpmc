@@ -77,10 +77,11 @@ export const defaultKeywords = [
 ]
 
 const defaultOgImage = {
-  url: "/images/og.png",
+  url: "/images/og.jpg",
   width: 1200,
   height: 630,
-  alt: siteName,
+  alt: "Arwindpianist Multimedia & Consulting — software factory, MSP, and enterprise systems integrator in Malaysia",
+  type: "image/jpeg",
 }
 
 /** Indexable public routes use this; `/payment-success` overrides with noindex. */
@@ -676,6 +677,7 @@ export function buildRootMetadata(): Metadata {
       card: "summary_large_image",
       creator: "@arwindpianist",
       site: "@arwindpianist",
+      images: [defaultOgImage.url],
     },
     alternates: {
       canonical: home.canonical,
@@ -730,6 +732,7 @@ export function buildRouteMetadata(pathname: keyof typeof routeSeo): Metadata {
       card: "summary_large_image",
       title: route.twitterTitle ?? route.title,
       description: route.twitterDescription ?? route.description,
+      images: [defaultOgImage.url],
     },
     robots:
       route.robots ?? {
