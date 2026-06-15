@@ -31,11 +31,11 @@ const capabilityNavItems = [
 
 const exploreHubItems = [
   { href: "/services", label: "Operational capabilities hub" },
-  { href: "/partners", label: "Partners" },
   { href: "/about", label: "About" },
 ] as const
 
 const directNavItems = [
+  { href: "/partners", label: "Partners", ariaLabel: "Partners and authorized vendors" as const },
   { href: "/projects", label: "Case studies", ariaLabel: "Case Studies in Infrastructure" as const },
   { href: "/contact", label: "Contact" },
 ] as const
@@ -141,7 +141,7 @@ export default function Header() {
             <SheetHeader>
               <SheetTitle>Navigate the site</SheetTitle>
               <SheetDescription>
-                Dedicated capability pages, the operational hub, partners, case studies, and contact.
+                Capability pages, partners, case studies, and contact — including the full vendor index.
               </SheetDescription>
             </SheetHeader>
             <nav className="theme-scrollbar grid max-h-[65vh] gap-2 overflow-y-auto pt-4 pr-1" aria-label="Mobile primary">

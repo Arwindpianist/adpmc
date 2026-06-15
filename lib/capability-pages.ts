@@ -131,7 +131,7 @@ const pages: Record<CapabilityPath, CapabilityPageContent> = {
       "Optional pairing with in-house platforms when service delivery and contracts must share one system of record.",
     ],
     stack: ["Extreme Networks", "Aruba", "Cisco", "Huawei", "Dell", "HPE", "Fortinet", "TicketOS"],
-    partners: ["Extreme Networks", "Aruba", "Huawei", "IBM", "Xero", "Cisco", "Dell", "HPE"],
+    partners: ["Extreme Networks", "Aruba", "Huawei", "IBM Registered Partner", "Xero", "Cisco", "Dell", "HPE"],
     relatedRoutes: [
       hubLink,
       { href: "/platforms", label: "Platforms and software factory" },
@@ -405,10 +405,10 @@ const pages: Record<CapabilityPath, CapabilityPageContent> = {
         tags: ["Governance", "Audit"],
       },
       {
-        title: "Model evaluation",
+        title: "Claude authorized resale",
         description:
-          "Open-weight lines such as Qwen evaluated against latency, cost, and safety criteria you define.",
-        tags: ["Qwen", "Evaluation"],
+          "Enterprise Claude access provisioned through our authorized reseller program, with procurement-friendly documentation and deployment guidance.",
+        tags: ["Claude", "Authorized reseller"],
       },
     ],
     outcomes: [
@@ -419,7 +419,7 @@ const pages: Record<CapabilityPath, CapabilityPageContent> = {
       "Coordination with networking when inference traffic must traverse controlled paths.",
     ],
     stack: ["MaaS", "PostgreSQL vectors", "Azure OpenAI-class", "Private inference"],
-    partners: ["Microsoft Azure", "AWS", "Supabase"],
+    partners: ["Microsoft Azure", "AWS", "Supabase", "Claude Authorized Reseller", "IBM Registered Partner"],
     relatedRoutes: [
       hubLink,
       { href: "/platforms", label: "Platforms and software factory" },

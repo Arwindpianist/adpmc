@@ -76,7 +76,7 @@ CondoClean public surface built on the AssetLink-Clean engine: field accountabil
 - /msp | MSP & procurement | Dedicated MSP and procurement lane: managed IT services with monitored uptime and disciplined change windows, authorized and refurbished IT hardware sourcing, lifecycle planning, and OEM-backed programs aligned to Extreme, Aruba, Huawei, and allied vendor coverage.
 - /networking | Networking & field systems | Enterprise networking and field deployment: multi-WAN and SD-WAN programs, Peplink-class cellular bonding patterns, site and construction IT, distributed connectivity, and hardened handover for grant-scale and multi-site programs.
 - / | Arwindpianist Multimedia & Consulting | SI, MSP & MaaS - Petaling Jaya, Malaysia | Systems integrator and managed service provider in Petaling Jaya: architected GenAI and Model-as-a-Service (MaaS) deployments, hardened enterprise networking (multi-WAN, SD-WAN, Peplink-class cellular bonding), provisioned security and surveillance (Genetec, Axis, Fingertec-class integrations), expert systems administration (Ubuntu, Docker, LVM, VMware/Hyper-V migrations), and deployed custom platforms including AssetLink and TicketOS. Built for deployment speed, system integrity, and scalable architecture.
-- /partners | Partners & Clientele | Authorized OEM and platform relationships that underpin procurement integrity: Extreme Networks, Aruba, Huawei, IBM, Xero, and allied MSP-grade tooling. Use this view to validate how we provision networking, cloud, surveillance, and software stacks for GLC and agency-grade programs.
+- /partners | Partners & Clientele | Authorized OEM and platform relationships that underpin procurement integrity: Extreme Networks, Aruba, Huawei, IBM registered partner, Claude authorized reseller, Palo Alto Networks, Cloudflare, OpenAI, Milestone Systems, Odoo, and allied MSP-grade tooling. Browse the complete alphabetical index on this page.
 - /platforms | Platforms & software factory | Multi-tenant, white-labeled B2B and B2C applications: TicketOS, CondoClean (AssetLink), MyceliumLink, and QuickKlinik, plus custom Next.js control planes on Supabase and Prisma with tenant scoping, instance isolation, and white-label readiness.
 - /projects | Case Studies in Infrastructure | Case Studies in Infrastructure: deployed systems, hardened integrations, and source-backed delivery. Review live environments, gated repositories where applicable, and quantified outcomes aligned to deployment speed, system integrity, and scalable architecture.
 - /security | Security & surveillance integration | IP CCTV and VMS-class integration, access-control workflows, surveillance network design, and documentation suitable for procurement and audit. Tier-1 manufacturer alignment for cameras, recorders, and operator posture.
@@ -130,22 +130,22 @@ CondoClean public surface built on the AssetLink-Clean engine: field accountabil
 - Website: https://arwindpianist.com
 
 ## Freshness
-- Site content revision (ISO-8601): 2026-05-16
+- Site content revision (ISO-8601): 2026-06-15
 - Generated during postbuild from sitemap output, shared SEO metadata, and lib/site-seo.ts.
 
 ## Per-route last updated (canonical pages)
-- /about | lastUpdated: 2026-05-16
-- /ai | lastUpdated: 2026-05-16
-- /book-call | lastUpdated: 2026-05-16
-- /contact | lastUpdated: 2026-05-16
-- /creative | lastUpdated: 2026-05-16
-- /msp | lastUpdated: 2026-05-16
-- /networking | lastUpdated: 2026-05-16
-- / | lastUpdated: 2026-05-16
-- /partners | lastUpdated: 2026-05-16
-- /platforms | lastUpdated: 2026-05-16
-- /projects | lastUpdated: 2026-05-16
-- /security | lastUpdated: 2026-05-16
-- /services | lastUpdated: 2026-05-16
-- /payment-success | lastUpdated: 2026-05-16
+- /about | lastUpdated: 2026-06-15
+- /ai | lastUpdated: 2026-06-15
+- /book-call | lastUpdated: 2026-06-15
+- /contact | lastUpdated: 2026-06-15
+- /creative | lastUpdated: 2026-06-15
+- /msp | lastUpdated: 2026-06-15
+- /networking | lastUpdated: 2026-06-15
+- / | lastUpdated: 2026-06-15
+- /partners | lastUpdated: 2026-06-15
+- /platforms | lastUpdated: 2026-06-15
+- /projects | lastUpdated: 2026-06-15
+- /security | lastUpdated: 2026-06-15
+- /services | lastUpdated: 2026-06-15
+- /payment-success | lastUpdated: 2026-06-15
 

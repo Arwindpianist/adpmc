@@ -13,8 +13,8 @@ const capabilityLinks = [
 ] as const
 
 const siteLinks = [
-  { href: "/projects", label: "Case studies", ariaLabel: "Case Studies in Infrastructure" as const },
   { href: "/partners", label: "Partners" },
+  { href: "/projects", label: "Case studies", ariaLabel: "Case Studies in Infrastructure" as const },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ] as const
@@ -38,6 +38,9 @@ export default function Footer() {
             </p>
           </div>
           <p className="text-sm text-[#c9b8e8]/70">Registration: {companyRegistrationDisplay}</p>
+          <Link href="/partners" className={`inline-flex min-h-11 items-center text-sm font-medium ${footerLinkClass}`}>
+            Partners and authorized vendors
+          </Link>
         </section>
 
         <section className="space-y-3">

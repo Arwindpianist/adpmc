@@ -4,20 +4,10 @@ import { BentoCell, BentoGrid } from "@/components/bento"
 import { SectionIntro } from "@/components/site/section-intro"
 import TransitionLink from "@/components/TransitionLink"
 
-const partnerGroups = [
-  {
-    title: "Infrastructure and networking",
-    items: ["Extreme Networks", "Aruba", "Huawei", "Cisco", "Juniper", "Ubiquiti"],
-  },
-  {
-    title: "Cloud and product delivery",
-    items: ["Vercel", "Supabase", "Prisma", "Microsoft Azure", "Xero", "Zoho"],
-  },
-  {
-    title: "Field and surveillance systems",
-    items: ["Hikvision", "Axis", "Dahua", "Hanwha Vision", "Uniview", "Genetec"],
-  },
-] as const
+import {
+  homePartnerEcosystemGroups,
+  partnerEcosystemPartnerCount,
+} from "@/lib/partner-ecosystem"
 
 export default function Partnerships() {
   return (
@@ -27,12 +17,12 @@ export default function Partnerships() {
           <SectionIntro
             eyebrow="Partner ecosystem"
             title="A curated stack of platforms, vendors, and operating systems."
-            description="We combine authorized sourcing with modern product tooling, so infrastructure programs and software delivery can live under one execution model."
+            description={`We combine authorized sourcing with modern product tooling across ${partnerEcosystemPartnerCount}+ partners — so infrastructure programs and software delivery can live under one execution model.`}
           />
         </div>
         <BentoGrid>
-            {partnerGroups.map((group) => (
-              <BentoCell key={group.title} colClassName="col-span-full lg:col-span-4">
+            {homePartnerEcosystemGroups.map((group) => (
+              <BentoCell key={group.id} colClassName="col-span-full lg:col-span-4">
                 <div className="flex h-full flex-col p-6 sm:p-8">
                   <h3 className="text-xl font-semibold text-zinc-50 sm:text-2xl">{group.title}</h3>
                   <div className="mt-6 flex flex-wrap gap-2">
@@ -61,7 +51,7 @@ export default function Partnerships() {
                   href="/partners"
                   className="inline-flex min-h-11 shrink-0 items-center gap-2 text-sm font-medium text-dracula-purple transition hover:text-dracula-pink"
                 >
-                  Explore full partner view
+                  Explore full partner index ({partnerEcosystemPartnerCount})
                   <ArrowRight className="h-4 w-4" />
                 </TransitionLink>
               </div>

@@ -166,10 +166,10 @@ export default function Hero() {
                       Live catalogue
                     </span>
                     <TransitionLink
-                      href="/partners"
+                      href="/partners#partner-index"
                       className="inline-flex w-fit items-center gap-1.5 text-xs font-medium text-dracula-purple transition hover:text-dracula-pink"
                     >
-                      Authorized partner index
+                      Full partner index
                       <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
                     </TransitionLink>
                   </div>

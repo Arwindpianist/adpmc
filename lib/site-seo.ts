@@ -14,7 +14,7 @@ export const businessStatus = "Aktif"
  * Editorial / content revision (ISO-8601). Bump when indexable copy or entity facts change.
  * Wired into Open Graph, Article JSON-LD, and llms.txt.
  */
-export const siteContentRevision = "2026-05-16"
+export const siteContentRevision = "2026-06-15"
 
 /** Public profiles for Schema.org `sameAs` (E-E-A-T). */
 export const companyLinkedInUrl =
@@ -70,6 +70,8 @@ export const defaultKeywords = [
   "Aruba",
   "Huawei",
   "IBM",
+  "Claude",
+  "Anthropic",
   "Supabase",
   "Prisma",
   "Next.js",
@@ -314,14 +316,21 @@ export const routeSeo: Record<string, RouteSeo> = {
     canonical: `${siteUrl}/partners`,
     title: "Partners & Clientele",
     description:
-      "Authorized OEM and platform relationships that underpin procurement integrity: Extreme Networks, Aruba, Huawei, IBM, Xero, and allied MSP-grade tooling. Use this view to validate how we provision networking, cloud, surveillance, and software stacks for GLC and agency-grade programs.",
+      "Authorized OEM and platform relationships that underpin procurement integrity: Extreme Networks, Aruba, Huawei, IBM registered partner, Claude authorized reseller, Palo Alto Networks, Cloudflare, OpenAI, Milestone Systems, Odoo, and allied MSP-grade tooling. Browse the complete alphabetical index on this page.",
     keywords: [
       "partners",
       "authorized partners",
       "Extreme Networks",
       "Aruba",
       "Huawei",
-      "IBM",
+      "IBM registered partner",
+      "Claude authorized reseller",
+      "Anthropic",
+      "Palo Alto Networks",
+      "Cloudflare",
+      "OpenAI",
+      "Docker",
+      "Milestone Systems",
       "Xero",
       "MSP platforms",
       "networking equipment",
@@ -774,11 +783,12 @@ const knowsAboutList = [
 ] as const
 
 const memberOrganizations = [
-  { "@type": "Organization", name: "Extreme Networks Authorized Partner" },
-  { "@type": "Organization", name: "Aruba Authorized Partner" },
-  { "@type": "Organization", name: "Huawei Authorized Partner" },
-  { "@type": "Organization", name: "IBM Authorized Partner" },
-  { "@type": "Organization", name: "Xero Authorized Partner" },
+  { "@type": "Organization", name: "Authorized Extreme Networks Partner" },
+  { "@type": "Organization", name: "Authorized Aruba Partner" },
+  { "@type": "Organization", name: "Authorized Huawei Partner" },
+  { "@type": "Organization", name: "IBM Registered Partner" },
+  { "@type": "Organization", name: "Claude Authorized Reseller" },
+  { "@type": "Organization", name: "Authorized Xero Partner" },
 ] as const
 
 /**

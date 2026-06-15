@@ -4,6 +4,7 @@ import { Clock3, ShieldCheck, Sparkles, TrendingUp } from "lucide-react"
 import { BentoCell, BentoGrid } from "@/components/bento"
 import { SectionIntro } from "@/components/site/section-intro"
 import { Badge } from "@/components/ui/badge"
+import { partnerAuthorizationPrograms } from "@/lib/partner-ecosystem"
 import { companyEstablishedDisplay, companyHeadquartersDisplay, companyRegistrationDisplay } from "@/lib/site-seo"
 
 /** Verifiable facts with internal sources (E-E-A-T / citation-ready). */
@@ -35,13 +36,7 @@ const verifiableFacts = [
   },
 ] as const
 
-const partnerAuthorizations = [
-  "Authorized Extreme Networks Partner",
-  "Authorized Aruba Partner",
-  "Authorized Huawei Partner",
-  "Authorized IBM Partner",
-  "Authorized Xero Partner",
-] as const
+const partnerAuthorizations = partnerAuthorizationPrograms
 
 const advantages = [
   {
@@ -119,6 +114,12 @@ export default function TrustSignals() {
                     </Badge>
                   ))}
                 </div>
+                <Link
+                  href="/partners"
+                  className="mt-6 inline-flex min-h-11 items-center text-sm font-medium text-dracula-purple transition hover:text-dracula-pink"
+                >
+                  View full partner index
+                </Link>
               </div>
             </BentoCell>
 
